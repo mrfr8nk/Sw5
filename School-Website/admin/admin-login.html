@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - St. Mary's High School</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" />
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      /* Enhanced Root Variables & Themes */
+      :root {
+        --primary: #1a365d;
+        --secondary: #d69e2e;
+        --accent: #9f7aea;
+        --glass: rgba(26, 54, 93, 0.15);
+        --bg-gradient: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+        --text-color: #ffffff;
+        --overlay: rgba(0, 0, 0, 0.5);
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        --header-height: 80px;
+      }
+      
+      [data-theme="light"] {
+        --primary: #3182ce;
+        --secondary: #dd6b20;
+        --accent: #805ad5;
+        --glass: rgba(237, 242, 247, 0.9);
+        --bg-gradient: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+        --text-color: #2d3748;
+        --overlay: rgba(255, 255, 255, 0.4);
+      }
+      
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      
+      body {
+        background: var(--bg-gradient);
+        color: var(--text-color);
+        min-height: 100vh;
+        transition: all 0.6s ease;
+        line-height: 1.6;
+      }
+      
+      /* Enhanced Header */
+      header {
+        background: rgba(26, 54, 93, 0.9);
+        backdrop-filter: blur(12px);
+        padding: 0 5%;
+        height: var(--header-height);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--card-shadow);
+        border-bottom: 2px solid var(--secondary);
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        color: white;
+      }
+      
+      .logo span {
+        color: var(--secondary);
+      }
+      
+      .header-logo {
+        height: 50px;
+        margin-right: 15px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+      
+      .menu-btn {
+        font-size: 1.8rem;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        color: white;
+        transition: transform 0.3s ease;
+      }
+      
+      .menu-btn:hover {
+        transform: scale(1.1);
+        color: var(--secondary);
+      }
+      
+      /* Enhanced Side Menu */
+      .side-menu {
+        position: fixed;
+        top: 0;
+        right: -350px;
+        width: 350px;
+        height: 100%;
+        background: rgba(26, 54, 93, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2000;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        border-left: 1px solid rgba(214, 158, 46, 0.3);
+      }
+      
+      .side-menu.active {
+        right: 0;
+      }
+      
+      .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .menu-header h3 {
+        font-size: 1.5rem;
+        color: var(--secondary);
+      }
+      
+      .close-btn {
+        font-size: 1.8rem;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        color: white;
+        transition: transform 0.3s ease;
+      }
+      
+      .close-btn:hover {
+        transform: rotate(90deg);
+        color: var(--secondary);
+      }
+      
+      .menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .menu-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 12px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .menu-links a i {
+        width: 25px;
+        text-align: center;
+      }
+      
+      .menu-links a:hover {
+        background: rgba(214, 158, 46, 0.2);
+        transform: translateX(5px);
+      }
+      
+      .menu-links a.active {
+        background: var(--secondary);
+        color: #1a365d;
+        font-weight: 600;
+      }
+      
+      /* Enhanced Login Container */
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - var(--header-height));
+        padding: 40px 20px;
+        margin-top: var(--header-height);
+      }
+      
+      .login-card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid rgba(255,255,255,0.1);
+        width: 100%;
+        max-width: 500px;
+        animation: fadeIn 0.8s ease-out;
+      }
+      
+      .login-card h2 {
+        color: var(--secondary);
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .login-card h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--secondary);
+      }
+      
+      /* Form Styles */
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+        color: var(--secondary);
+      }
+      
+      .form-group input {
+        width: 100%;
+        padding: 0.9rem;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+      
+      .form-group input:focus {
+        border-color: var(--secondary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.3);
+        background: rgba(255,255,255,0.15);
+      }
+      
+      .password-container {
+        position: relative;
+      }
+      
+      .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .password-toggle:hover {
+        color: var(--accent);
+      }
+      
+      /* Enhanced Buttons */
+      .btn {
+        padding: 0.9rem 1.8rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .btn-primary {
+        background: var(--secondary);
+        color: #1a365d;
+      }
+      
+      .btn-primary:hover {
+        background: #e69c2a;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      
+      .btn-google {
+        background: #db4437;
+        color: white;
+        margin-top: 15px;
+      }
+      
+      .btn-google:hover {
+        background: #c23323;
+        transform: translateY(-2px);
+      }
+      
+      /* Toggle Links */
+      .toggle-link {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+      
+      .toggle-link a {
+        color: var(--secondary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      
+      .toggle-link a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Error Message */
+      .error-message {
+        color: #ff6b6b;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+      
+      /* Footer - Compact Design like Student Dashboard */
+      footer {
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 0;
+        text-align: center;
+        position: relative;
+        margin-top: 2rem;
+      }
+      
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      
+      .social-icons a {
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+      }
+      
+      .social-icons a:hover {
+        color: var(--secondary);
+        opacity: 1;
+      }
+      
+      footer p {
+        margin: 2px 0;
+        font-size: 0.8rem;
+        opacity: 0.7;
+      }
+      
+      footer a {
+        color: var(--secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      
+      footer a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Enhanced Theme Toggle */
+      .theme-toggle {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--primary);
+        backdrop-filter: blur(8px);
+        border: 2px solid var(--secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      
+      .theme-toggle:hover {
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+      }
+      
+      .theme-toggle i {
+        font-size: 1.6rem;
+        color: var(--secondary);
+      }
+      
+      /* Animation Keyframes */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .side-menu {
+          width: 280px;
+        }
+        
+        .login-card {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Enhanced Header -->
+    <header>
+      <div class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="Logo" class="header-logo" />
+        <span>Admin</span> Portal
+      </div>
+      <button class="menu-btn" id="menuBtn">
+        <i class="fas fa-user-cog"></i>
+      </button>
+    </header>
+
+    <!-- Enhanced Side Menu -->
+    <div class="side-menu" id="sideMenu">
+      <div class="menu-header">
+        <h3>Navigation</h3>
+        <button class="close-btn" id="closeBtn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="menu-links">
+        <a href="/admin/forgot-password">
+          <i class="fas fa-key"></i> Forgot Password
+        </a>
+        <a href="/">
+          <i class="fas fa-home"></i> Home Page
+        </a>
+        <a href="/teacherslogin">
+          <i class="fas fa-sign-in-alt"></i> Teacher Login
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Login Content -->
+    <div class="login-container">
+      <!-- Email/Password Login Form -->
+      <div id="email-login-form" class="login-card">
+        <h2>Admin Login</h2>
+        <form id="admin-login-form">
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <div class="password-container">
+              <input type="password" id="password" placeholder="Enter your password" required />
+              <i class="fas fa-eye password-toggle" id="toggle-password"></i>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+          
+          <button type="button" id="google-login" class="btn btn-google">
+            <i class="fab fa-google"></i> Sign In with Google
+          </button>
+          
+          <div class="toggle-link">
+            <a href="#" id="switch-to-otp">Login with OTP instead</a>
+          </div>
+          
+          <div class="error-message" id="error-message"></div>
+        </form>
+      </div>
+
+      <!-- OTP Login Form -->
+      <div id="otp-login-form" class="login-card" style="display: none;">
+        <h2>OTP Login</h2>
+        <div class="form-group">
+          <label for="phone"><i class="fas fa-mobile-alt"></i> Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter your phone number" required />
+        </div>
+        
+        <button type="button" id="send-otp-btn" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i> Send OTP
+        </button>
+        
+        <div class="form-group" style="display: none;" id="otp-input-group">
+          <label for="otp-code"><i class="fas fa-sms"></i> OTP Code</label>
+          <input type="text" id="otp-code" placeholder="Enter the OTP" required />
+        </div>
+        
+        <button type="button" id="verify-otp-btn" class="btn btn-primary" style="display: none;">
+          <i class="fas fa-check-circle"></i> Verify OTP
+        </button>
+        
+        <div class="toggle-link">
+          <a href="#" id="switch-to-email">Back to Email Login</a>
+        </div>
+        
+        <div class="error-message" id="otp-error"></div>
+      </div>
+    </div>
+
+    <!-- reCAPTCHA container (hidden) -->
+    <div id="recaptcha-container"></div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p>
+        <a
+          href="https://wa.me/263719647303?text=hi%20darrell%20i%20would%20want%20you%20to%20create%20me%20a%20site%20like%20that%20of%20st%20marys.%20It%20wonderful"
+          target="_blank"
+          >Made By Darrell Mucheri</a
+        >
+      </p>
+      <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+    </footer>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Firebase and JavaScript -->
+    <script type="module">
+      // Function to wait for SweetAlert2 to load
+      function waitForSwal() {
+        return new Promise((resolve, reject) => {
+          if (typeof Swal !== 'undefined') {
+            resolve();
+          } else {
+            let attempts = 0;
+            const maxAttempts = 50; // Wait up to 5 seconds
+            const checkSwal = setInterval(() => {
+              attempts++;
+              if (typeof Swal !== 'undefined') {
+                clearInterval(checkSwal);
+                resolve();
+              } else if (attempts >= maxAttempts) {
+                clearInterval(checkSwal);
+                reject(new Error('SweetAlert2 failed to load'));
+              }
+            }, 100);
+          }
+        });
+      }
+
+      // Fallback alert function
+      function showAlert(type, title, text) {
+        if (typeof Swal !== 'undefined') {
+          Swal.fire({
+            icon: type,
+            title: title,
+            text: text,
+            confirmButtonColor: '#d69e2e'
+          });
+        } else {
+          alert(title + ': ' + text);
+        }
+      }
+
+      // Wait for SweetAlert2 to be available
+      try {
+        await waitForSwal();
+        console.log('SweetAlert2 loaded successfully');
+      } catch (error) {
+        console.warn('SweetAlert2 failed to load, using fallback alerts');
+      }
+
+      // Import Firebase services and functions from centralized config
+      import {
+        auth,
+        db,
+        signInWithEmailAndPassword,
+        signInWithPhoneNumber,
+        RecaptchaVerifier,
+        GoogleAuthProvider,
+        signInWithPopup,
+        doc,
+        getDoc
+      } from "/db/firebase.js";
+
+      let confirmationResult; // for OTP login
+
+      // Menu Toggle Functionality
+      const menuBtn = document.getElementById("menuBtn");
+      const sideMenu = document.getElementById("sideMenu");
+      const closeBtn = document.getElementById("closeBtn");
+      
+      menuBtn.addEventListener("click", () => {
+        sideMenu.classList.toggle("active");
+      });
+      
+      closeBtn.addEventListener("click", () => {
+        sideMenu.classList.remove("active");
+      });
+      
+      document.addEventListener("click", (e) => {
+        if (!sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+          sideMenu.classList.remove("active");
+        }
+      });
+
+      // Email/Password Login
+      document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Show loading state
+        const loginBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = loginBtn.innerHTML;
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+        loginBtn.disabled = true;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            return getDoc(doc(db, "users", user.uid));
+          })
+          .then((docSnap) => {
+            if (docSnap.exists()) {
+              const userData = docSnap.data();
+              const userRole = userData.role ? userData.role.toLowerCase() : null;
+              
+              // Allow both admin and teacher roles access
+              if (userRole === "admin" || userRole === "teacher") {
+                if (typeof Swal !== 'undefined') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: 'Welcome to the Teacher Portal',
+                    confirmButtonColor: '#d69e2e'
+                  }).then(() => {
+                    window.location.href = '/teachersdashboard';
+                  });
+                } else {
+                  alert('Login Successful: Welcome to the Teacher Portal');
+                  window.location.href = '/teachersdashboard';
+                }
+              } else {
+                auth.signOut();
+                throw new Error('You do not have admin or teacher privileges');
+              }
+            } else {
+              auth.signOut();
+              throw new Error('User account not found in database');
+            }
+          })
+          .catch((error) => {
+            showAlert('error', 'Login Failed', error.message);
+          })
+          .finally(() => {
+            loginBtn.innerHTML = originalText;
+            loginBtn.disabled = false;
+          });
+      });
+
+      // Google Login
+      document.getElementById("google-login").addEventListener("click", () => {
+        const provider = new GoogleAuthProvider();
+        const googleBtn = document.getElementById("google-login");
+        const originalText = googleBtn.innerHTML;
+        googleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+        googleBtn.disabled = true;
+
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            return getDoc(doc(db, "users", user.uid));
+          })
+          .then((docSnap) => {
+            if (docSnap.exists()) {
+              const userData = docSnap.data();
+              const userRole = userData.role ? userData.role.toLowerCase() : null;
+              
+              // Allow both admin and teacher roles access
+              if (userRole === "admin" || userRole === "teacher") {
+                if (typeof Swal !== 'undefined') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: 'Welcome to the Teacher Portal',
+                    confirmButtonColor: '#d69e2e'
+                  }).then(() => {
+                    window.location.href = '/teachersdashboard';
+                  });
+                } else {
+                  alert('Login Successful: Welcome to the Teacher Portal');
+                  window.location.href = '/teachersdashboard';
+                }
+              } else {
+                auth.signOut();
+                throw new Error('You do not have admin or teacher privileges');
+              }
+            } else {
+              auth.signOut();
+              throw new Error('User account not found in database');
+            }
+          })
+          .catch((error) => {
+            showAlert('error', 'Google Login Failed', error.message);
+          })
+          .finally(() => {
+            googleBtn.innerHTML = originalText;
+            googleBtn.disabled = false;
+          });
+      });
+
+      // OTP Login
+      document.getElementById('send-otp-btn').addEventListener('click', () => {
+        const phone = document.getElementById('phone').value;
+        if (!phone) {
+          showAlert('error', 'Missing Phone Number', 'Please enter your phone number with country code');
+          return;
+        }
+
+        const otpBtn = document.getElementById('send-otp-btn');
+        const originalText = otpBtn.innerHTML;
+        otpBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        otpBtn.disabled = true;
+
+        // Initialize reCAPTCHA verifier if not already done
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+            size: 'invisible',
+            callback: () => {
+              // This will be called when reCAPTCHA is solved
+            }
+          }, auth);
+        }
+
+        signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
+          .then((result) => {
+            confirmationResult = result;
+            showAlert('success', 'OTP Sent', 'Verification code has been sent to your phone');
+            
+            // Show OTP input fields
+            document.getElementById('otp-input-group').style.display = 'block';
+            document.getElementById('verify-otp-btn').style.display = 'block';
+            otpBtn.style.display = 'none';
+          })
+          .catch((error) => {
+            showAlert('error', 'OTP Failed', error.message);
+          })
+          .finally(() => {
+            otpBtn.innerHTML = originalText;
+            otpBtn.disabled = false;
+          });
+      });
+
+      document.getElementById('verify-otp-btn').addEventListener('click', () => {
+        const otpCode = document.getElementById('otp-code').value;
+        if (!otpCode) {
+          showAlert('error', 'Missing OTP', 'Please enter the verification code');
+          return;
+        }
+
+        const verifyBtn = document.getElementById('verify-otp-btn');
+        const originalText = verifyBtn.innerHTML;
+        verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+        verifyBtn.disabled = true;
+
+        confirmationResult.confirm(otpCode)
+          .then((result) => {
+            const user = result.user;
+            return getDoc(doc(db, "users", user.uid));
+          })
+          .then((docSnap) => {
+            if (docSnap.exists() && docSnap.data().role === "admin") {
+              if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Login Successful',
+                  text: 'Welcome to the Teacher Portal',
+                  confirmButtonColor: '#d69e2e'
+                }).then(() => {
+                  window.location.href = '/teachersdashboard';
+                });
+              } else {
+                alert('Login Successful: Welcome to the Teacher Portal');
+                window.location.href = '/teachersdashboard';
+              }
+            } else {
+              auth.signOut();
+              throw new Error('You do not have admin privileges');
+            }
+          })
+          .catch((error) => {
+            showAlert('error', 'Verification Failed', error.message);
+          })
+          .finally(() => {
+            verifyBtn.innerHTML = originalText;
+            verifyBtn.disabled = false;
+          });
+      });
+
+      // Toggle Password Visibility
+      const togglePassword = document.getElementById('toggle-password');
+      const passwordInput = document.getElementById('password');
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.classList.toggle('fa-eye-slash');
+      });
+
+      // Toggle between Email and OTP login
+      document.getElementById('switch-to-otp').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('email-login-form').style.display = 'none';
+        document.getElementById('otp-login-form').style.display = 'block';
+      });
+      
+      document.getElementById('switch-to-email').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('otp-login-form').style.display = 'none';
+        document.getElementById('email-login-form').style.display = 'block';
+      });
+
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      let isDark = true;
+      themeToggle.addEventListener('click', () => {
+        isDark = !isDark;
+        document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+      
+      if (localStorage.getItem('theme')) {
+        const savedTheme = localStorage.getItem('theme');
+        document.body.setAttribute('data-theme', savedTheme);
+        isDark = savedTheme === 'dark';
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
+</html>

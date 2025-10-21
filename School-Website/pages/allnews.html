@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All News | St. Mary's High School</title>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/4476/4476871.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #000000;
+      --accent-color: #4d94ff;
+      --light-color: #ffffff;
+      --dark-color: #121212;
+      --text-color: #333333;
+      --light-gray: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--light-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background-color: var(--light-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .logo-text span {
+      color: var(--accent-color);
+    }
+    
+    .page-header {
+      margin-top: 80px;
+      padding: 60px 0;
+      background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                  url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3') no-repeat center center/cover;
+      color: var(--light-color);
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .content-section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .news-card {
+      background: var(--light-color);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .news-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .news-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .news-content {
+      padding: 25px;
+    }
+    
+    .news-date {
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    
+    .news-content h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .read-more {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .read-more:hover {
+      color: var(--accent-color);
+    }
+    
+    footer {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      padding: 40px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>All News & Events</h1>
+      <p>Stay updated with the latest happenings at St. Mary's</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Latest Updates</h2>
+      </div>
+      
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-image">
+            <img src="https://files.catbox.moe/41cewv.jpg" alt="Quiz Team">
+          </div>
+          <div class="news-content">
+            <div class="news-date">June 15, 2024</div>
+            <h3>Quiz Team Wins Provincial Championship</h3>
+            <p>Our Quiz Team took first place at the Old Mutual School Quiz competition with their innovative problem-solving skills.</p>
+            <a href="/news/quiz-championship" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="news-card">
+          <div class="news-image">
+            <img src="https://files.catbox.moe/9hsuch.jpg" alt="Awards Ceremony">
+          </div>
+          <div class="news-content">
+            <div class="news-date">September 10, 2024</div>
+            <h3>Speech & Prize Ceremony</h3>
+            <p>We celebrated our students' academic and athletic achievements at our annual awards ceremony.</p>
+            <a href="/news/awards-ceremony" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="news-card">
+          <div class="news-image">
+            <img src="https://files.catbox.moe/bryizn.jpg" alt="New Bus">
+          </div>
+          <div class="news-content">
+            <div class="news-date">March 10, 2025</div>
+            <h3>Our New School Bus</h3>
+            <p>The school has acquired a new state-of-the-art bus to enhance our transportation services for students.</p>
+            <a href="/news/new-bus" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="news-card">
+          <div class="news-image">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3" alt="Academic Excellence">
+          </div>
+          <div class="news-content">
+            <div class="news-date">February 20, 2025</div>
+            <h3>Outstanding ZIMSEC Results</h3>
+            <p>St. Mary's High School achieves exceptional results in the latest ZIMSEC examinations across all subjects.</p>
+            <a href="/news/zimsec-results" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="news-card">
+          <div class="news-image">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3" alt="Sports Day">
+          </div>
+          <div class="news-content">
+            <div class="news-date">January 15, 2025</div>
+            <h3>Annual Sports Day Success</h3>
+            <p>Students showcased their athletic abilities at our annual sports day with record-breaking performances.</p>
+            <a href="/news/sports-day" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="news-card">
+          <div class="news-image">
+            <img src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3" alt="Science Fair">
+          </div>
+          <div class="news-content">
+            <div class="news-date">December 5, 2024</div>
+            <h3>Science Fair Innovation</h3>
+            <p>Students impressed judges with innovative science projects at our annual science fair competition.</p>
+            <a href="/news/science-fair" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

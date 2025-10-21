@@ -1,0 +1,23 @@
+teachersdashboard:3405 Uncaught (in promise) ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3405:11)Understand this error
+Console.js:61 Error generating access code: ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3393:11)
+Mt.forEach.n.<computed> @ Console.js:61Understand this error
+teachersdashboard:3405 Uncaught (in promise) ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3405:11)Understand this error
+Console.js:61 Error generating access code: ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3393:11)
+Mt.forEach.n.<computed> @ Console.js:61Understand this error
+teachersdashboard:3405 Uncaught (in promise) ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3405:11)Understand this error
+_app-1f2980d9c526711e.js:19 An error occurred! For more details, see the full error text at https://go.apollo.dev/c/err#%7B%22version%22%3A%223.14.0%22%2C%22message%22%3A78%2C%22args%22%3A%5B%22useQuery%22%2C%22onCompleted%22%2C%22If%20your%20%60onCompleted%60%20callback%20sets%20local%20state%2C%20switch%20to%20use%20derived%20state%20using%20%60data%60%20returned%20from%20the%20hook%20instead.%20Use%20%60useEffect%60%20to%20perform%20side-effects%20as%20a%20result%20of%20updates%20to%20%60data%60.%22%5D%7D
+(anonymous) @ _app-1f2980d9c526711e.js:19Understand this warning
+Console.js:61 Error generating access code: ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3393:11)
+Mt.forEach.n.<computed> @ Console.js:61Understand this error
+teachersdashboard:3405 Uncaught (in promise) ReferenceError: Swal is not defined
+    at HTMLFormElement.<anonymous> (teachersdashboard:3405:11)Understand this error
+_app-1f2980d9c526711e.js:19 task queue exceeded allotted deadline by 52ms
+(anonymous) @ _app-1f2980d9c526711e.js:19Understand this warning
+stallwart.build.js:1 stallwart: failed ping 1
+stallwart.build.js:1 stallwart: failed ping 2

@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Sign Up - St. Mary's High School</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" />
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      /* Enhanced Root Variables & Themes */
+      :root {
+        --primary: #1a365d;
+        --secondary: #d69e2e;
+        --accent: #9f7aea;
+        --glass: rgba(26, 54, 93, 0.15);
+        --bg-gradient: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+        --text-color: #ffffff;
+        --overlay: rgba(0, 0, 0, 0.5);
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        --header-height: 80px;
+      }
+      
+      [data-theme="light"] {
+        --primary: #3182ce;
+        --secondary: #dd6b20;
+        --accent: #805ad5;
+        --glass: rgba(237, 242, 247, 0.9);
+        --bg-gradient: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+        --text-color: #2d3748;
+        --overlay: rgba(255, 255, 255, 0.4);
+      }
+      
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      
+      body {
+        background: var(--bg-gradient);
+        color: var(--text-color);
+        min-height: 100vh;
+        transition: all 0.6s ease;
+        line-height: 1.6;
+      }
+      
+      /* Enhanced Header */
+      header {
+        background: rgba(26, 54, 93, 0.9);
+        backdrop-filter: blur(12px);
+        padding: 0 5%;
+        height: var(--header-height);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--card-shadow);
+        border-bottom: 2px solid var(--secondary);
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        color: white;
+      }
+      
+      .logo span {
+        color: var(--secondary);
+      }
+      
+      .header-logo {
+        height: 50px;
+        margin-right: 15px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+      
+      .menu-btn {
+        font-size: 1.8rem;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        color: white;
+        transition: transform 0.3s ease;
+      }
+      
+      .menu-btn:hover {
+        transform: scale(1.1);
+        color: var(--secondary);
+      }
+      
+      /* Enhanced Side Menu */
+      .side-menu {
+        position: fixed;
+        top: 0;
+        right: -350px;
+        width: 350px;
+        height: 100%;
+        background: rgba(26, 54, 93, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2000;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        border-left: 1px solid rgba(214, 158, 46, 0.3);
+      }
+      
+      .side-menu.active {
+        right: 0;
+      }
+      
+      .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .menu-header h3 {
+        font-size: 1.5rem;
+        color: var(--secondary);
+      }
+      
+      .close-btn {
+        font-size: 1.8rem;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        color: white;
+        transition: transform 0.3s ease;
+      }
+      
+      .close-btn:hover {
+        transform: rotate(90deg);
+        color: var(--secondary);
+      }
+      
+      .menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .menu-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 12px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .menu-links a i {
+        width: 25px;
+        text-align: center;
+      }
+      
+      .menu-links a:hover {
+        background: rgba(214, 158, 46, 0.2);
+        transform: translateX(5px);
+      }
+      
+      .menu-links a.active {
+        background: var(--secondary);
+        color: #1a365d;
+        font-weight: 600;
+      }
+      
+      /* Enhanced Signup Form */
+      .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - var(--header-height));
+        padding: 40px 20px;
+        margin-top: var(--header-height);
+      }
+      
+      .signup-card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid rgba(255,255,255,0.1);
+        width: 100%;
+        max-width: 500px;
+        animation: fadeIn 0.8s ease-out;
+      }
+      
+      .signup-card h2 {
+        color: var(--secondary);
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .signup-card h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--secondary);
+      }
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+        color: var(--secondary);
+      }
+      
+      .form-group input {
+        width: 100%;
+        padding: 0.9rem;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+      
+      .form-group input:focus {
+        border-color: var(--secondary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.3);
+        background: rgba(255,255,255,0.15);
+      }
+      
+      .password-container {
+        position: relative;
+      }
+      
+      .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .password-toggle:hover {
+        color: var(--accent);
+      }
+      
+      /* Enhanced Confirmation Box */
+      .confirmation-box {
+        background: rgba(214, 158, 46, 0.1);
+        border: 1px solid var(--secondary);
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      
+      .confirmation-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .confirmation-checkbox input {
+        width: auto;
+        transform: scale(1.3);
+      }
+      
+      .confirmation-checkbox label {
+        margin-bottom: 0;
+        color: var(--text-color);
+      }
+      
+      /* Enhanced Buttons */
+      .btn {
+        padding: 0.9rem 1.8rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .btn-primary {
+        background: var(--secondary);
+        color: #1a365d;
+      }
+      
+      .btn-primary:hover {
+        background: #e69c2a;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      
+      .btn-google {
+        background: #db4437;
+        color: white;
+        margin-top: 15px;
+      }
+      
+      .btn-google:hover {
+        background: #c23323;
+        transform: translateY(-2px);
+      }
+      
+      /* Error Message */
+      .error-message {
+        color: #ff6b6b;
+        margin-top: 15px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+      
+      /* Footer - Compact Design like Student Dashboard */
+      footer {
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 0;
+        text-align: center;
+        position: relative;
+        margin-top: 2rem;
+      }
+      
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      
+      .social-icons a {
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+      }
+      
+      .social-icons a:hover {
+        color: var(--secondary);
+        opacity: 1;
+      }
+      
+      footer p {
+        margin: 2px 0;
+        font-size: 0.8rem;
+        opacity: 0.7;
+      }
+      
+      footer a {
+        color: var(--secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      
+      footer a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Enhanced Theme Toggle */
+      .theme-toggle {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--primary);
+        backdrop-filter: blur(8px);
+        border: 2px solid var(--secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      
+      .theme-toggle:hover {
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+      }
+      
+      .theme-toggle i {
+        font-size: 1.6rem;
+        color: var(--secondary);
+      }
+      
+      /* Animation Keyframes */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .side-menu {
+          width: 280px;
+        }
+        
+        .signup-card {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Enhanced Header -->
+    <header>
+      <div class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="Logo" class="header-logo" />
+        <span>Admin</span> Portal
+      </div>
+      <button class="menu-btn" id="menuBtn">
+        <i class="fas fa-user-cog"></i>
+      </button>
+    </header>
+
+    <!-- Enhanced Side Menu -->
+    <div class="side-menu" id="sideMenu">
+      <div class="menu-header">
+        <h3>Navigation</h3>
+        <button class="close-btn" id="closeBtn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="menu-links">
+        <a href="/">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a href="/contact">
+          <i class="fas fa-envelope"></i> Contact
+        </a>
+        <a href="/admin">
+          <i class="fas fa-question-circle"></i> Get Help
+        </a>
+        <a href="/teacherslogin">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Signup Content -->
+    <div class="signup-container">
+      <div class="signup-card">
+        <h2>Admin Registration</h2>
+        <form id="admin-signup-form">
+          <div class="form-group">
+            <label for="firstname"><i class="fas fa-user"></i> First Name</label>
+            <input type="text" id="firstname" placeholder="Enter your first name" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="surname"><i class="fas fa-user-tag"></i> Surname</label>
+            <input type="text" id="surname" placeholder="Enter your surname" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <div class="password-container">
+              <input type="password" id="password" placeholder="Create a password" required />
+              <i class="fas fa-eye password-toggle" id="toggle-password"></i>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="access-code"><i class="fas fa-key"></i> Access Code</label>
+            <input type="text" id="access-code" placeholder="Enter teacher registration code" required />
+            <small style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 5px;">
+              Contact the administrator to get a valid access code
+            </small>
+          </div>
+          
+          <div class="confirmation-box">
+            <div class="confirmation-checkbox">
+              <input type="checkbox" id="confirm-role" required />
+              <label for="confirm-role">I confirm that I am an authorized teacher/admin</label>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Create Admin Account
+          </button>
+          
+          <button type="button" id="google-signup" class="btn btn-google">
+            <i class="fab fa-google"></i> Sign Up with Google
+          </button>
+          
+          <div class="error-message" id="error-message"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p>
+        <a
+          href="https://wa.me/263719647303?text=hi%20darrell%20i%20would%20want%20you%20to%20create%20me%20a%20site%20like%20that%20of%20st%20marys.%20It%20wonderful"
+          target="_blank"
+          >Made By Darrell Mucheri</a
+        >
+      </p>
+      <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+    </footer>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Firebase and JavaScript -->
+    <script type="module">
+      // Import centralized Firebase configuration
+      import {
+        auth,
+        db,
+        createUserWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup,
+        doc,
+        setDoc,
+        onAuthStateChanged,
+        signOut,
+        getDoc,
+        collection,
+        query,
+        where,
+        getDocs,
+        updateDoc
+      } from "/db/firebase.js";
+
+      // Initialize Super Admin Account if it doesn't exist
+      async function initializeSuperAdmin() {
+        try {
+          const systemDocRef = doc(db, "systemSettings", "initialized");
+          const systemDoc = await getDoc(systemDocRef);
+          
+          if (!systemDoc.exists() || !systemDoc.data().superAdminCreated) {
+            // Check if super admin exists
+            const superAdminQuery = query(collection(db, "users"), where("email", "==", "superadmin@gmail.com"));
+            const superAdminSnapshot = await getDocs(superAdminQuery);
+            
+            if (superAdminSnapshot.empty) {
+              try {
+                // Create super admin account with strong password
+                const superAdminCredential = await createUserWithEmailAndPassword(auth, "superadmin@gmail.com", "admin123");
+                const superAdminUser = superAdminCredential.user;
+                
+                // Add super admin data to Firestore
+                await setDoc(doc(db, "users", superAdminUser.uid), {
+                  firstname: "Super",
+                  surname: "Admin",
+                  email: "superadmin@gmail.com",
+                  role: "admin",
+                  isSuperAdmin: true,
+                  createdAt: new Date(),
+                  passwordChangeRequired: false
+                });
+                
+                // Mark system as initialized
+                await setDoc(systemDocRef, {
+                  superAdminCreated: true,
+                  createdAt: new Date()
+                });
+                
+                console.log("Super admin account created successfully");
+                await signOut(auth); // Sign out after creating super admin
+              } catch (error) {
+                if (error.code !== 'auth/email-already-in-use') {
+                  console.error("Error creating super admin:", error);
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error initializing super admin:", error);
+        }
+      }
+      
+      // Run super admin initialization
+      initializeSuperAdmin();
+
+      // Menu Toggle Functionality
+      const menuBtn = document.getElementById("menuBtn");
+      const sideMenu = document.getElementById("sideMenu");
+      const closeBtn = document.getElementById("closeBtn");
+      
+      menuBtn.addEventListener("click", () => {
+        sideMenu.classList.toggle("active");
+      });
+      
+      closeBtn.addEventListener("click", () => {
+        sideMenu.classList.remove("active");
+      });
+      
+      document.addEventListener("click", (e) => {
+        if (!sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+          sideMenu.classList.remove("active");
+        }
+      });
+
+      // Email/Password Signup Logic
+      document.getElementById('admin-signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        // Check confirmation checkbox before proceeding
+        const confirmCheckbox = document.getElementById('confirm-role');
+        if (!confirmCheckbox.checked) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Authorization Required',
+            text: 'Please confirm that you are an authorized teacher/admin.',
+            confirmButtonColor: '#d69e2e'
+          });
+          return;
+        }
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const firstname = document.getElementById('firstname').value;
+        const surname = document.getElementById('surname').value;
+        const accessCode = document.getElementById('access-code').value.trim();
+
+        // Validate access code first
+        try {
+          const accessCodeQuery = query(collection(db, "accessCodes"), where("code", "==", accessCode));
+          const accessCodeSnapshot = await getDocs(accessCodeQuery);
+          
+          if (accessCodeSnapshot.empty) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Access Code',
+              text: 'The access code you entered is not valid. Please contact the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+          
+          const accessCodeDoc = accessCodeSnapshot.docs[0];
+          const accessCodeData = accessCodeDoc.data();
+          const now = new Date();
+          
+          // Check if code is expired
+          if (accessCodeData.expiresAt && accessCodeData.expiresAt.toDate() < now) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Code Expired',
+              text: 'This access code has expired. Please request a new one from the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+          
+          // Check if code usage limit is reached
+          if (accessCodeData.usageLimit && accessCodeData.usedCount >= accessCodeData.usageLimit) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Code Limit Reached',
+              text: 'This access code has reached its usage limit. Please request a new one from the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+          
+          // Check if code is inactive
+          if (accessCodeData.status !== 'active') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Code Inactive',
+              text: 'This access code is no longer active. Please request a new one from the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Failed to validate access code. Please try again.',
+            confirmButtonColor: '#d69e2e'
+          });
+          return;
+        }
+
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(async (userCredential) => {
+            const user = userCredential.user;
+            
+            // Add user data to Firestore with role: "admin"
+            await setDoc(doc(db, "users", user.uid), {
+              firstname: firstname,
+              surname: surname,
+              email: email,
+              role: "admin",
+              createdAt: new Date(),
+              registeredWithCode: accessCode
+            });
+            
+            // Increment access code usage count
+            const accessCodeQuery = query(collection(db, "accessCodes"), where("code", "==", accessCode));
+            const accessCodeSnapshot = await getDocs(accessCodeQuery);
+            const accessCodeDoc = accessCodeSnapshot.docs[0];
+            const accessCodeData = accessCodeDoc.data();
+            
+            const newUsedCount = (accessCodeData.usedCount || 0) + 1;
+            const newStatus = (accessCodeData.usageLimit && newUsedCount >= accessCodeData.usageLimit) ? 'depleted' : 'active';
+            
+            await updateDoc(doc(db, "accessCodes", accessCodeDoc.id), {
+              usedCount: newUsedCount,
+              status: newStatus,
+              lastUsedAt: new Date()
+            });
+            
+            return user;
+          })
+          .then(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Admin Account Created!',
+              text: 'Your admin account has been successfully created.',
+              confirmButtonColor: '#d69e2e'
+            }).then(() => {
+              window.location.href = '/teacherslogin'; // Redirect to admin login page
+            });
+          })
+          .catch((error) => {
+            let errorMessage = error.message;
+            if (error.code === 'auth/email-already-in-use') {
+              errorMessage = 'This email is already registered. Please use a different email or login.';
+            } else if (error.code === 'auth/weak-password') {
+              errorMessage = 'Password should be at least 6 characters.';
+            }
+            
+            Swal.fire({
+              icon: 'error',
+              title: 'Registration Error',
+              text: errorMessage,
+              confirmButtonColor: '#d69e2e'
+            });
+          });
+      });
+
+      // Google Sign Up Logic
+      document.getElementById("google-signup").addEventListener("click", async () => {
+        const confirmCheckbox = document.getElementById('confirm-role');
+        if (!confirmCheckbox.checked) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Authorization Required',
+            text: 'Please confirm that you are an authorized teacher/admin.',
+            confirmButtonColor: '#d69e2e'
+          });
+          return;
+        }
+        
+        const accessCode = document.getElementById('access-code').value.trim();
+        if (!accessCode) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Access Code Required',
+            text: 'Please enter your access code before signing up.',
+            confirmButtonColor: '#d69e2e'
+          });
+          return;
+        }
+        
+        // Validate access code first
+        try {
+          const accessCodeQuery = query(collection(db, "accessCodes"), where("code", "==", accessCode));
+          const accessCodeSnapshot = await getDocs(accessCodeQuery);
+          
+          if (accessCodeSnapshot.empty) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Access Code',
+              text: 'The access code you entered is not valid. Please contact the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+          
+          const accessCodeDoc = accessCodeSnapshot.docs[0];
+          const accessCodeData = accessCodeDoc.data();
+          const now = new Date();
+          
+          // Check if code is expired
+          if (accessCodeData.expiresAt && accessCodeData.expiresAt.toDate() < now) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Code Expired',
+              text: 'This access code has expired. Please request a new one from the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+          
+          // Check if code usage limit is reached
+          if (accessCodeData.usageLimit && accessCodeData.usedCount >= accessCodeData.usageLimit) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Code Limit Reached',
+              text: 'This access code has reached its usage limit. Please request a new one from the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+          
+          // Check if code is inactive
+          if (accessCodeData.status !== 'active') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Code Inactive',
+              text: 'This access code is no longer active. Please request a new one from the administrator.',
+              confirmButtonColor: '#d69e2e'
+            });
+            return;
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Validation Error',
+            text: 'Failed to validate access code. Please try again.',
+            confirmButtonColor: '#d69e2e'
+          });
+          return;
+        }
+        
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+          .then(async (result) => {
+            const user = result.user;
+            // Split displayName into firstname and surname
+            const name = user.displayName || "";
+            let firstname = "";
+            let surname = "";
+            if (name) {
+              const parts = name.split(" ");
+              firstname = parts[0];
+              surname = parts.slice(1).join(" ") || "";
+            }
+            
+            await setDoc(doc(db, "users", user.uid), {
+              firstname: firstname,
+              surname: surname,
+              email: user.email,
+              role: "admin",
+              createdAt: new Date(),
+              registeredWithCode: accessCode
+            });
+            
+            // Increment access code usage count
+            const accessCodeQuery = query(collection(db, "accessCodes"), where("code", "==", accessCode));
+            const accessCodeSnapshot = await getDocs(accessCodeQuery);
+            const accessCodeDoc = accessCodeSnapshot.docs[0];
+            const accessCodeData = accessCodeDoc.data();
+            
+            const newUsedCount = (accessCodeData.usedCount || 0) + 1;
+            const newStatus = (accessCodeData.usageLimit && newUsedCount >= accessCodeData.usageLimit) ? 'depleted' : 'active';
+            
+            await updateDoc(doc(db, "accessCodes", accessCodeDoc.id), {
+              usedCount: newUsedCount,
+              status: newStatus,
+              lastUsedAt: new Date()
+            });
+            
+            return user;
+          })
+          .then(() => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Admin Account Created!',
+              text: 'Your admin account has been successfully created with Google.',
+              confirmButtonColor: '#d69e2e'
+            }).then(() => {
+              window.location.href = '/teacherslogin';
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Google Sign Up Error',
+              text: error.message,
+              confirmButtonColor: '#d69e2e'
+            });
+          });
+      });
+
+      // Toggle Password Visibility
+      const togglePassword = document.getElementById('toggle-password');
+      const passwordInput = document.getElementById('password');
+
+      togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.classList.toggle('fa-eye-slash');
+      });
+
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      let isDark = true;
+
+      themeToggle.addEventListener('click', () => {
+        isDark = !isDark;
+        document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        themeToggle.innerHTML = isDark 
+            ? '<i class="fas fa-moon"></i>' 
+            : '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+
+      // Load saved theme
+      if (localStorage.getItem('theme')) {
+        const savedTheme = localStorage.getItem('theme');
+        document.body.setAttribute('data-theme', savedTheme);
+        isDark = savedTheme === 'dark';
+        themeToggle.innerHTML = isDark 
+            ? '<i class="fas fa-moon"></i>' 
+            : '<i class="fas fa-sun"></i>';
+      }
+
+      /* --------------------- Enhanced Auth & Security Protection --------------------- */
+      
+      // SECURITY WARNING: This client-side authentication check provides basic protection
+      // but should be supplemented with Firestore Security Rules to prevent bypassing.
+      // Recommended: Add server-side validation or Firestore Security Rules that:
+      // 1. Only allow admin users to write to users collection with role: "admin"
+      // 2. Prevent users from self-assigning admin roles
+      // 3. Validate admin creation requests server-side
+      
+      // Auth state checker function - CRITICAL SECURITY
+      function checkAuthState() {
+        onAuthStateChanged(auth, async (user) => {
+          if (!user) {
+            // No user logged in, redirect to login
+            Swal.fire({
+              icon: 'warning',
+              title: 'Authentication Required',
+              text: 'You must be logged in as an admin to access this page',
+              confirmButtonColor: '#d69e2e'
+            }).then(() => {
+              window.location.href = "/teacherslogin";
+            });
+            return;
+          }
+
+          try {
+            // Get user document from Firestore
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            
+            if (!userDoc.exists()) {
+              // User document doesn't exist, log out
+              await signOut(auth);
+              Swal.fire({
+                icon: 'error',
+                title: 'Account Not Found',
+                text: 'Your account data was not found. Please contact support.',
+                confirmButtonColor: '#d69e2e'
+              }).then(() => {
+                window.location.href = "/teacherslogin";
+              });
+              return;
+            }
+
+            const userData = userDoc.data();
+            
+            // Check if user is a student (shouldn't have access)
+            if (userData.role && userData.role.toLowerCase() === "student") {
+              // Log out student users immediately
+              await signOut(auth);
+              
+              // Show message and redirect
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'Students cannot access the admin portal. Only authorized teachers and administrators are allowed.',
+                confirmButtonColor: '#d69e2e'
+              }).then(() => {
+                window.location.href = "/login"; // Redirect to student login
+              });
+              return;
+            }
+
+            // Check if user is not admin (ONLY admins can create admin accounts)
+            if (!userData.role || userData.role.toLowerCase() !== 'admin') {
+              // Log out unauthorized users
+              await signOut(auth);
+              
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'Only existing administrators can create new admin accounts. Teachers cannot perform this action.',
+                confirmButtonColor: '#d69e2e'
+              }).then(() => {
+                window.location.href = "/teacherslogin";
+              });
+              return;
+            }
+
+            // User is authenticated and authorized - allow access
+            console.log('Admin signup access granted for:', userData.role, userData.email);
+          } catch (error) {
+            console.error('Error checking user role:', error);
+            await signOut(auth);
+            Swal.fire({
+              icon: 'error',
+              title: 'Authentication Error',
+              text: 'Unable to verify your permissions. Please try again.',
+              confirmButtonColor: '#d69e2e'
+            }).then(() => {
+              window.location.href = "/teacherslogin";
+            });
+          }
+        });
+      }
+
+    </script>
+  </body>
+</html>

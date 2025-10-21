@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>St. Mary's High School | Excellence in Education</title>
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#003366">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Color System */
+      --primary: #003366;
+      --primary-light: #3d5d8a;
+      --primary-dark: #001a33;
+      --secondary: #FFD700;
+      --secondary-light: #ffeb99;
+      --accent: #87CEEB;
+      --accent-dark: #5aa5d1;
+      --text: #333333;
+      --text-light: #6c757d;
+      --light: #ffffff;
+      --light-gray: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --info: #17a2b8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+
+      /* Typography */
+      --font-primary: 'Poppins', sans-serif;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --text-5xl: 3rem;
+      --text-6xl: 3.75rem;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+      --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+      /* Border Radius */
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --primary: #4d94ff;
+      --primary-light: #7ab3ff;
+      --primary-dark: #0052cc;
+      --text: #f8f9fa;
+      --text-light: #adb5bd;
+      --light: #212529;
+      --light-gray: #343a40;
+      --dark: #f8f9fa;
+    }
+
+    /* Base Styles */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text);
+      background-color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color var(--transition-slow), color var(--transition-slow);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    ul, ol {
+      padding-left: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Utility Classes */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .section {
+      padding: var(--space-xxl) 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-title h2 {
+      font-size: var(--text-4xl);
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      transform: translateX(-50%);
+      border-radius: var(--radius-full);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 { margin-top: var(--space-xs); }
+    .mt-2 { margin-top: var(--space-sm); }
+    .mt-3 { margin-top: var(--space-md); }
+    .mt-4 { margin-top: var(--space-lg); }
+    .mt-5 { margin-top: var(--space-xl); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid transparent;
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      color: var(--light);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-light);
+      color: var(--dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-lg {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-lg);
+    }
+
+    .btn-icon {
+      margin-right: var(--space-sm);
+    }
+
+    /* Header & Navigation */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--light);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .header.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dark-mode .header.scrolled {
+      background-color: rgba(33, 37, 41, 0.95);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      margin-right: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .logo-text {
+      font-family: var(--font-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links > li:not(:last-child) {
+      margin-right: var(--space-md);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      transition: color var(--transition-normal);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: var(--space-md);
+      bottom: 0;
+      width: calc(100% - 2 * var(--space-md));
+      height: 2px;
+      background-color: var(--primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-normal);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-links .dropdown {
+      position: relative;
+    }
+
+    .nav-links .dropdown-content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background-color: var(--light);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all var(--transition-normal);
+      z-index: 100;
+    }
+
+    .nav-links .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-links .dropdown-content a {
+      padding: var(--space-sm) var(--space-md);
+      color: var(--text);
+    }
+
+    .nav-links .dropdown-content a:hover {
+      background-color: var(--light-gray);
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: var(--text-2xl);
+      cursor: pointer;
+      color: var(--primary);
+      z-index: 1001;
+    }
+
+    /* Portal Buttons in Nav */
+    .portal-btn {
+      display: flex;
+      align-items: center;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-md);
+      background-color: var(--light-gray);
+      margin-left: var(--space-sm);
+      transition: all var(--transition-normal);
+    }
+
+    .portal-btn:hover {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .portal-btn i {
+      margin-right: var(--space-xs);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                  url('https://files.catbox.moe/7jw8ee.jpg') no-repeat center center/cover;
+      color: var(--light);
+      position: relative;
+      overflow: hidden;
+      margin-top: 80px;
+    }
+
+    .school-motto {
+      margin: var(--space-lg) 0;
+      text-align: center;
+    }
+
+    .motto-text {
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--secondary);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-style: italic;
+      background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    .motto-decoration {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: var(--space-sm);
+      gap: var(--space-md);
+    }
+
+    .motto-decoration .star {
+      color: var(--secondary);
+      font-size: var(--text-lg);
+      animation: twinkle 2s ease-in-out infinite alternate;
+    }
+
+    .motto-decoration .line {
+      height: 2px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Head Master's Message Section */
+    .head-message {
+      background: linear-gradient(135deg, var(--light-gray), var(--light));
+      position: relative;
+    }
+
+    .message-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--space-xxl);
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .head-image {
+      position: relative;
+      text-align: center;
+    }
+
+    .head-image img {
+      width: 280px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      border: 4px solid var(--primary);
+    }
+
+    .quote-mark {
+      position: absolute;
+      top: -20px;
+      right: -10px;
+      font-size: 4rem;
+      color: var(--secondary);
+      font-family: Georgia, serif;
+      opacity: 0.7;
+    }
+
+    .message-text h3 {
+      font-size: var(--text-2xl);
+      color: var(--primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .position {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+      display: block;
+    }
+
+    .message-text blockquote {
+      border-left: 4px solid var(--secondary);
+      padding-left: var(--space-lg);
+      margin: var(--space-lg) 0;
+      font-style: italic;
+    }
+
+    .signature {
+      margin-top: var(--space-lg);
+      text-align: right;
+    }
+
+    .signature span {
+      font-weight: 600;
+      color: var(--primary);
+      display: block;
+    }
+
+    .signature small {
+      color: var(--text-light);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-lg);
+      line-height: 1.2;
+      animation: fadeInUp 1s var(--transition-bounce) forwards;
+    }
+
+    .hero p {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-xl);
+      animation: fadeInUp 1s var(--transition-bounce) 0.2s forwards;
+      opacity: 0;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      animation: fadeInUp 1s var(--transition-bounce) 0.4s forwards;
+      opacity: 0;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .hero-scroll i {
+      font-size: var(--text-3xl);
+      color: var(--light);
+    }
+
+    /* About Section */
+    .about {
+      background-color: var(--light);
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .about-image {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      animation: fadeInLeft 1s var(--transition-bounce);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+    }
+
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-text {
+      animation: fadeInRight 1s var(--transition-bounce);
+    }
+
+    .about-text h3 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-lg);
+      color: var(--primary);
+    }
+
+    /* Academics Section */
+    .academics {
+      background-color: var(--light-gray);
+    }
+
+    .academics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .academic-card {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+      animation: fadeInUp 1s var(--transition-bounce);
+    }
+
+    .academic-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .academic-card:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    .academic-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .academic-icon {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary);
+      color: var(--light);
+      font-size: var(--text-4xl);
+    }
+
+    .academic-content {
+      padding: var(--space-lg);
+    }
+
+    .academic-content h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-md);
+      color: var(--primary);
+    }
+
+    /* Enhanced Faculty Section */
+    .faculty {
+      padding: var(--space-xxl) 0;
+    }
+
+    .faculty-categories {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .category-btn {
+      padding: var(--space-sm) var(--space-lg);
+      background-color: var(--light-gray);
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: var(--font-primary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .category-btn.active,
+    .category-btn:hover {
+      background-color: var(--primary);
+      color: var(--light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .faculty-card {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+      position: relative;
+    }
+
+    .faculty-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .admin-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: var(--primary);
+      color: var(--light);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .senior-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #ff9f43;
+      color: var(--light);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .deputy-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #2ecc71;
+      color: var(--light);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+
+    .faculty-image {
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .faculty-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .faculty-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+      z-index: 1;
+    }
+
+    .faculty-card:hover .faculty-image::before {
+      opacity: 1;
+    }
+
+    .faculty-card:hover .faculty-image img {
+      transform: scale(1.1);
+    }
+
+    .faculty-info {
+      padding: var(--space-lg);
+      text-align: center;
+    }
+
+    .faculty-info h3 {
+      font-size: var(--text-xl);
+      color: var(--primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .faculty-position {
+      font-size: var(--text-base);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+
+    .faculty-subject {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+    }
+
+    .faculty-subject i {
+      margin-right: var(--space-sm);
+      color: var(--primary);
+    }
+
+    .faculty-contact {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+
+    .faculty-contact a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--light-gray);
+      border-radius: 50%;
+      color: var(--primary);
+      transition: all var(--transition-normal);
+    }
+
+    .faculty-contact a:hover {
+      background-color: var(--primary);
+      color: var(--light);
+      transform: translateY(-3px);
+    }
+
+    /* Gallery Section */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      height: 250px;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-lg);
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay h3 {
+      color: var(--light);
+      margin-bottom: var(--space-sm);
+      transform: translateY(20px);
+      transition: transform var(--transition-normal);
+    }
+
+    .gallery-overlay p {
+      color: var(--light);
+      transform: translateY(20px);
+      transition: transform var(--transition-normal) 0.1s;
+    }
+
+    .gallery-item:hover .gallery-overlay h3,
+    .gallery-item:hover .gallery-overlay p {
+      transform: translateY(0);
+    }
+
+    /* News Section */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .news-card {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .news-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .news-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .news-card:hover .news-image img {
+      transform: scale(1.1);
+    }
+
+    .news-content {
+      padding: var(--space-lg);
+    }
+
+    .news-date {
+      font-size: var(--text-sm);
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .news-content h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-sm);
+      color: var(--primary);
+    }
+
+    .read-more {
+      color: var(--accent);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .read-more i {
+      margin-left: var(--space-xs);
+      transition: transform var(--transition-normal);
+    }
+
+    .read-more:hover i {
+      transform: translateX(5px);
+    }
+
+    /* CTA Section */
+    .cta {
+      background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), 
+                  url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      color: var(--light);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-lg);
+    }
+
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto var(--space-xl);
+      font-size: var(--text-lg);
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+      color: var(--light);
+      padding: var(--space-xxl) 0 var(--space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.08)"/><circle cx="90" cy="40" r="0.8" fill="rgba(255,255,255,0.06)"/><circle cx="10" cy="60" r="0.6" fill="rgba(255,255,255,0.07)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-col {
+      position: relative;
+      padding: var(--space-lg);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all var(--transition-normal);
+    }
+
+    .footer-col:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-col h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary) 0%, var(--accent) 100%);
+      border-radius: var(--radius-full);
+    }
+
+    .footer-col p {
+      margin-bottom: var(--space-md);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      color: var(--light);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+      font-size: var(--text-lg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-links a:hover {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(135, 206, 235, 0.4);
+      color: var(--dark);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links a {
+      color: var(--light);
+      transition: color var(--transition-normal);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .quick-contact i {
+      margin-right: var(--space-sm);
+      color: var(--accent);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: var(--space-xxl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: var(--space-xl);
+      right: var(--space-xl);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      transition: all var(--transition-normal);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Faculty Modal */
+    .faculty-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-normal);
+    }
+
+    .faculty-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      transform: scale(0.9);
+      transition: transform var(--transition-normal);
+    }
+
+    .faculty-modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: var(--light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all var(--transition-normal);
+    }
+
+    .modal-close:hover {
+      background-color: var(--danger);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: var(--space-xl);
+      overflow-y: auto;
+      max-height: calc(90vh - 120px);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .modal-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: var(--space-lg);
+      border: 5px solid var(--light-gray);
+    }
+
+    .modal-title h3 {
+      font-size: var(--text-2xl);
+      color: var(--primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .modal-position {
+      font-size: var(--text-lg);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+
+    .modal-department {
+      display: inline-block;
+      background-color: var(--light-gray);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-full);
+      font-size: var(--text-base);
+      color: var(--text);
+    }
+
+    .modal-bio {
+      margin-bottom: var(--space-lg);
+    }
+
+    .modal-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .detail-icon {
+      margin-right: var(--space-sm);
+      color: var(--primary);
+      font-size: var(--text-lg);
+    }
+
+    .detail-content h4 {
+      font-size: var(--text-base);
+      color: var(--primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .detail-content p {
+      margin-bottom: 0;
+      color: var(--text);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from { 
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from { 
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .about-content,
+      .academics-grid,
+      .faculty-grid,
+      .news-grid,
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .modal-details {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+        transition: left var(--transition-normal);
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .nav-links .dropdown-content {
+        position: static;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+      }
+
+      .nav-links .dropdown:hover .dropdown-content,
+      .nav-links .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: var(--text-4xl);
+      }
+
+      .hero p {
+        font-size: var(--text-lg);
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+
+      .about-content,
+      .academics-grid,
+      .faculty-grid,
+      .news-grid,
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .modal-image {
+        margin-right: 0;
+        margin-bottom: var(--space-lg);
+      }
+
+
+            .portal-buttons-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+        padding: 0 var(--space-md);
+        width: 100%;
+      }
+
+      .portal-buttons-mobile .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: var(--text-3xl);
+      }
+
+      .hero p {
+        font-size: var(--text-base);
+      }
+
+      .section {
+        padding: var(--space-xl) 0;
+      }
+
+      .section-title h2 {
+        font-size: var(--text-3xl);
+      }
+
+      .faculty-grid {
+        grid-template-columns: 1fr;
+      }
+      /* Portal Button Styles */
+.portal-desktop {
+  display: block;
+}
+.portal-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .portal-desktop {
+    display: none;
+  }
+  .portal-mobile {
+    display: block;
+    margin-top: var(--space-md);
+  }
+  .portal-mobile .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.btn-sm {
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.875rem;
+}
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+  <div class="container header-container">
+    <a href="/" class="logo">
+      <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+      <span class="logo-text">St. Mary's</span>
+    </a>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/" class="active"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="/admissions"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+      <li><a href="/staff"><i class="fas fa-chalkboard-teacher"></i> Staff</a></li>
+      <li><a href="/schoolview"><i class="fas fa-school"></i> Gallery</a></li>
+      <li><a href="/news"><i class="fas fa-newspaper"></i> Events</a></li>
+      <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+
+      <!-- Mobile Portal Buttons -->
+      <li class="portal-mobile">
+        <a href="/dashboard" class="btn btn-outline btn-sm"><i class="fas fa-user-graduate"></i> Students Portal</a>
+      </li>
+      <li class="portal-mobile">
+        <a href="/teachersdashboard" class="btn btn-outline btn-sm"><i class="fas fa-chalkboard-teacher"></i> Teachers Portal</a>
+      </li>
+
+      <!-- Desktop Portal Buttons -->
+      <li class="portal-desktop">
+        <a href="/dashboard" class="btn btn-outline"><i class="fas fa-user-graduate"></i> Students Portal</a>
+      </li>
+      <li class="portal-desktop">
+        <a href="/teachersdashboard" class="btn btn-outline"><i class="fas fa-chalkboard-teacher"></i> Teachers Portal</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Excellence in Education Since 1962</h1>
+      <div class="school-motto">
+        <h2 class="motto-text">"We Think We Can and Indeed We Can"</h2>
+        <div class="motto-decoration">
+          <span class="star">✦</span>
+          <span class="line"></span>
+          <span class="star">✦</span>
+        </div>
+      </div>
+      <p>St. Mary's High School provides a transformative educational experience that prepares students for success in college and beyond.</p>
+      <div class="hero-buttons">
+        <a href="/admissions" class="btn btn-primary btn-lg">
+          <i class="fas fa-file-alt btn-icon"></i> Apply Now
+        </a>
+        <a href="/dashboard" class="btn btn-secondary btn-lg">
+          <i class="fas fa-user-graduate btn-icon"></i> Student Portal
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" id="heroScroll">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section about">
+    <div class="container">
+      <div class="section-title">
+        <h2>About Our School</h2>
+      </div>
+      <div class="about-content">
+        <div class="about-image">
+          <img src="https://i.postimg.cc/kXH63b4j/IMG-20250227-WA0009.jpg" alt="St. Mary's High School">
+        </div>
+        <div class="about-text">
+          <h3>A Legacy of Academic Excellence</h3>
+          <p>Founded in 1962, St. Mary's High School has been a cornerstone of educational excellence in our community for over 60 years. Our mission is to nurture the intellectual, spiritual, and personal growth of each student.</p>
+          <p>With a student-teacher ratio of 12:1, we provide personalized attention to ensure every student reaches their full potential. Our graduates consistently gain admission to top universities and excel in their chosen fields.</p>
+          <p>At St. Mary's, we believe education extends beyond the classroom. Our comprehensive programs in arts, athletics, and community service develop well-rounded individuals prepared to make a difference in the world.</p>
+          <a href="/about" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Head Master's Message Section -->
+  <section class="section head-message">
+    <div class="container">
+      <div class="section-title">
+        <h2>Message from Our Head Master</h2>
+      </div>
+      <div class="message-content">
+        <div class="head-image">
+          <img src="https://i.postimg.cc/prr8wNPX/20250809-091036.jpg" alt="Mr. Nyabako - Head Master">
+          <div class="quote-mark">"</div>
+        </div>
+        <div class="message-text">
+          <h3>Mr. Nyabako</h3>
+          <span class="position">Head Master</span>
+          <blockquote>
+            <p>Welcome to St. Mary's High School, where we have embodied our motto "We Think We Can and Indeed We Can" for over six decades. As Head Master, I am proud to lead an institution that consistently demonstrates academic excellence within the ZIMSEC curriculum framework.</p>
+            <p>Our dedicated faculty and staff are committed to nurturing each student's potential, ensuring they develop not only academically but also as responsible citizens. We believe in providing a holistic education that prepares our students for the challenges of the 21st century.</p>
+            <p>At St. Mary's, we don't just teach subjects; we shape futures. I invite you to join our community where tradition meets innovation, and where every student's success story begins.</p>
+          </blockquote>
+          <div class="signature">
+            <span>Mr. Nyabako</span>
+            <small>Head Master, St. Mary's High School</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academics Section -->
+  <section class="section academics">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Academic Programs</h2>
+      </div>
+      <div class="academics-grid">
+        <div class="academic-card">
+          <div class="academic-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div class="academic-content">
+            <h3>Science</h3>
+            <p>Our STEM programs prepare students for careers in science, technology, engineering, and mathematics with state-of-the-art labs and partnerships with local universities.</p>
+            <a href="/stem" class="btn btn-outline">Explore STEM</a>
+          </div>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <div class="academic-content">
+            <h3>Arts & Humanities</h3>
+            <p>From visual arts to performing arts and literature, our comprehensive humanities program fosters creativity and critical thinking skills essential for any career path.</p>
+            <a href="/arts" class="btn btn-outline">Explore Arts</a>
+          </div>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="academic-content">
+            <h3>Commercial Sciences</h3>
+            <p>Our Commercial Sciences program follows the ZIMSEC curriculum, preparing students for careers in business, accounting, and economics with practical skills and real-world applications.</p>
+            <a href="/commercial" class="btn btn-outline">Explore Commercial</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Faculty Section -->
+  <section class="section faculty">
+    <div class="container">
+      <div class="section-title">
+        <h2>Meet Our Faculty</h2>
+      </div>
+
+      <div class="faculty-categories">
+        <button class="category-btn active" data-category="all">All Faculty</button>
+        <button class="category-btn" data-category="admin">Administration</button>
+        <button class="category-btn" data-category="senior">Senior Teachers</button>
+        <button class="category-btn" data-category="deputy">Deputy Heads</button>
+        <button class="category-btn" data-category="teachers">Teaching Staff</button>
+      </div>
+
+      <div class="faculty-grid">
+        <div class="faculty-card" data-category="admin">
+          <div class="admin-badge">Principal</div>
+          <div class="faculty-image">
+            <img src="https://i.postimg.cc/VNWk6rfP/IMG-20250227-WA0003.jpg" alt="Principal">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. Nyabako</h3>
+            <div class="faculty-position">Head Master</div>
+            <div class="faculty-subject">
+              <i class="fas fa-book-open"></i> Educational Leadership
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:principal@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+              <a href="#" class="view-profile" data-id="1"><i class="fas fa-user"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="faculty-card" data-category="admin">
+          <div class="admin-badge">Vice Principal</div>
+          <div class="faculty-image">
+            <img src="https://i.postimg.cc/prr8wNPX/20250809-091036.jpg" alt="Vice Principal">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. Gocha</h3>
+            <div class="faculty-position">Deputy Head</div>
+            <div class="faculty-subject">
+              <i class="fas fa-book-open"></i> Administration
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:deputy@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+              <a href="#" class="view-profile" data-id="2"><i class="fas fa-user"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="faculty-card" data-category="senior">
+          <div class="senior-badge">Teacher In Charge</div>
+          <div class="faculty-image">
+            <img src="https://i.postimg.cc/43kYnRpV/IMG-20250227-WA0007.jpg" alt="Science Teacher">
+          </div>
+          <div class="faculty-info">
+            <h3>Mrs. Chiweshe</h3>
+            <div class="faculty-position">Senior Teacher</div>
+            <div class="faculty-subject">
+              <i class="fas fa-flask"></i> Mathematics & Sciences
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:sciences@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+              <a href="#" class="view-profile" data-id="3"><i class="fas fa-user"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <a href="/staff" class="btn btn-primary">View All Staff</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="section gallery">
+    <div class="container">
+      <div class="section-title">
+        <h2>School Environment</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://cdn.mrfrankofc.gleeze.com/alevel_stm.jpg" alt="Science Lab">
+          <div class="gallery-overlay">
+            <h3>A level Classes</h3>
+            <p>Students in our modern classes</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://files.catbox.moe/fdcdgv.jpg" alt="Computer Lab">
+          <div class="gallery-overlay">
+            <h3>Computer Lab</h3>
+            <p>Our Advanced IT lab with the latest technology</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://files.catbox.moe/unpca7.jpg" alt="Classroom">
+          <div class="gallery-overlay">
+            <h3>Interactive Learning</h3>
+            <p>Students collaborating in our modern learning spaces</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/hjDd7PSr/IMG-20250524-WA0002.jpg" alt="Sports">
+          <div class="gallery-overlay">
+            <h3>Athletics Program</h3>
+            <p>Our championship-winning sports teams in action</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://files.catbox.moe/3kffy1.jpg" alt="Leadership">
+          <div class="gallery-overlay">
+            <h3>Student Leadership</h3>
+            <p>Developing future leaders through our programs</p>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="https://files.catbox.moe/yndyr1.jpg" alt="Campus">
+          <div class="gallery-overlay">
+            <h3>Beautiful Campus</h3>
+            <p>Our 25-acre learning environment</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <a href="/gallery" class="btn btn-primary">View Full Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- News Section -->
+  <section class="section news">
+    <div class="container">
+      <div class="section-title">
+        <h2>Latest News & Events</h2>
+      </div>
+      <div class="news-grid">
+        <div class="news-card fade-in">
+          <div class="news-image">
+            <img src="https://files.catbox.moe/41cewv.jpg" alt="Science Fair Winners">
+          </div>
+          <div class="news-content">
+            <div class="news-date">June 15, 2024</div>
+            <h3>Quiz Team Wins Provincial Championship</h3>
+            <p>Our Quiz Team took first place at the Old Mutual School Quiz competition with their innovative problem-solving skills.</p>
+            <a href="/news/quiz-championship" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="news-card fade-in delay-1">
+          <div class="news-image">
+            <img src="https://files.catbox.moe/9hsuch.jpg" alt="Graduation Ceremony">
+          </div>
+          <div class="news-content">
+            <div class="news-date">September 10, 2024</div>
+            <h3>Speech & Prize Ceremony</h3>
+            <p>We celebrated our students' academic and athletic achievements at our annual awards ceremony.</p>
+            <a href="/news/awards-ceremony" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="news-card fade-in delay-2">
+          <div class="news-image">
+            <img src="https://files.catbox.moe/bryizn.jpg" alt="New Bus">
+          </div>
+          <div class="news-content">
+            <div class="news-date">March 10, 2025</div>
+            <h3>Our New School Bus</h3>
+            <p>The school has acquired a new state-of-the-art bus to enhance our transportation services for students.</p>
+            <a href="/news/new-bus" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <a href="/allnews" class="btn btn-primary">View All News</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta">
+    <div class="container">
+      <h2>Ready to Join the St. Mary's Family?</h2>
+      <p>Applications for the 2025-2026 school year are now being accepted.</p>
+      <div class="hero-buttons">
+        <a href="/admissions" class="btn btn-primary btn-lg">
+          <i class="fas fa-file-alt btn-icon"></i> Apply Now
+        </a>
+        <a href="/admissions" class="btn btn-secondary btn-lg">
+          <i class="fas fa-chart-line btn-icon"></i> View Pass Rates
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1962. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="/academics"><i class="fas fa-book"></i> Academics</a></li>
+            <li><a href="/admissions"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+            <li><a href="/news"><i class="fas fa-newspaper"></i> News</a></li>
+            <li><a href="/schoolview"><i class="fas fa-paint-brush"></i> School View</a></li>
+            <li><a href="/staff"><i class="fas fa-chalkboard-teacher"></i> Our Staff</a></li>
+            <li><a href="/calendar"><i class="fas fa-calendar-alt"></i> School Calendar</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> Harare, Chitungwiza Zengeza 1</p>
+            <p><i class="fas fa-phone"></i> +263 719 647 303</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+        <p class="mt-2">Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by <a href="/credits" target="_blank" style="color: var(--accent);">Darrell Mucheri</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <!-- Faculty Modal -->
+  <div class="faculty-modal" id="facultyModal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <div class="modal-body">
+        <div class="modal-header">
+          <img src="" alt="Faculty Member" class="modal-image" id="modalImage">
+          <div class="modal-title">
+            <h3 id="modalName">Mr. Nyabako</h3>
+            <div class="modal-position" id="modalPosition">Head Master</div>
+            <span class="modal-department" id="modalDepartment">Administration</span>
+          </div>
+        </div>
+
+        <div class="modal-bio">
+          <p id="modalBio">Mr. Nyabako has been the Head Master of St. Mary's High School since 1982. With over 20+ years of experience in education, he has transformed the school into one of the top-performing institutions in the region.</p>
+        </div>
+
+        <div class="modal-details">
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Education</h4>
+              <p id="modalEducation">M.Ed in Educational Leadership, University of Zimbabwe</p>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Experience</h4>
+              <p id="modalExperience">25+ years in educational administration</p>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Email</h4>
+              <p id="modalEmail">principal@stmaryshs.edu</p>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="detail-content">
+              <h4>Phone</h4>
+              <p id="modalPhone">+263 719 647 303</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faculty-contact">
+          <a href="#" id="modalEmailLink"><i class="fas fa-envelope"></i></a>
+          <a href="#" id="modalPhoneLink"><i class="fas fa-phone"></i></a>
+          <a href="#" id="modalScheduleLink"><i class="fas fa-calendar-alt"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Preloader
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      preloader.style.transition = 'opacity 0.5s ease';
+      preloader.style.opacity = '0';
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 500);
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('show');
+      mobileMenuBtn.innerHTML = navLinks.classList.contains('show') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Dropdown Menus
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('a');
+      link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // Sticky Header
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+
+          // Close mobile menu if open
+          if (navLinks.classList.contains('show')) {
+            navLinks.classList.remove('show');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        }
+      });
+    });
+
+    // Hero Scroll Button
+    const heroScroll = document.getElementById('heroScroll');
+    if (heroScroll) {
+      heroScroll.addEventListener('click', function() {
+        window.scrollTo({
+          top: document.querySelector('.about').offsetTop - 80,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+
+      // Save preference to localStorage
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+
+      // Update icon
+      themeToggle.innerHTML = isDarkMode 
+        ? '<i class="fas fa-sun"></i>' 
+        : '<i class="fas fa-moon"></i>';
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Faculty Card Filtering
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const facultyCards = document.querySelectorAll('.faculty-card');
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        categoryBtns.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        const category = this.dataset.category;
+
+        // Filter faculty cards
+        facultyCards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Faculty Modal
+    const facultyModal = document.getElementById('facultyModal');
+    const modalClose = facultyModal.querySelector('.modal-close');
+    const viewProfileBtns = document.querySelectorAll('.view-profile');
+
+    // Sample faculty data
+    const facultyData = {
+      1: {
+        name: "Mr. Nyabako",
+        position: "Head Master",
+        department: "Administration",
+        image: "https://i.postimg.cc/VNWk6rfP/IMG-20250227-WA0003.jpg",
+        bio: "Mr. Nyabako has been the Head Master of St. Mary's High School since 2010. With over 25 years of experience in education, he has transformed the school into one of the top-performing institutions in the region.",
+        education: "M.Ed in Educational Leadership, University of Zimbabwe",
+        experience: "25+ years in educational administration",
+        email: "principal@stmaryshs.edu",
+        phone: "+263 719 647 303"
+      },
+      2: {
+        name: "Mr. Gocha",
+        position: "Deputy Head",
+        department: "Administration",
+        image: "https://i.postimg.cc/SxB9NwG9/20250129-113912.avif",
+        bio: "Mr. Gocha serves as the Deputy Head of St. Mary's High School, overseeing daily operations and student affairs. He specializes in curriculum development and teacher training.",
+        education: "M.Sc in Educational Management, Midlands State University",
+        experience: "18 years in secondary education",
+        email: "deputy@stmaryshs.edu",
+        phone: "+263 772 123 456"
+      },
+      3: {
+        name: "Mrs. Chiweshe",
+        position: "Senior Teacher",
+        department: "Sciences",
+        image: "https://i.postimg.cc/43kYnRpV/IMG-20250227-WA0007.jpg",
+        bio: "Mrs. Chiweshe leads our Science Department and has been instrumental in developing our STEM program. Her students consistently achieve top marks in national examinations.",
+        education: "B.Sc Honors in Chemistry, University of Zimbabwe",
+        experience: "15 years teaching experience",
+        email: "sciences@stmaryshs.edu",
+        phone: "+263 773 987 654"
+      }
+    };
+
+    // Open modal with faculty data
+    viewProfileBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const facultyId = this.dataset.id;
+        const faculty = facultyData[facultyId];
+
+        if (faculty) {
+          document.getElementById('modalImage').src = faculty.image;
+          document.getElementById('modalName').textContent = faculty.name;
+          document.getElementById('modalPosition').textContent = faculty.position;
+          document.getElementById('modalDepartment').textContent = faculty.department;
+          document.getElementById('modalBio').textContent = faculty.bio;
+          document.getElementById('modalEducation').textContent = faculty.education;
+          document.getElementById('modalExperience').textContent = faculty.experience;
+          document.getElementById('modalEmail').textContent = faculty.email;
+          document.getElementById('modalPhone').textContent = faculty.phone;
+          document.getElementById('modalEmailLink').href = `mailto:${faculty.email}`;
+          document.getElementById('modalPhoneLink').href = `tel:${faculty.phone.replace(/\D/g, '')}`;
+
+          facultyModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    // Close modal
+    modalClose.addEventListener('click', function() {
+      facultyModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    facultyModal.addEventListener('click', function(e) {
+      if (e.target === facultyModal) {
+        facultyModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Scroll Animations
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => {
+      fadeObserver.observe(el);
+    });
+  </script>
+</body>
+</html>

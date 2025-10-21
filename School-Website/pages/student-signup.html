@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Registration - St. Mary's High School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/4476/4476871.png" />
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    :root {
+      --primary: #003366;
+      --primary-light: #4d94ff;
+      --secondary: #FFD700;
+      --accent: #e63946;
+      --text-color: #333;
+      --text-light: #f9f9f9;
+      --bg-light: #ffffff;
+      --bg-dark: #121212;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text-color);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 51, 102, 0.85);
+      z-index: -1;
+    }
+
+    /* Header */
+    header {
+      background: rgba(0, 51, 102, 0.9);
+      color: white;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      transform: translateY(-2px);
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 100px 5% 80px;
+    }
+
+    /* Signup Card */
+    .signup-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+      position: relative;
+      transition: var(--transition);
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .signup-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .signup-header {
+      background: var(--primary);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signup-header::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .signup-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .signup-header p {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    .signup-form {
+      padding: 2rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: #f9f9f9;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(77, 148, 255, 0.2);
+      outline: none;
+      background-color: white;
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      top: 42px;
+      color: #999;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .input-icon:hover {
+      color: var(--primary);
+    }
+
+    /* Phone Input */
+    .phone-container {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .phone-container select {
+      flex: 1;
+      padding: 0.9rem 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: #f9f9f9;
+      transition: var(--transition);
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      background-size: 1rem;
+    }
+
+    .phone-container input {
+      flex: 2;
+    }
+
+    /* Buttons */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      background: #002244;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+
+    .btn:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+
+    /* Google Button */
+    .btn-google {
+      background: white;
+      color: #444;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .btn-google:hover {
+      background: #f5f5f5;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-google i {
+      margin-right: 10px;
+      color: #dd4b39;
+      font-size: 1.2rem;
+    }
+
+    /* Footer Links */
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .auth-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .auth-footer a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    /* Password Strength Meter */
+    .password-strength {
+      height: 5px;
+      background-color: #eee;
+      border-radius: 5px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .strength-meter {
+      height: 100%;
+      width: 0;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Error Message */
+    .error-message {
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      display: none;
+      align-items: center;
+      background-color: rgba(231, 76, 60, 0.1);
+      border-left: 4px solid #e74c3c;
+      color: #e74c3c;
+    }
+
+    .error-message i {
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Button Loading State */
+    .btn-loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 80px 2% 80px;
+      }
+
+      .signup-card {
+        max-width: 100%;
+      }
+
+      .signup-form {
+        padding: 1.5rem;
+      }
+
+      .phone-container {
+        flex-direction: column;
+      }
+
+      .phone-container select,
+      .phone-container input {
+        width: 100%;
+      }
+    }
+
+    /* Custom Checkbox */
+    .terms-container {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .terms-container input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--primary);
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .terms-container input[type="checkbox"]:checked {
+      background-color: var(--primary);
+    }
+
+    .terms-container input[type="checkbox"]:checked::after {
+      content: '\f00c';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.8rem;
+    }
+
+    .terms-container label {
+      font-size: 0.9rem;
+      color: #666;
+      cursor: pointer;
+    }
+
+    .terms-container a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .terms-container a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <a href="/" class="logo">
+      <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="School Logo" class="floating" />
+      St. Mary's High
+    </a>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container animate__animated animate__fadeIn">
+    <div class="signup-card">
+      <div class="signup-header">
+        <h2>Student Registration</h2>
+        <p>Join our learning community</p>
+      </div>
+
+      <form id="signup-form" class="signup-form">
+        <!-- Error Message -->
+        <div class="error-message" id="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <div id="error-text"></div>
+        </div>
+
+        <!-- Form Fields -->
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input type="text" id="firstname" class="form-control" placeholder="Enter your first name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="surname">Surname</label>
+          <input type="text" id="surname" class="form-control" placeholder="Enter your surname" required />
+        </div>
+
+        <div class="form-group">
+          <label for="birth-number">Birth Number/National ID</label>
+          <input type="text" id="birth-number" class="form-control" placeholder="Enter birth certificate or national ID number" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="yourname@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-container">
+            <input type="password" id="password" class="form-control" placeholder="Create a password" required />
+            <i class="fas fa-eye input-icon" id="toggle-password"></i>
+          </div>
+          <div class="password-strength">
+            <div class="strength-meter" id="password-strength-meter"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <div class="phone-container">
+            <select id="country-code" class="form-control">
+              <option value="+263" data-flag="🇿🇼">🇿🇼 +263</option>
+              <option value="+267" data-flag="🇧🇼">🇧🇼 +267</option>
+              <option value="+260" data-flag="🇿🇲">🇿🇲 +260</option>
+              <option value="+27" data-flag="🇿🇦">🇿🇦 +27</option>
+              <option value="+254" data-flag="🇰🇪">🇰🇪 +254</option>
+            </select>
+            <input type="tel" id="phone" class="form-control" placeholder="Phone number" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" class="form-control" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" class="form-control" placeholder="Enter your address" required />
+        </div>
+
+        <div class="form-group">
+          <label for="parent-name">Parent/Guardian Name</label>
+          <input type="text" id="parent-name" class="form-control" placeholder="Enter parent/guardian name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="parent-phone">Parent/Guardian Phone</label>
+          <div class="phone-container">
+            <select id="parent-country-code" class="form-control">
+              <option value="+263" data-flag="🇿🇼">🇿🇼 +263</option>
+              <option value="+267" data-flag="🇧🇼">🇧🇼 +267</option>
+              <option value="+260" data-flag="🇿🇲">🇿🇲 +260</option>
+              <option value="+27" data-flag="🇿🇦">🇿🇦 +27</option>
+              <option value="+254" data-flag="🇰🇪">🇰🇪 +254</option>
+            </select>
+            <input type="tel" id="parent-phone" class="form-control" placeholder="Parent/guardian phone" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form">Form (Grade Level)</label>
+          <select id="form" class="form-control" required>
+            <option value="">Select Form</option>
+            <option value="Form 1">Form 1</option>
+            <option value="Form 2">Form 2</option>
+            <option value="Form 3">Form 3</option>
+            <option value="Form 4">Form 4</option>
+            <option value="Form 5">Form 5</option>
+            <option value="Form 6">Form 6</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="stream">Class/Stream</label>
+          <select id="stream" class="form-control" required>
+            <option value="">Select Class</option>
+            <option value="G">G</option>
+            <option value="W">W</option>
+            <option value="E">E</option>
+            <option value="Z">Z</option>
+            <option value="U">U</option>
+            <option value="SP">SP</option>
+            <option value="Arts">Arts</option>
+            <option value="Commercials">Commercials</option>
+            <option value="Sciences">Sciences</option>
+          </select>
+        </div>
+
+        <div class="terms-container">
+          <input type="checkbox" id="agree-terms" required />
+          <label for="agree-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+
+        <button type="submit" class="btn" id="signup-btn">
+          <span id="signup-btn-text">Create Account</span>
+          <span id="signup-spinner" class="spinner" style="display: none;"></span>
+        </button>
+
+        <div class="auth-footer">
+          <p>Already have an account? <a href="/pages/student-login.html">Sign in here</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDK v9 -->
+  <script type="module">
+    // Import Firebase services and functions from centralized config
+    import {
+      auth,
+      db,
+      createUserWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup,
+      sendEmailVerification,
+      doc,
+      setDoc,
+      runTransaction
+    } from "/db/firebase.js";
+
+    // Initialize Google Auth Provider
+    const provider = new GoogleAuthProvider();
+
+    // DOM Elements
+    const signupForm = document.getElementById("signup-form");
+    const errorMessage = document.getElementById("error-message");
+    const errorText = document.getElementById("error-text");
+    const signupBtn = document.getElementById("signup-btn");
+    const signupBtnText = document.getElementById("signup-btn-text");
+    const signupSpinner = document.getElementById("signup-spinner");
+    const togglePassword = document.getElementById("toggle-password");
+    const passwordInput = document.getElementById("password");
+    const passwordStrengthMeter = document.getElementById("password-strength-meter");
+
+    // Password Strength Indicator
+    passwordInput.addEventListener("input", function() {
+      const password = this.value;
+      let strength = 0;
+      
+      // Length check
+      if (password.length >= 8) strength += 1;
+      
+      // Contains lowercase
+      if (/[a-z]/.test(password)) strength += 1;
+      
+      // Contains uppercase
+      if (/[A-Z]/.test(password)) strength += 1;
+      
+      // Contains number
+      if (/[0-9]/.test(password)) strength += 1;
+      
+      // Contains special char
+      if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+      
+      // Update meter
+      const width = (strength / 5) * 100;
+      passwordStrengthMeter.style.width = `${width}%`;
+      
+      // Update color
+      if (strength <= 2) {
+        passwordStrengthMeter.style.backgroundColor = '#e74c3c';
+      } else if (strength <= 4) {
+        passwordStrengthMeter.style.backgroundColor = '#f39c12';
+      } else {
+        passwordStrengthMeter.style.backgroundColor = '#2ecc71';
+      }
+    });
+
+    // Toggle Password Visibility - FIXED
+    togglePassword.addEventListener("click", function() {
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+      this.classList.toggle("fa-eye");
+      this.classList.toggle("fa-eye-slash");
+    });
+
+    // Generate unique student ID using Firestore transaction for atomicity
+    async function generateStudentID() {
+      const currentYear = new Date().getFullYear();
+      const prefix = `STM${currentYear}`;
+      const counterKey = `studentIDCounter_${currentYear}`;
+      
+      try {
+        const counterRef = doc(db, "counters", counterKey);
+        
+        const nextNumber = await runTransaction(db, async (transaction) => {
+          const counterDoc = await transaction.get(counterRef);
+          
+          let newValue = 1;
+          if (counterDoc.exists()) {
+            newValue = (counterDoc.data().value || 0) + 1;
+          }
+          
+          transaction.set(counterRef, { value: newValue, year: currentYear }, { merge: true });
+          return newValue;
+        });
+        
+        const studentID = `${prefix}${String(nextNumber).padStart(3, '0')}`;
+        return studentID;
+      } catch (error) {
+        console.error("Error generating student ID:", error);
+        const timestamp = Date.now() % 10000;
+        return `${prefix}${String(timestamp).padStart(3, '0')}`;
+      }
+    }
+
+    // Form Submission - FIXED
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      // Hide any previous error messages
+      errorMessage.style.display = "none";
+      
+      // Get form values
+      const firstname = document.getElementById("firstname").value.trim();
+      const surname = document.getElementById("surname").value.trim();
+      const birthNumber = document.getElementById("birth-number").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const countryCode = document.getElementById("country-code").value;
+      const phone = document.getElementById("phone").value.trim();
+      const fullPhone = `${countryCode}${phone}`;
+      const dob = document.getElementById("dob").value;
+      const gender = document.getElementById("gender").value;
+      const address = document.getElementById("address").value.trim();
+      const parentName = document.getElementById("parent-name").value.trim();
+      const parentCountryCode = document.getElementById("parent-country-code").value;
+      const parentPhone = document.getElementById("parent-phone").value.trim();
+      const fullParentPhone = `${parentCountryCode}${parentPhone}`;
+      const form = document.getElementById("form").value;
+      const stream = document.getElementById("stream").value;
+      const agreeTerms = document.getElementById("agree-terms").checked;
+
+      // Validate form
+      if (!firstname || !surname || !email || !password || !phone || !dob || !gender || !address || !parentName || !parentPhone || !form || !stream) {
+        showError("Please fill in all required fields");
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError("Please enter a valid email address");
+        return;
+      }
+
+      if (password.length < 8) {
+        showError("Password must be at least 8 characters");
+        return;
+      }
+
+      if (!agreeTerms) {
+        showError("You must agree to the terms and conditions");
+        return;
+      }
+
+      // Validate date of birth (must be between 10 and 25 years old)
+      const dobDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - dobDate.getFullYear();
+      const monthDiff = today.getMonth() - dobDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+        age--;
+      }
+      if (age < 10 || age > 25) {
+        showError("Please enter a valid date of birth (student must be between 10-25 years old)");
+        return;
+      }
+
+      // Validate phone number format (basic check)
+      if (!/^\d{7,15}$/.test(phone.replace(/[^\d]/g, ''))) {
+        showError("Please enter a valid phone number");
+        return;
+      }
+
+      if (!/^\d{7,15}$/.test(parentPhone.replace(/[^\d]/g, ''))) {
+        showError("Please enter a valid parent/guardian phone number");
+        return;
+      }
+
+      // Show loading state
+      setLoadingState(true);
+
+      try {
+        // Generate unique student ID
+        const studentID = await generateStudentID();
+
+        // Create user with email/password
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Send email verification
+        await sendEmailVerification(user);
+
+        // Save user data to Firestore using email as document ID (matches dashboard expectations)
+        await setDoc(doc(db, "students", email), {
+          studentID: studentID,
+          firstname: firstname,
+          surname: surname,
+          birthNumber: birthNumber,
+          email: email,
+          phone: fullPhone,
+          dob: dob,
+          gender: gender,
+          address: address,
+          "parent-name": parentName,
+          "parent-phone": fullParentPhone,
+          form: form,
+          stream: stream,
+          createdAt: new Date(),
+          status: "inactive",
+          emailVerified: false,
+          role: "student",
+          profileCompleted: true,
+          uid: user.uid,
+          createdByAdmin: false,
+          mustChangePassword: false,
+          accountPendingApproval: true
+        });
+
+        // Store user email in localStorage for dashboard
+        localStorage.setItem("studentEmail", email);
+
+        // Show success message with student ID
+        await Swal.fire({
+          title: "Registration Submitted!",
+          html: `Welcome to St. Mary's High, ${firstname}!<br><br>
+                <strong>Your Student ID: ${studentID}</strong><br><br>
+                Please save this ID for your records.<br><br>
+                <strong style="color: #d69e2e;">⚠️ Your account is pending admin approval.</strong><br>
+                You will receive an email at <strong>${email}</strong> once your account is activated.<br><br>
+                Please contact the school administration if you have any questions.`,
+          icon: "info",
+          confirmButtonColor: "#003366",
+          confirmButtonText: "OK"
+        });
+
+        // Redirect to login page
+        window.location.href = "/pages/student-login.html";
+      } catch (error) {
+        // Handle errors
+        handleSignupError(error);
+      } finally {
+        // Reset loading state
+        setLoadingState(false);
+      }
+    });
+
+    // Set loading state
+    function setLoadingState(isLoading) {
+      if (isLoading) {
+        signupBtn.disabled = true;
+        signupBtn.classList.add("btn-loading");
+        signupBtnText.textContent = "Creating account...";
+        signupSpinner.style.display = "inline-block";
+      } else {
+        signupBtn.disabled = false;
+        signupBtn.classList.remove("btn-loading");
+        signupBtnText.textContent = "Create Account";
+        signupSpinner.style.display = "none";
+      }
+    }
+
+    // Handle signup errors
+    function handleSignupError(error) {
+      let errorMessage = "An error occurred during registration. Please try again.";
+      
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "This email is already registered. Please use a different email or sign in.";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Please enter a valid email address.";
+          break;
+        case "auth/weak-password":
+          errorMessage = "Password should be at least 8 characters and include a mix of letters, numbers, and symbols.";
+          break;
+        case "auth/operation-not-allowed":
+          errorMessage = "Account creation is currently disabled. Please contact support.";
+          break;
+        case "auth/network-request-failed":
+          errorMessage = "Network error. Please check your internet connection and try again.";
+          break;
+        default:
+          console.error("Signup error:", error);
+          errorMessage = error.message || "Registration failed. Please try again.";
+      }
+      
+      showError(errorMessage);
+    }
+
+    // Show error message
+    function showError(message) {
+      errorText.textContent = message;
+      errorMessage.style.display = "flex";
+      
+      // Add shake animation
+      signupForm.classList.add("animate__animated", "animate__shakeX");
+      setTimeout(() => {
+        signupForm.classList.remove("animate__animated", "animate__shakeX");
+      }, 1000);
+      
+      // Scroll to error message
+      errorMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    // Validate email format
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    // Country code selector enhancement
+    document.getElementById("country-code").addEventListener("change", function() {
+      const flag = this.options[this.selectedIndex].getAttribute("data-flag");
+      this.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">${flag}</svg>')`;
+    });
+
+    // Trigger initial flag display
+    document.getElementById("country-code").dispatchEvent(new Event("change"));
+  </script>
+</body>
+</html>

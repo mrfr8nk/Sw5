@@ -1,0 +1,4113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard - St. Mary's High School</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      /* ========== Global Variables & Reset ========== */
+      :root {
+        /* Color System */
+        --primary: #003366;
+        --primary-light: #3d5d8a;
+        --primary-dark: #001a33;
+        --secondary: #FFD700;
+        --secondary-light: #ffeb99;
+        --accent: #87CEEB;
+        --accent-dark: #5aa5d1;
+        --success: #28a745;
+        --danger: #dc3545;
+        --warning: #ffc107;
+        --info: #17a2b8;
+
+        /* Neutral Colors */
+        --white: #ffffff;
+        --light-gray: #f8f9fa;
+        --medium-gray: #e9ecef;
+        --dark-gray: #6c757d;
+        --black: #212529;
+
+        /* Text Colors */
+        --text-primary: #212529;
+        --text-secondary: #495057;
+        --text-light: #f8f9fa;
+
+        /* Spacing */
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+        --space-xl: 2rem;
+        --space-xxl: 3rem;
+
+        /* Typography */
+        --font-primary: 'Poppins', sans-serif;
+        --font-secondary: 'Montserrat', sans-serif;
+        --text-base: 1rem;
+        --text-lg: 1.125rem;
+        --text-xl: 1.25rem;
+        --text-2xl: 1.5rem;
+        --text-3xl: 1.875rem;
+        --text-4xl: 2.25rem;
+        --text-5xl: 3rem;
+
+        /* Shadows */
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        --shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+
+        /* Transitions */
+        --transition-fast: 0.15s ease;
+        --transition-normal: 0.3s ease;
+        --transition-slow: 0.5s ease;
+
+        /* Border Radius */
+        --radius-sm: 0.25rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+        --radius-full: 9999px;
+
+        /* Layout */
+        --header-height: 80px;
+        --sidebar-width: 280px;
+        --max-content-width: 1200px;
+      }
+
+      /* Dark Mode Variables */
+      .dark-mode {
+        --primary: #4d94ff;
+        --primary-light: #7ab3ff;
+        --primary-dark: #0052cc;
+        --secondary: #ffcc00;
+        --accent: #5aa5d1;
+
+        --white: #121212;
+        --light-gray: #1e1e1e;
+        --medium-gray: #2d2d2d;
+        --dark-gray: #868e96;
+        --black: #f8f9fa;
+
+        --text-primary: #f8f9fa;
+        --text-secondary: #e9ecef;
+        --text-light: #212529;
+      }
+
+      /* ========== Base Styles ========== */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        color: var(--text-primary);
+        background-color: var(--white);
+        line-height: 1.6;
+        transition: background-color var(--transition-slow), color var(--transition-slow);
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-secondary);
+        font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: var(--space-md);
+        color: var(--primary);
+      }
+
+      p {
+        margin-bottom: var(--space-md);
+        color: var(--text-secondary);
+      }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color var(--transition-normal);
+      }
+
+      a:hover {
+        color: var(--primary-dark);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      ul, ol {
+        list-style: none;
+      }
+
+      /* ========== Utility Classes ========== */
+      .container {
+        width: 100%;
+        max-width: var(--max-content-width);
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+      }
+
+      .section {
+        padding: var(--space-xxl) 0;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: var(--space-xl);
+      }
+
+      .section-title h2 {
+        font-size: var(--text-3xl);
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title h2::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        width: 80px;
+        height: 4px;
+        background: var(--secondary);
+        transform: translateX(-50%);
+        border-radius: var(--radius-full);
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .mt-1 { margin-top: var(--space-xs); }
+      .mt-2 { margin-top: var(--space-sm); }
+      .mt-3 { margin-top: var(--space-md); }
+      .mt-4 { margin-top: var(--space-lg); }
+      .mt-5 { margin-top: var(--space-xl); }
+
+      /* ========== Buttons ========== */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-sm) var(--space-lg);
+        font-size: var(--text-base);
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        border: 2px solid transparent;
+        border-radius: var(--radius-lg);
+        transition: all var(--transition-normal);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--white);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        color: var(--white);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: var(--black);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--secondary-light);
+        color: var(--black);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .btn-outline:hover {
+        background-color: var(--primary);
+        color: var(--white);
+      }
+
+      .btn-lg {
+        padding: var(--space-md) var(--space-xl);
+        font-size: var(--text-lg);
+      }
+
+      .btn-icon {
+        margin-right: var(--space-sm);
+      }
+
+      /* ========== Layout Components ========== */
+      /* Header */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--header-height);
+        z-index: 1000;
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-normal);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-mode .header {
+        background-color: rgba(33, 37, 41, 0.95);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding: 0 var(--space-md);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-size: var(--text-xl);
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .logo-img {
+        width: 40px;
+        height: 40px;
+        margin-right: var(--space-sm);
+        border-radius: var(--radius-sm);
+      }
+
+      .logo-text {
+        font-family: var(--font-secondary);
+      }
+
+      .header-profile {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--primary);
+        cursor: pointer;
+        transition: transform var(--transition-normal);
+      }
+
+      .profile-pic:hover {
+        transform: scale(1.1);
+      }
+
+      /* Sidebar Navigation */
+      .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: var(--sidebar-width);
+        height: calc(100vh - var(--header-height));
+        background-color: var(--white);
+        box-shadow: var(--shadow-md);
+        transform: translateX(-100%);
+        transition: transform var(--transition-normal);
+        z-index: 999;
+        overflow-y: auto;
+        padding: var(--space-md) 0;
+      }
+
+      .dark-mode .sidebar {
+        background-color: var(--light-gray);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        padding: 0 var(--space-md);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md);
+        transition: all var(--transition-normal);
+        color: var(--text-secondary);
+      }
+
+      .sidebar-link:hover,
+      .sidebar-link.active {
+        background-color: var(--primary-light);
+        color: var(--white);
+      }
+
+      .sidebar-link i {
+        margin-right: var(--space-sm);
+        width: 24px;
+        text-align: center;
+      }
+
+      .sidebar-divider {
+        height: 1px;
+        background-color: var(--medium-gray);
+        margin: var(--space-md) 0;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 0;
+        padding: calc(var(--header-height) + var(--space-md)) var(--space-md) var(--space-md);
+        transition: margin-left var(--transition-normal);
+      }
+
+      .main-content.expanded {
+        margin-left: var(--sidebar-width);
+      }
+
+      /* Overlay */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-normal);
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Mobile Menu Button */
+      .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-md);
+        background-color: var(--primary);
+        color: var(--white);
+        border: none;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+      }
+
+      .menu-btn:hover {
+        background-color: var(--primary-dark);
+      }
+
+      /* ========== Dashboard Components ========== */
+      /* Cards */
+      .card {
+        background-color: var(--white);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        padding: var(--space-lg);
+        transition: all var(--transition-normal);
+        border: 1px solid var(--medium-gray);
+      }
+
+      .dark-mode .card {
+        background-color: var(--light-gray);
+        border-color: var(--dark-gray);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-md);
+      }
+
+      .card-title {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .card-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--primary-light);
+        color: var(--white);
+        border-radius: var(--radius-md);
+      }
+
+      /* Dashboard Grid */
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+      }
+
+      /* Attendance */
+      .attendance-progress {
+        height: 10px;
+        border-radius: var(--radius-full);
+        background-color: var(--medium-gray);
+        overflow: hidden;
+        margin: var(--space-sm) 0;
+      }
+
+      .attendance-bar {
+        height: 100%;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        transition: width 0.5s ease;
+      }
+
+      /* Forms */
+      .form-group {
+        margin-bottom: var(--space-md);
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: var(--space-sm);
+        font-weight: 500;
+        color: var(--primary);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: var(--space-sm) var(--space-md);
+        border: 1px solid var(--medium-gray);
+        border-radius: var(--radius-md);
+        font-size: var(--text-base);
+        transition: border-color var(--transition-normal);
+        background-color: var(--white);
+        color: var(--text-primary);
+      }
+
+      .dark-mode .form-control {
+        background-color: var(--light-gray);
+        border-color: var(--dark-gray);
+        color: var(--text-primary);
+      }
+
+      .form-control:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      }
+
+      /* Results Table */
+      .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: var(--space-md) 0;
+      }
+
+      .results-table th,
+      .results-table td {
+        padding: var(--space-sm) var(--space-md);
+        text-align: left;
+        border-bottom: 1px solid var(--medium-gray);
+      }
+
+      .dark-mode .results-table th,
+      .dark-mode .results-table td {
+        border-bottom-color: var(--dark-gray);
+      }
+
+      .results-table th {
+        background-color: var(--primary);
+        color: var(--white);
+      }
+
+      .results-table tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+      }
+
+      /* Charts */
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+        margin: var(--space-md) 0;
+      }
+
+      /* Notices */
+      .notice-card {
+        background-color: var(--white);
+        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        margin-bottom: var(--space-md);
+        box-shadow: var(--shadow-sm);
+        border-left: 4px solid var(--primary);
+        transition: all var(--transition-normal);
+      }
+
+      .dark-mode .notice-card {
+        background-color: var(--light-gray);
+      }
+
+      .notice-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .notice-title {
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: var(--space-sm);
+      }
+
+      .notice-meta {
+        font-size: var(--text-sm);
+        color: var(--dark-gray);
+        margin-top: var(--space-sm);
+      }
+
+      /* Theme Toggle */
+      .theme-toggle {
+        position: fixed;
+        bottom: var(--space-xl);
+        right: var(--space-xl);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: var(--shadow-lg);
+        z-index: 999;
+        transition: all var(--transition-normal);
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      /* Footer */
+      .footer {
+        background-color: var(--primary);
+        color: var(--white);
+        padding: var(--space-lg) 0;
+        text-align: center;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-md);
+        margin: var(--space-md) 0;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        transition: all var(--transition-normal);
+      }
+
+      .social-link:hover {
+        background-color: var(--secondary);
+        color: var(--primary);
+        transform: translateY(-3px);
+      }
+
+      /* ========== Animations ========== */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes fadeInUp {
+        from { 
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to { 
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from { 
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to { 
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.5s ease forwards;
+      }
+
+      .slide-in-right {
+        animation: slideInRight 0.5s ease forwards;
+      }
+
+      /* ========== Responsive Styles ========== */
+      @media (max-width: 992px) {
+        .dashboard-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 100%;
+          transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content.expanded {
+          margin-left: 0;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .section {
+          padding: var(--space-xl) 0;
+        }
+
+        .section-title h2 {
+          font-size: var(--text-2xl);
+        }
+      }
+      /* Add this to your existing CSS */
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.bg-danger {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+.bg-success {
+  color: #fff;
+  background-color: #28a745;
+}
+
+/* For the unread count in sidebar */
+.sidebar-link .badge {
+  margin-left: auto;
+  font-size: 0.7rem;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* ========== Fees Section Styles ========== */
+/* Term and Year Navigation */
+.term-navigation {
+  padding: var(--space-md);
+}
+
+.year-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  border-bottom: 2px solid var(--medium-gray);
+  padding-bottom: var(--space-sm);
+}
+
+.year-tab {
+  padding: var(--space-sm) var(--space-lg);
+  border: 2px solid var(--medium-gray);
+  border-radius: var(--radius-md);
+  background-color: var(--white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-weight: 500;
+}
+
+.dark-mode .year-tab {
+  background-color: var(--light-gray);
+  border-color: var(--dark-gray);
+}
+
+.year-tab:hover,
+.year-tab.active {
+  background-color: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.term-tabs {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.term-tab {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--radius-sm);
+  background-color: var(--white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-weight: 400;
+}
+
+.dark-mode .term-tab {
+  background-color: var(--light-gray);
+  border-color: var(--dark-gray);
+}
+
+.term-tab:hover,
+.term-tab.active {
+  background-color: var(--secondary);
+  color: var(--black);
+  border-color: var(--secondary);
+}
+
+/* Activity Timeline */
+.activity-timeline {
+  padding: var(--space-md);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--medium-gray);
+  position: relative;
+}
+
+.dark-mode .activity-item {
+  border-bottom-color: var(--dark-gray);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item:before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 40px;
+  width: 2px;
+  height: calc(100% + var(--space-md));
+  background-color: var(--medium-gray);
+}
+
+.dark-mode .activity-item:before {
+  background-color: var(--dark-gray);
+}
+
+.activity-item:last-child:before {
+  display: none;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-base);
+  flex-shrink: 0;
+  z-index: 1;
+  position: relative;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-content p {
+  margin-bottom: var(--space-xs);
+}
+
+.activity-meta {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  font-style: italic;
+}
+
+/* Enhanced Status Badges for Fees Section */
+.status-badge.status-scholarship {
+  background: rgba(159, 122, 234, 0.2);
+  color: #9f7aea;
+  border: 1px solid rgba(159, 122, 234, 0.3);
+}
+
+.status-badge.status-organization {
+  background: rgba(56, 178, 172, 0.2);
+  color: #38b2ac;
+  border: 1px solid rgba(56, 178, 172, 0.3);
+}
+
+.status-badge.status-overdue {
+  background: rgba(245, 101, 101, 0.2);
+  color: #f56565;
+  border: 1px solid rgba(245, 101, 101, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Payment History Table Enhancements */
+#paymentHistoryTable {
+  font-size: 0.95rem;
+}
+
+#paymentHistoryTable td {
+  vertical-align: middle;
+}
+
+#paymentHistoryTable .receipt-btn {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.8rem;
+  background-color: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+#paymentHistoryTable .receipt-btn:hover {
+  background-color: var(--accent-dark);
+  transform: scale(1.05);
+}
+
+/* Responsive Design for Fees Section */
+@media (max-width: 768px) {
+  .year-tabs {
+    flex-wrap: wrap;
+  }
+
+  .term-tabs {
+    flex-wrap: wrap;
+  }
+
+  .year-tab,
+  .term-tab {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .activity-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .activity-item:before {
+    display: none;
+  }
+
+  .activity-icon {
+    align-self: center;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <div class="logo">
+          <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+          <span class="logo-text">St. Mary's</span>
+        </div>
+
+        <div class="header-profile">
+          <img id="smallProfilePic" src="https://i.postimg.cc/28gm27sy/2993763.png" alt="Profile" class="profile-pic">
+          <button class="menu-btn" id="menuBtn">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-menu">
+        <a href="#dashboard" class="sidebar-link active">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#profile" class="sidebar-link">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <a href="#results" class="sidebar-link">
+          <i class="fas fa-chart-bar"></i>
+          <span>Results</span>
+        </a>
+        <a href="#fees" class="sidebar-link">
+          <i class="fas fa-money-bill-wave"></i>
+          <span>Fees & Payments</span>
+        </a>
+     <!--   <a href="#performance" class="sidebar-link">
+          <i class="fas fa-line-chart"></i>
+          <span>Performance</span>
+        </a> -->
+        <a href="#activity" class="sidebar-link">
+          <i class="fas fa-history"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="#chat" class="sidebar-link">
+          <i class="fas fa-comments"></i>
+          <span>Chat with AI</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="#updates" class="sidebar-link">
+          <i class="fas fa-bell"></i>
+          <span>Updates</span>
+          <span class="badge" id="updateCount"></span>
+        </a>
+        <a href="#report" class="sidebar-link">
+          <i class="fas fa-share"></i>
+          <span>Send Report</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+
+        <a href="#" id="logoutBtn" class="sidebar-link">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="section fade-in">
+        <div class="container">
+          <div class="section-title">
+            <h2 id="welcomeMessage">Welcome Back, Student</h2>
+            <p>Your personalized dashboard with all important information</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <!-- Student ID Card -->
+            <div class="card fade-in-up">
+              <div class="card-header">
+                <h3 class="card-title">Student ID</h3>
+                <div class="card-icon">
+                  <i class="fas fa-id-card"></i>
+                </div>
+              </div>
+              <p id="dashboardStudentID" style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">Loading...</p>
+            </div>
+
+            <!-- Grade Card -->
+            <div class="card fade-in-up">
+              <div class="card-header">
+                <h3 class="card-title">Grade & Class</h3>
+                <div class="card-icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+              </div>
+              <p id="currentGrade">Not set</p>
+            </div>
+
+            <!-- Attendance Card -->
+            <!--div class="card fade-in-up" style="animation-delay: 0.1s">
+              <div class="card-header">
+                <h3 class="card-title">Attendance</h3>
+                <div class="card-icon">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+              </div>
+              <div class="attendance-progress">
+                <div class="attendance-bar" id="attendanceProgress" style="width: 0%"></div>
+              </div>
+              <p id="attendanceText">Loading attendance data...</p>
+            </div>-->
+            <!-- Notices Card -->
+            <div class="card fade-in-up" style="animation-delay: 0.2s">
+              <div class="card-header">
+                <h3 class="card-title">Latest Notice</h3>
+                <div class="card-icon">
+                  <i class="fas fa-bullhorn"></i>
+                </div>
+              </div>
+              <div id="notices">
+                <div class="notice-card">
+                  <h4 class="notice-title">Loading notices...</h4>
+                  <p>Please wait while we fetch the latest notices.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Links Card -->
+            <div class="card fade-in-up" style="animation-delay: 0.4s">
+              <div class="card-header">
+                <h3 class="card-title">Quick Links</h3>
+                <div class="card-icon">
+                  <i class="fas fa-link"></i>
+                </div>
+              </div>
+              <div class="quick-links">
+                <a href="#profile" class="btn btn-outline btn-sm quick-link">
+                  <i class="fas fa-user btn-icon"></i> Update Profile
+                </a>
+                <a href="#results" class="btn btn-outline btn-sm mt-2 quick-link">
+                  <i class="fas fa-file-alt btn-icon"></i> View Results
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Section -->
+      <section id="profile" class="section" style="display: none;">
+        <div class="container">
+          <div class="section-title">
+            <h2>Personal Information</h2>
+            <p>Manage your profile details and settings</p>
+          </div>
+
+          <div class="card">
+            <div class="row">
+              <div class="col-md-4 text-center">
+                <img src="https://i.postimg.cc/28gm27sy/2993763.png" alt="Profile Picture" class="profile-pic" id="profilePic" style="width: 150px; height: 150px;">
+                <input type="file" id="profilePicInput" accept="image/*" class="mt-3" style="display: none;">
+                <button class="btn btn-outline mt-3" onclick="document.getElementById('profilePicInput').click()">
+                  <i class="fas fa-camera btn-icon"></i> Change Photo
+                </button>
+                <div id="uploadProgress" style="display:none; margin-top:10px;">
+                  <div class="progress" style="height: 10px;">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                  </div>
+                  <small id="progressText" class="text-muted">0%</small>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <form id="profileForm">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="name">First Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your first name">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="surname">Surname</label>
+                        <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="studentID">Student ID</label>
+                        <input type="text" class="form-control" id="studentID" placeholder="Your Student ID" readonly style="background-color: #f8f9fa; font-weight: 600; color: #003366;">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" readonly>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="phone">Phone</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- Empty column for layout balance -->
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="nationalId">National ID / Birth Number</label>
+                        <input type="text" class="form-control" id="nationalId" placeholder="Enter your national ID or birth number">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="dob">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="gender">Gender</label>
+                        <select class="form-control" id="gender">
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- Empty column to maintain layout balance -->
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="address">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="Enter your address">
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="parent-name">Parent/Guardian Name</label>
+                        <input type="text" class="form-control" id="parent-name" placeholder="Enter parent/guardian name">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="parent-phone">Parent/Guardian Phone</label>
+                        <input type="tel" class="form-control" id="parent-phone" placeholder="Enter parent/guardian phone">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="form">Form</label>
+                        <select class="form-control" id="form">
+                          <option value="">Select Form</option>
+                          <option value="Form 1">Form 1</option>
+                          <option value="Form 2">Form 2</option>
+                          <option value="Form 3">Form 3</option>
+                          <option value="Form 4">Form 4</option>
+                          <option value="Form 5">Form 5</option>
+                          <option value="Form 6">Form 6</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="stream">Class</label>
+                        <select class="form-control" id="stream">
+                          <option value="">Select Class</option>
+                          <option value="G">G</option>
+                          <option value="W">W</option>
+                          <option value="E">E</option>
+                          <option value="Z">Z</option>
+                          <option value="U">U</option>
+                          <option value="SP">SP</option>
+                          <option value="Arts">Arts</option>
+                          <option value="Commercials">Commercials</option>
+                          <option value="Sciences">Sciences</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="healthIssues">Health Issues</label>
+                    <textarea class="form-control" id="healthIssues" rows="2" placeholder="Enter any health issues"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="additionalInfo">Additional Information</label>
+                    <textarea class="form-control" id="additionalInfo" rows="2" placeholder="Enter any additional information"></textarea>
+                  </div>
+
+                  <div class="d-flex justify-content-between mt-4">
+                    <button type="button" class="btn btn-primary" id="saveChangesBtn">
+                      <i class="fas fa-save btn-icon"></i> Save Changes
+                    </button>
+                    <button type="button" class="btn btn-outline" id="changePasswordBtn">
+                      <i class="fas fa-key btn-icon"></i> Reset Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section id="results" class="section" style="display: none;">
+        <div class="container">
+          <div class="section-title">
+            <h2>Academic Results</h2>
+            <p>View your latest report card and performance</p>
+          </div>
+
+          <div id="resultsMessage" class="alert alert-info" style="display: none;"></div>
+
+          <div class="card" id="reportCardContainer" style="display: none;">
+            <div class="card-header">
+              <h3 class="card-title">Report Card</h3>
+              <button class="btn btn-secondary" onclick="exportPDF()">
+                <i class="fas fa-download btn-icon"></i> Download PDF
+              </button>
+            </div>
+
+            <div class="report-header mb-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>Name:</strong> <span id="reportName"></span></p>
+                  <p><strong>Email:</strong> <span id="reportEmail"></span></p>
+                </div>
+                <div class="col-md-6">
+                  <p><strong>Year:</strong> <span id="reportYear"></span></p>
+                  <p><strong>Term:</strong> <span id="reportTerm"></span></p>
+                </div>
+              </div>
+              <p class="mt-3"><strong>Teacher's Comments:</strong> <span id="reportTeacherComments" class="highlight-comments"></span></p>
+            </div>
+
+            <div class="table-responsive">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Performance</th>
+                  </tr>
+                </thead>
+                <tbody id="reportCardBody">
+                  <!-- Results will be populated here -->
+                </tbody>
+              </table>
+            </div>
+
+                   <div class="chart-container mt-4">
+          <canvas id="performanceChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fees & Payments Section -->
+  <section id="fees" class="section" style="display: none;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Fees & Payments</h2>
+        <p>View your payment history, balance, and financial status</p>
+      </div>
+
+      <!-- Student Financial Status -->
+      <div class="dashboard-grid" style="margin-bottom: 2rem;">
+        <!-- Organization/Scholarship Status -->
+        <div class="card fade-in-up">
+          <div class="card-header">
+            <h3 class="card-title">Financial Status</h3>
+            <div class="card-icon">
+              <i class="fas fa-university"></i>
+            </div>
+          </div>
+          <div id="financialStatus">
+            <p><strong>Payment Method:</strong> <span id="paymentMethod">Self-Paid</span></p>
+            <p><strong>Organization:</strong> <span id="organization">N/A</span></p>
+            <p><strong>Scholarship Status:</strong> <span id="scholarshipStatus" class="status-badge status-notset">No Scholarship</span></p>
+          </div>
+        </div>
+
+        <!-- Current Balance -->
+        <div class="card fade-in-up">
+          <div class="card-header">
+            <h3 class="card-title">Current Balance</h3>
+            <div class="card-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+          </div>
+          <div id="balanceInfo">
+            <p class="text-2xl" id="currentBalance">$0.00</p>
+            <p><strong>Term:</strong> <span id="currentTerm">Term 1, Year 1</span></p>
+            <p class="status-badge" id="paymentStatus">Up to Date</p>
+          </div>
+        </div>
+
+        <!-- Academic Progress -->
+        <div class="card fade-in-up">
+          <div class="card-header">
+            <h3 class="card-title">Academic Progress</h3>
+            <div class="card-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+          </div>
+          <div id="academicProgress">
+            <p><strong>Current Year:</strong> <span id="currentYear">Year 1</span></p>
+            <p><strong>Years Remaining:</strong> <span id="yearsRemaining">3</span></p>
+            <p><strong>Terms Completed:</strong> <span id="termsCompleted">0/12</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Term Navigation -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <h3 class="card-title">Terms & Years Navigation</h3>
+        </div>
+        <div class="term-navigation">
+          <div class="year-tabs" id="yearTabs">
+            <button class="year-tab active" data-year="1">Year 1</button>
+            <button class="year-tab" data-year="2">Year 2</button>
+            <button class="year-tab" data-year="3">Year 3</button>
+            <button class="year-tab" data-year="4">Year 4</button>
+          </div>
+          <div class="term-tabs" id="termTabs">
+            <button class="term-tab active" data-term="1">Term 1</button>
+            <button class="term-tab" data-term="2">Term 2</button>
+            <button class="term-tab" data-term="3">Term 3</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment History -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Payment History</h3>
+          <button class="btn btn-secondary" onclick="exportPaymentHistory()">
+            <i class="fas fa-download btn-icon"></i> Download Report
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="results-table" id="paymentHistoryTable">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Year/Term</th>
+                <th>Amount Paid</th>
+                <th>Balance</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+                <th>Receipt</th>
+              </tr>
+            </thead>
+            <tbody id="paymentHistoryBody">
+              <!-- Payment history will be populated here -->
+              <tr>
+                <td colspan="7" class="text-center">
+                  <i class="fas fa-info-circle"></i> No payment history available
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="card" style="margin-top: 2rem;">
+        <div class="card-header">
+          <h3 class="card-title">Activity Log</h3>
+        </div>
+        <div id="activityLog" class="activity-timeline">
+          <!-- Activity timeline will be populated here -->
+          <div class="activity-item">
+            <div class="activity-icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="activity-content">
+              <p><strong>Account Created</strong></p>
+              <p class="activity-meta">Student profile was created</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance History Section -->
+  <section id="performance" class="section" style="display: none;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Performance History</h2>
+        <p>Track your academic progress over time</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Historical Performance</h3>
+          <button class="btn btn-secondary" onclick="exportPerformancePDF()">
+            <i class="fas fa-download btn-icon"></i> Download Report
+          </button>
+        </div>
+
+        <div id="performanceHistoryContainer" class="p-4">
+          <p>Loading performance history...</p>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="overallPerformanceChart"></canvas>
+        </div>
+
+        <div id="analyticsMessage" class="alert alert-info mt-4" style="display: none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat with AI Section -->
+<!-- Chat with AI Section -->
+<section id="chat" class="section" style="display: none;">
+  <div class="container">
+    <div class="section-title">
+      <h2>Chat with AI Assistant</h2>
+      <p>Get instant help with your academic questions</p>
+    </div>
+
+    <div class="card">
+      <div id="chatContainer" class="p-4">
+        <div class="text-center py-5">
+          <div class="ai-icon-container" style="position: relative; display: inline-block;">
+            <i class="fas fa-robot fa-4x text-primary mb-3" style="color: var(--primary);"></i>
+            <div class="ai-pulse" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: rgba(0, 123, 255, 0.3); animation: pulse 2s infinite;"></div>
+          </div>
+          <h4 style="margin-bottom: 15px; color: var(--primary); font-weight: 600;">AI Learning Assistant</h4>
+          <p class="text-muted" style="max-width: 500px; margin: 0 auto 25px;">Start a conversation with our School AI assistant to get help with your studies & questions about the school.</p>
+          <a href="/ai" class="btn btn-primary mt-3" id="startChatBtn" 
+             style="padding: 12px 30px; font-size: 1.1rem; border-radius: 50px; 
+                    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+                    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+                    position: relative; overflow: hidden;
+                    transition: all 0.3s ease;">
+            <i class="fas fa-comments btn-icon"></i> Start Chat Now
+            <span style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; 
+                         background: linear-gradient(to right, rgba(255,255,255,0) 0%, 
+                         rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+                         transform: rotate(30deg);
+                         animation: shine 3s infinite; opacity: 0;"></span>
+          </a>
+          <div class="mt-3" style="font-size: 0.9rem; color: var(--dark-gray);">
+            <i class="fas fa-bolt" style="color: var(--secondary);"></i> Powered by advanced AI technology
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Add these animations to your existing style section */
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 0.4; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+  }
+
+  @keyframes shine {
+    0% { left: -50%; opacity: 0; }
+    20% { opacity: 0.5; }
+    100% { left: 150%; opacity: 0; }
+  }
+
+  #startChatBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+  }
+
+  #startChatBtn:active {
+    transform: translateY(1px);
+  }
+</style>
+  <!-- Updates Section -->
+  <section id="updates" class="section" style="display: none;">
+    <div class="container">
+      <div class="section-title">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h2>School Updates</h2>
+            <p>Latest announcements and notices</p>
+          </div>
+          <button class="btn btn-outline" id="markAllReadBtn">
+            <i class="fas fa-check-circle btn-icon"></i> Mark All as Read
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="updatesList" class="p-4">
+          <div class="notice-card">
+            <h4 class="notice-title">Loading updates...</h4>
+            <p>Please wait while we fetch the latest updates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Activity Log Section -->
+<section id="activity" class="section" style="display: none;">
+  <div class="container">
+    <div class="section-title">
+      <h2>Account Activity Log</h2>
+      <p>Track all your account activities and login history</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Activity Timeline</h3>
+        <div style="display: flex; gap: 10px;" id="activityFilterButtons">
+          <button class="btn btn-secondary activity-filter-btn active" data-filter="all" onclick="filterActivityLog('all', this)">
+            <i class="fas fa-list btn-icon"></i> All
+          </button>
+          <button class="btn btn-outline activity-filter-btn" data-filter="login" onclick="filterActivityLog('login', this)">
+            <i class="fas fa-sign-in-alt btn-icon"></i> Logins
+          </button>
+          <button class="btn btn-outline activity-filter-btn" data-filter="payment" onclick="filterActivityLog('payment', this)">
+            <i class="fas fa-credit-card btn-icon"></i> Payments
+          </button>
+        </div>
+      </div>
+
+      <div id="fullActivityLog" class="p-4">
+        <p class="text-center">Loading activity log...</p>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3 class="card-title">Current Session</h3>
+      </div>
+      <div class="p-4">
+        <div class="detail-row">
+          <span class="detail-label">Session ID:</span>
+          <span class="detail-value" id="currentSessionId">Loading...</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Login Time:</span>
+          <span class="detail-value" id="currentLoginTime">Loading...</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Device:</span>
+          <span class="detail-value" id="currentDevice">Loading...</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Browser:</span>
+          <span class="detail-value" id="currentBrowser">Loading...</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">OS:</span>
+          <span class="detail-value" id="currentOS">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Update the report section in your main dashboard code -->
+<section id="report" class="section" style="display: none;">
+  <div class="container">
+    <div class="section-title">
+      <h2>Send Report</h2>
+      <p>Submit reports or issues to school administration</p>
+    </div>
+
+    <div class="card">
+      <div class="p-4">
+        <div class="report-header" style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--secondary);">
+          <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="School Logo" style="height: 50px; border-radius: 50%; border: 2px solid var(--secondary);" />
+          <h2 style="margin: 0; color: var(--secondary);">Student Report Form</h2>
+        </div>
+
+        <form id="reportForm">
+          <div class="checkbox-group" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+            <input type="checkbox" id="anonymous" name="anonymous" style="width: 18px; height: 18px; accent-color: var(--secondary);" />
+            <label for="anonymous" style="margin: 0; font-size: 0.95rem;">Submit Anonymously</label>
+          </div>
+
+          <div class="form-group" id="nameGroup">
+            <label class="form-label" for="name">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" />
+          </div>
+
+          <div class="form-group" id="classGroup">
+            <label class="form-label">Class Information</label>
+            <div style="display: flex; gap: 15px;">
+              <select class="form-control" id="form" style="flex: 1;">
+                <option value="">Select Form</option>
+                <option value="FORM 1">FORM 1</option>
+                <option value="FORM 2">FORM 2</option>
+                <option value="FORM 3">FORM 3</option>
+                <option value="FORM 4">FORM 4</option>
+                <option value="FORM 5">FORM 5</option>
+                <option value="FORM 6">FORM 6</option>
+              </select>
+              <select class="form-control" id="stream" style="flex: 1;">
+                <option value="">Select Stream</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="G">G</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="message">Report Details</label>
+            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Please provide detailed information about your report..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reportAttachment">Attach Supporting Documents (Optional)</label>
+            <div class="file-input-wrapper" style="position: relative; overflow: hidden; display: inline-block; width: 100%;">
+              <input type="file" class="form-control" id="reportAttachment" accept="image/*,.pdf,.doc,.docx" style="position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;" />
+              <label for="reportAttachment" class="file-input-label" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; background: var(--light-gray); border: 1px dashed var(--medium-gray); border-radius: var(--radius-md); color: var(--text-secondary); text-align: center; transition: var(--transition-normal);">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Click to upload files or drag and drop</span>
+              </label>
+            </div>
+            <small style="display: block; margin-top: 5px; color: var(--secondary);">Max file size: 5MB (Images, PDF, Word)</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-3" id="submitReportBtn">
+            <i class="fas fa-paper-plane btn-icon"></i> Submit Report
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section></main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <p class="mt-3">&copy; 2025 St. Mary's High School. All rights reserved.</p>
+    <p class="text-muted small mt-2">Version 2.0.0</p>
+  </div>
+</footer>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle" id="themeToggle">
+  <i class="fas fa-moon"></i>
+</div>
+
+<!-- Hidden File Input for Profile Pic Update -->
+<input type="file" id="file-input" accept="image/*" style="display:none;" />
+
+<!-- Firebase and App Scripts -->
+<script type="module">
+  // Import centralized Firebase configuration
+  import {
+    auth,
+    db,
+    storage,
+    signOut,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    doc,
+    getDoc,
+    setDoc,
+    updateDoc,
+    collection,
+    query,
+    orderBy,
+    getDocs,
+    limit,
+    arrayUnion,
+    where,
+    addDoc,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    serverTimestamp,
+    fetchSignInMethodsForEmail,
+    EmailAuthProvider
+  } from "/db/firebase.js";
+
+  // DOM Elements
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const mainContent = document.getElementById('mainContent');
+  const themeToggle = document.getElementById('themeToggle');
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.sidebar-link');
+  const quickLinks = document.querySelectorAll('.quick-link');
+
+  // Global variables
+  let performanceChart = null;
+  let overallPerformanceChart = null;
+
+  // Toggle Sidebar
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.add('active');
+    overlay.classList.add('active');
+    mainContent.classList.add('expanded');
+  });
+
+  // Close Sidebar
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    mainContent.classList.remove('expanded');
+  });
+
+  // Theme Toggle
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    themeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 
+      '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  });
+
+  // Set initial theme
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+
+  // Navigation
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // Hide all sections
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+
+      // Show selected section
+      const target = link.getAttribute('href').substring(1);
+      document.getElementById(target).style.display = 'block';
+
+      // Update active link
+      navLinks.forEach(navLink => {
+        navLink.classList.remove('active');
+      });
+      link.classList.add('active');
+
+      // Close sidebar on mobile
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      mainContent.classList.remove('expanded');
+
+      // Load section-specific content
+      switch(target) {
+        case 'dashboard':
+          loadDashboard();
+          break;
+        case 'profile':
+          loadProfile();
+          break;
+        case 'results':
+          loadResults();
+          break;
+        case 'fees':
+          loadFees();
+          break;
+        case 'performance':
+          loadPerformanceHistory();
+          break;
+        case 'activity':
+          loadFullActivityLog(auth.currentUser?.email);
+          break;
+        case 'updates':
+          loadUpdates();
+          break;
+      }
+    });
+  });
+
+  // Quick Links functionality
+  quickLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.getAttribute('href').substring(1);
+
+      // Hide all sections
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+
+      // Show target section
+      document.getElementById(target).style.display = 'block';
+
+      // Update active link in sidebar
+      navLinks.forEach(navLink => {
+        navLink.classList.remove('active');
+        if (navLink.getAttribute('href') === `#${target}`) {
+          navLink.classList.add('active');
+        }
+      });
+
+      // Load section content if needed
+      if (target === 'results') loadResults();
+      if (target === 'profile') loadProfile();
+    });
+  });
+
+  // Utility Functions
+  function showMessage(message, type = 'success') {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: type,
+      title: message,
+      showConfirmButton: false,
+      timer: 3000
+    });
+  }
+
+  function capitalize(str) {
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+  }
+
+  // Navigate to section helper function
+  window.navigateTo = function(sectionId) {
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.sidebar-link');
+
+    // Hide all sections
+    sections.forEach(section => section.style.display = 'none');
+
+    // Show target section
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) targetSection.style.display = 'block';
+
+    // Update active link
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${sectionId}`) {
+        link.classList.add('active');
+      }
+    });
+
+    // Load section content if needed
+    if (sectionId === 'fees') loadFees();
+    if (sectionId === 'activity') loadFullActivityLog(auth.currentUser?.email);
+  };
+
+  // Dashboard Functions
+  async function loadDashboard() {
+    // Dashboard content is now handled by other sections
+  }
+
+  // Profile Functions
+  function loadProfile() {
+    // Already loaded when user data is fetched
+  }
+
+  // Results Functions
+  async function loadResults() {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const studentRef = doc(db, 'students', user.email);
+      const docSnap = await getDoc(studentRef);
+
+      if (docSnap.exists()) {
+        const studentData = docSnap.data();
+        const resultsMessage = document.getElementById('resultsMessage');
+        const reportCardContainer = document.getElementById('reportCardContainer');
+
+        // Enhanced scholarship-aware results access check
+        const canAccessResults = await checkResultsAccess(user.email, studentData);
+        if (!canAccessResults.allowed) {
+          resultsMessage.innerHTML = `
+            <strong>Notice:</strong> ${canAccessResults.reason}
+            ${!canAccessResults.isScholarship ? '' : '<br><small><i class="fas fa-graduation-cap"></i> Scholarship student status verified.</small>'}
+          `;
+          resultsMessage.style.display = 'block';
+          reportCardContainer.style.display = 'none';
+          return;
+        } else if (!studentData.marks || Object.keys(studentData.marks).length === 0) {
+          resultsMessage.innerHTML = `
+            <strong>Notice:</strong> Your results are not yet available. Please check back later.
+          `;
+          resultsMessage.style.display = 'block';
+          reportCardContainer.style.display = 'none';
+          return;
+        } else {
+          resultsMessage.style.display = 'none';
+          reportCardContainer.style.display = 'block';
+
+          // Populate report card
+          document.getElementById('reportName').textContent = 
+            `${capitalize(studentData.firstname || '')} ${capitalize(studentData.surname || '')}`;
+          document.getElementById('reportEmail').textContent = studentData.email || '';
+          document.getElementById('reportYear').textContent = studentData.year || 'Not set';
+          document.getElementById('reportTerm').textContent = studentData.term || 'Not set';
+          document.getElementById('reportTeacherComments').textContent = 
+            studentData.teacherComments || 'No comments available';
+
+          // Populate results table
+          const tbody = document.getElementById('reportCardBody');
+          tbody.innerHTML = '';
+
+          let totalMarks = 0;
+          let subjectCount = 0;
+
+          for (const [subject, data] of Object.entries(studentData.marks)) {
+            const row = document.createElement('tr');
+
+            let performanceIcon = '';
+            if (data.marks >= 75) {
+              performanceIcon = '<i class="fas fa-thumbs-up text-success"></i> Excellent';
+            } else if (data.marks >= 50) {
+              performanceIcon = '<i class="fas fa-check text-primary"></i> Good';
+            } else {
+              performanceIcon = '<i class="fas fa-exclamation-triangle text-danger"></i> Needs Improvement';
+            }
+
+            row.innerHTML = `
+              <td>${subject}</td>
+              <td>${data.marks}</td>
+              <td>${data.grade || 'N/A'}</td>
+              <td>${performanceIcon}</td>
+            `;
+            tbody.appendChild(row);
+
+            totalMarks += Number(data.marks);
+            subjectCount++;
+          }
+
+          // Add average row
+          if (subjectCount > 0) {
+            const average = (totalMarks / subjectCount).toFixed(2);
+            const avgRow = document.createElement('tr');
+            avgRow.innerHTML = `
+              <td colspan="4" class="text-center">
+                <strong>Average: ${average}%</strong>
+              </td>
+            `;
+            tbody.appendChild(avgRow);
+
+
+          }
+
+          // Update performance chart
+          updatePerformanceChart(studentData.marks);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading results:', error);
+      showMessage('Error loading results', 'error');
+    }
+  }
+
+  function updatePerformanceChart(marksData) {
+    const canvas = document.getElementById('performanceChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const subjects = Object.keys(marksData);
+    const marks = subjects.map(subject => marksData[subject].marks);
+
+    // Destroy previous chart if it exists
+    if (performanceChart) {
+      performanceChart.destroy();
+    }
+
+    performanceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: subjects,
+        datasets: [{
+          label: 'Marks',
+          data: marks,
+          backgroundColor: 'rgba(0, 123, 255, 0.5)',
+          borderColor: 'rgba(0, 123, 255, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+              display: true,
+              text: 'Marks (%)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Subjects'
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Performance History Functions
+  async function loadPerformanceHistory() {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const container = document.getElementById('performanceHistoryContainer');
+      container.innerHTML = '<p>Loading performance history...</p>';
+
+      // Query performance records for this student
+      const q = query(
+        collection(db, 'performanceHistory'),
+        where('studentEmail', '==', user.email),
+        orderBy('year', 'desc'),
+        orderBy('term', 'desc')
+      );
+
+      const querySnapshot = await getDocs(q);
+      const performanceRecords = [];
+
+      querySnapshot.forEach((doc) => {
+        performanceRecords.push(doc.data());
+      });
+
+      if (performanceRecords.length === 0) {
+        container.innerHTML = '<p>No performance records found.</p>';
+        return;
+      }
+
+      // Display performance records
+      container.innerHTML = '';
+      performanceRecords.forEach(record => {
+        const recordElement = document.createElement('div');
+        recordElement.className = 'performance-item mb-3 p-3 border rounded';
+        recordElement.innerHTML = `
+          <h4>${record.term} ${record.year}</h4>
+          <p><strong>Average:</strong> ${record.average}%</p>
+          <p><strong>Comments:</strong> ${record.comments || 'No comments'}</p>
+        `;
+        container.appendChild(recordElement);
+      });
+
+      // Update overall performance chart
+      updateOverallPerformanceChart(performanceRecords);
+
+      // Show analytics message
+      showPerformanceAnalytics(performanceRecords);
+    } catch (error) {
+      console.error('Error loading performance history:', error);
+      document.getElementById('performanceHistoryContainer').innerHTML = 
+        '<p class="text-danger">Error loading performance history</p>';
+    }
+  }
+
+  function updateOverallPerformanceChart(records) {
+    const canvas = document.getElementById('overallPerformanceChart');
+    if (!canvas) return;
+
+    // Sort records chronologically
+    const sortedRecords = [...records].sort((a, b) => {
+      if (a.year !== b.year) return a.year - b.year;
+      return a.term.localeCompare(b.term);
+    });
+
+    const labels = sortedRecords.map(r => `${r.term} ${r.year}`);
+    const averages = sortedRecords.map(r => r.average);
+
+    // Destroy previous chart if it exists
+    if (overallPerformanceChart) {
+      overallPerformanceChart.destroy();
+    }
+
+    const ctx = canvas.getContext('2d');
+    overallPerformanceChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Average Marks',
+          data: averages,
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          borderColor: 'rgba(0, 123, 255, 1)',
+          borderWidth: 2,
+          tension: 0.1,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+              display: true,
+              text: 'Average Marks (%)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Term'
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function showPerformanceAnalytics(records) {
+    if (records.length < 2) {
+      document.getElementById('analyticsMessage').innerHTML = 
+        '<p>Not enough data to show performance trends.</p>';
+      document.getElementById('analyticsMessage').style.display = 'block';
+      return;
+    }
+
+    // Sort records chronologically
+    const sortedRecords = [...records].sort((a, b) => {
+      if (a.year !== b.year) return a.year - b.year;
+      return a.term.localeCompare(b.term);
+    });
+
+    const latest = sortedRecords[sortedRecords.length - 1];
+    const previous = sortedRecords[sortedRecords.length - 2];
+    const change = latest.average - previous.average;
+
+    let message = '';
+    if (change > 0) {
+      message = `Your performance has improved by ${change.toFixed(2)}% compared to the previous term. Keep up the good work!`;
+    } else if (change < 0) {
+      message = `Your performance has decreased by ${Math.abs(change).toFixed(2)}% compared to the previous term. Let's work on improvement!`;
+    } else {
+      message = 'Your performance is consistent with the previous term.';
+    }
+
+    document.getElementById('analyticsMessage').innerHTML = message;
+    document.getElementById('analyticsMessage').style.display = 'block';
+  }
+
+  // Updates Functions
+  async function loadUpdates() {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const updatesList = document.getElementById('updatesList');
+      updatesList.innerHTML = '<p>Loading updates...</p>';
+
+      const q = query(
+        collection(db, 'updates'),
+        orderBy('timestamp', 'desc'),
+        limit(10)
+      );
+
+      const querySnapshot = await getDocs(q);
+      let unreadCount = 0;
+      let updatesHtml = '';
+
+      querySnapshot.forEach(doc => {
+        const update = doc.data();
+        const isRead = update.readBy && update.readBy.includes(user.email);
+
+        if (!isRead) unreadCount++;
+
+        let date = "No date available";
+
+        if (update.timestamp) {
+          try {
+            // Handle Firestore Timestamp object
+            if (typeof update.timestamp.toDate === 'function') {
+              date = update.timestamp.toDate().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+            } 
+            // Handle Date object
+            else if (update.timestamp instanceof Date) {
+              date = update.timestamp.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+            }
+            // Handle timestamp string
+            else if (typeof update.timestamp === 'string') {
+              date = new Date(update.timestamp).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+            }
+            // Handle Unix timestamp (seconds)
+            else if (typeof update.timestamp === 'number') {
+              date = new Date(update.timestamp * 1000).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+            }
+          } catch (error) {
+            console.error('Error formatting date:', error);
+            date = "Invalid date";
+          }
+        }
+
+        updatesHtml += `
+          <div class="notice-card ${isRead ? 'read' : 'unread'}" data-id="${doc.id}">
+            <h4 class="notice-title">${update.updateTitle || 'No title'}</h4>
+            <p>${update.updateContent || ''}</p>
+            <div class="notice-meta">
+              Posted by ${update.teacherName || 'Staff'} on 
+              ${date}
+              ${isRead ? '<span class="badge bg-success float-end">Read</span>' : ''}
+            </div>
+          </div>
+        `;
+      });
+
+      updatesList.innerHTML = updatesHtml || '<p>No updates available.</p>';
+
+      // Update unread count badge
+      const updateCountBadge = document.getElementById('updateCount');
+      if (unreadCount > 0) {
+        updateCountBadge.textContent = unreadCount;
+        updateCountBadge.style.display = 'inline-block';
+      } else {
+        updateCountBadge.style.display = 'none';
+      }
+
+      // Add click handlers to mark updates as read
+      document.querySelectorAll('.notice-card.unread').forEach(card => {
+        card.addEventListener('click', () => markUpdateAsRead(card));
+      });
+    } catch (error) {
+      console.error('Error loading updates:', error);
+      document.getElementById('updatesList').innerHTML = 
+        '<p class="text-danger">Error loading updates</p>';
+    }
+  }
+
+  async function markUpdateAsRead(card) {
+    const updateId = card.getAttribute('data-id');
+    const user = auth.currentUser;
+
+    if (!user || !updateId) return;
+
+    try {
+      await updateDoc(doc(db, 'updates', updateId), {
+        readBy: arrayUnion(user.email)
+      });
+
+      card.classList.remove('unread');
+      card.classList.add('read');
+
+      // Update the read badge
+      const meta = card.querySelector('.notice-meta');
+      if (meta) {
+        meta.innerHTML += '<span class="badge bg-success float-end">Read</span>';
+      }
+
+      // Decrement unread count
+      const updateCountBadge = document.getElementById('updateCount');
+      let count = parseInt(updateCountBadge.textContent) || 0;
+      count--;
+
+      if (count > 0) {
+        updateCountBadge.textContent = count;
+      } else {
+        updateCountBadge.style.display = 'none';
+      }
+    } catch (error) {
+      console.error('Error marking update as read:', error);
+    }
+  }
+
+// Add this to your existing Firebase script
+document.getElementById('anonymous').addEventListener('change', function() {
+  const nameGroup = document.getElementById('nameGroup');
+  const classGroup = document.getElementById('classGroup');
+  if (this.checked) {
+    nameGroup.style.display = 'none';
+    classGroup.style.display = 'none';
+  } else {
+    nameGroup.style.display = 'block';
+    classGroup.style.display = 'block';
+  }
+});
+
+// Handle file selection for report attachment
+document.getElementById('reportAttachment').addEventListener('change', function() {
+  const fileInputLabel = this.nextElementSibling;
+  if (this.files.length > 0) {
+    const fileName = this.files[0].name;
+    fileInputLabel.innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
+    fileInputLabel.style.border = "1px solid var(--secondary)";
+    fileInputLabel.style.background = "rgba(214, 158, 46, 0.1)";
+  } else {
+    fileInputLabel.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Click to upload files or drag and drop';
+    fileInputLabel.style.border = "1px dashed var(--medium-gray)";
+    fileInputLabel.style.background = "var(--light-gray)";
+  }
+});
+
+// Report form submission
+document.getElementById('reportForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const submitBtn = document.getElementById('submitReportBtn');
+  const user = auth.currentUser;
+
+  if (!user) return;
+
+  try {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin btn-icon"></i> Submitting...';
+
+    const name = document.getElementById('name').value;
+    const form = document.getElementById('form').value;
+    const stream = document.getElementById('stream').value;
+    const message = document.getElementById('message').value;
+    const attachment = document.getElementById('reportAttachment').files[0];
+    const isAnonymous = document.getElementById('anonymous').checked;
+
+    // Validate required fields
+    if (!message) {
+      showMessage('Please provide the details of your report', 'error');
+      return;
+    }
+
+    if (!isAnonymous && (!name || !form)) {
+      showMessage('Please provide your name and class information', 'error');
+      return;
+    }
+
+    let attachmentUrl = null;
+    if (attachment) {
+      // Check file size (5MB limit)
+      if (attachment.size > 5 * 1024 * 1024) {
+        showMessage('File size exceeds 5MB limit', 'error');
+        return;
+      }
+
+      const storageRef = ref(storage, `reports/${user.email}/${Date.now()}_${attachment.name}`);
+      await uploadBytes(storageRef, attachment);
+      attachmentUrl = await getDownloadURL(storageRef);
+    }
+
+    // Prepare report data
+    const reportData = {
+      studentEmail: user.email,
+      name: isAnonymous ? 'Anonymous' : name,
+      class: isAnonymous ? 'Anonymous' : `${form} ${stream}`.trim(),
+      message,
+      attachmentUrl,
+      timestamp: new Date().toISOString(),
+      status: 'pending',
+      isAnonymous,
+      read: false
+    };
+
+    // Add to Firestore
+    await addDoc(collection(db, 'reports'), reportData);
+
+    showMessage('Report submitted successfully! We will review it shortly.');
+    document.getElementById('reportForm').reset();
+
+    // Reset file input display
+    const fileInputLabel = document.getElementById('reportAttachment').nextElementSibling;
+    fileInputLabel.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Click to upload files or drag and drop';
+    fileInputLabel.style.border = '1px dashed var(--medium-gray)';
+    fileInputLabel.style.background = 'var(--light-gray)';
+
+  } catch (error) {
+    console.error('Error submitting report:', error);
+    showMessage('Error submitting report. Please try again.', 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-paper-plane btn-icon"></i> Submit Report';
+  }
+});
+
+  // Mark all updates as read
+  document.getElementById('markAllReadBtn').addEventListener('click', async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      const q = query(
+        collection(db, 'updates'),
+        orderBy('timestamp', 'desc'),
+        limit(10)
+      );
+
+      const querySnapshot = await getDocs(q);
+      const batch = [];
+
+      querySnapshot.forEach(doc => {
+        batch.push(updateDoc(doc.ref, {
+          readBy: arrayUnion(user.email)
+        }));
+      });
+
+      await Promise.all(batch);
+
+      // Update UI
+      document.querySelectorAll('.notice-card').forEach(card => {
+        card.classList.remove('unread');
+        card.classList.add('read');
+
+        const meta = card.querySelector('.notice-meta');
+        if (meta && !meta.innerHTML.includes('Read</span>')) {
+          meta.innerHTML += '<span class="badge bg-success float-end">Read</span>';
+        }
+      });
+
+      document.getElementById('updateCount').style.display = 'none';
+      showMessage('All updates marked as read');
+    } catch (error) {
+      console.error('Error marking all updates as read:', error);
+      showMessage('Error marking updates as read', 'error');
+    }
+  });
+
+  // Notices Functions
+  async function loadNotices() {
+    try {
+      const noticesContainer = document.getElementById('notices');
+      noticesContainer.innerHTML = '<p>Loading notices...</p>';
+
+      const q = query(
+        collection(db, 'updates'),
+        orderBy('timestamp', 'desc'),
+        limit(1)
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        noticesContainer.innerHTML = `
+          <div class="notice-card">
+            <h4 class="notice-title">No notices available</h4>
+            <p>Check back later for updates from the school.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const notice = querySnapshot.docs[0].data();
+      let dateStr = 'No date available';
+      
+      if (notice.timestamp) {
+        try {
+          // Handle Firestore Timestamp object
+          if (typeof notice.timestamp.toDate === 'function') {
+            dateStr = notice.timestamp.toDate().toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          } 
+          // Handle Date object
+          else if (notice.timestamp instanceof Date) {
+            dateStr = notice.timestamp.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          }
+          // Handle timestamp string
+          else if (typeof notice.timestamp === 'string') {
+            dateStr = new Date(notice.timestamp).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          }
+          // Handle Unix timestamp (seconds)
+          else if (typeof notice.timestamp === 'number') {
+            dateStr = new Date(notice.timestamp * 1000).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          }
+        } catch (error) {
+          console.error('Error formatting date:', error);
+          dateStr = "Invalid date";
+        }
+      }
+
+      noticesContainer.innerHTML = `
+        <div class="notice-card">
+          <h4 class="notice-title">${notice.updateTitle || 'School Notice'}</h4>
+          <p>${notice.updateContent || 'No content available'}</p>
+          <div class="notice-meta">
+            Posted by ${notice.teacherName || 'Staff'} on ${dateStr}
+          </div>
+        </div>
+      `;
+    } catch (error) {
+      console.error('Error loading notices:', error);
+      document.getElementById('notices').innerHTML = `
+        <div class="notice-card">
+          <h4 class="notice-title">Error loading notices</h4>
+          <p>Please try again later.</p>
+        </div>
+      `;
+    }
+  }
+
+// Update the exportPDF function
+window.exportPDF = function() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Add school logo
+  const logoUrl = 'https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg';
+  const img = new Image();
+  img.src = logoUrl;
+
+  // Wait for image to load
+  img.onload = function() {
+    doc.addImage(img, 'JPEG', 14, 10, 30, 30);
+
+    // Add header text
+    doc.setFontSize(16);
+    doc.setTextColor(0, 51, 102);
+    doc.text('St. Mary\'s High School', 105, 20, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text('Official Report Card', 105, 27, { align: 'center' });
+
+    // Add security features
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text(`Document ID: ${generateDocumentId()}`, 14, 45);
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 160, 45);
+
+    // Add watermark
+    doc.setFontSize(40);
+    doc.setTextColor(200, 200, 200);
+    doc.text('OFFICIAL', 40, 150, { angle: 45 });
+
+    // Add student info
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Name: ${document.getElementById('reportName').textContent}`, 14, 55);
+    doc.text(`Term: ${document.getElementById('reportTerm').textContent} ${document.getElementById('reportYear').textContent}`, 14, 60);
+    doc.text(`Comments: ${document.getElementById('reportTeacherComments').textContent}`, 14, 65);
+
+    // Add table
+    const rows = [];
+    document.querySelectorAll('#reportCardBody tr').forEach(tr => {
+      const row = [];
+      tr.querySelectorAll('td').forEach(td => {
+        row.push(td.textContent);
+      });
+      if (row.length > 0) {
+        rows.push(row);
+      }
+    });
+
+    doc.autoTable({
+      head: [['Subject', 'Marks', 'Grade', 'Performance']],
+      body: rows,
+      startY: 75,
+      headStyles: {
+        fillColor: [0, 51, 102],
+        textColor: [255, 255, 255]
+      },
+      alternateRowStyles: {
+        fillColor: [240, 240, 240]
+      }
+    });
+
+    // Add security footer
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Verification: ${generateVerificationHash()}`, 14, doc.internal.pageSize.height - 10);
+    doc.text('Official Document - St. Mary\'s High School', 105, doc.internal.pageSize.height - 10, { align: 'center' });
+
+    doc.save(`report_card_${generateDocumentId()}.pdf`);
+  };
+
+  // Fallback if image fails to load
+  img.onerror = function() {
+    // Proceed without logo if image fails to load
+    doc.setFontSize(16);
+    doc.setTextColor(0, 51, 102);
+    doc.text('St. Mary\'s High School', 105, 15, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text('Official Report Card', 105, 22, { align: 'center' });
+
+    // Rest of the document as above...
+  };
+};
+
+// Helper functions for security features
+function generateDocumentId() {
+  return 'SMHS-' + Math.random().toString(36).substring(2, 10).toUpperCase() + 
+         '-' + new Date().getFullYear();
+}
+
+function generateVerificationHash() {
+  // In a real implementation, this would be a server-generated hash
+  return 'VER-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+  // Profile picture upload
+  document.getElementById('profilePicInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const uploadProgress = document.getElementById('uploadProgress');
+
+    uploadProgress.style.display = 'block';
+
+    reader.onload = async (event) => {
+      const base64Image = event.target.result;
+      const user = auth.currentUser;
+
+      if (!user) return;
+
+      try {
+        // Update Firestore
+        await updateDoc(doc(db, 'students', user.email), {
+          profilePic: base64Image
+        });
+
+        // Update UI
+        document.getElementById('profilePic').src = base64Image;
+        document.getElementById('smallProfilePic').src = base64Image;
+        showMessage('Profile picture updated!');
+      } catch (error) {
+        console.error('Error updating profile picture:', error);
+        showMessage('Error updating profile picture', 'error');
+      } finally {
+        uploadProgress.style.display = 'none';
+      }
+    };
+
+    reader.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percent = Math.round((event.loaded / event.total) * 100);
+        progressBar.style.width = `${percent}%`;
+        progressText.textContent = `${percent}%`;
+      }
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  // Small profile picture click
+  document.getElementById('smallProfilePic').addEventListener('click', () => {
+    document.getElementById('profilePicInput').click();
+  });
+
+  // Initialize the app when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Show dashboard by default
+    document.getElementById('dashboard').style.display = 'block';
+
+    // Check auth state
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User is signed in
+        console.log('User is signed in:', user.email);
+
+        // Load user data
+        await loadUserData(user.email);
+
+        // Load initial data for dashboard
+        loadDashboard();
+        loadNotices();
+        loadResults();
+
+        // Initialize session start time
+        if (!sessionStorage.getItem('sessionStartTime')) {
+          sessionStorage.setItem('sessionStartTime', new Date().toISOString());
+        }
+      } else {
+        // User is signed out
+        window.location.href = '/login';
+      }
+    });
+  });
+
+  // Load user data from Firestore
+  async function loadUserData(email) {
+    try {
+      const docRef = doc(db, 'students', email);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+
+        // Update UI with user data
+        document.getElementById('welcomeMessage').textContent = `Welcome, ${capitalize(userData.firstname || 'Student')}`;
+        document.getElementById('studentID').value = userData.studentID || 'Not Assigned';
+        document.getElementById('dashboardStudentID').textContent = userData.studentID || 'Not Assigned';
+        document.getElementById('name').value = userData.firstname || '';
+        document.getElementById('surname').value = userData.surname || '';
+        document.getElementById('email').value = userData.email || '';
+        document.getElementById('phone').value = userData.phone || '';
+        document.getElementById('nationalId').value = userData.nationalId || '';
+        document.getElementById('dob').value = userData.dob || '';
+        document.getElementById('gender').value = userData.gender || 'male';
+        document.getElementById('address').value = userData.address || '';
+        document.getElementById('parent-name').value = userData.parentName || '';
+        document.getElementById('parent-phone').value = userData.parentPhone || '';
+        document.getElementById('healthIssues').value = userData.healthIssues || '';
+        document.getElementById('additionalInfo').value = userData.additionalInfo || '';
+        document.getElementById('form').value = userData.form || '';
+        document.getElementById('stream').value = userData.stream || '';
+
+        if (userData.profilePic) {
+          document.getElementById('profilePic').src = userData.profilePic;
+          document.getElementById('smallProfilePic').src = userData.profilePic;
+        }
+
+        if (userData.form && userData.stream) {
+          document.getElementById('currentGrade').textContent = `${userData.form} ${userData.stream}`;
+        }
+
+        if (userData.attendance) {
+          document.getElementById('attendanceProgress').style.width = `${userData.attendance}%`;
+          document.getElementById('attendanceText').textContent = `Attendance: ${userData.attendance}%`;
+        }
+      } else {
+        console.log('No user data found');
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+      showMessage('Error loading user data', 'error');
+    }
+  }
+
+// Save profile changes
+document.getElementById('saveChangesBtn').addEventListener('click', async () => {
+  const saveBtn = document.getElementById('saveChangesBtn');
+  const user = auth.currentUser;
+
+  if (!user) return;
+
+  try {
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin btn-icon"></i> Saving...';
+
+    const userData = {
+      firstname: document.getElementById('name').value.trim(),
+      surname: document.getElementById('surname').value.trim(),
+      email: user.email,
+      phone: document.getElementById('phone').value.trim(),
+      nationalId: document.getElementById('nationalId').value.trim(),
+      dob: document.getElementById('dob').value,
+      gender: document.getElementById('gender').value,
+      address: document.getElementById('address').value.trim(),
+      parentName: document.getElementById('parent-name').value.trim(),  // Fixed ID here
+      parentPhone: document.getElementById('parent-phone').value.trim(),
+      healthIssues: document.getElementById('healthIssues').value.trim(),
+      additionalInfo: document.getElementById('additionalInfo').value.trim(),
+      form: document.getElementById('form').value,
+      stream: document.getElementById('stream').value,
+      lastUpdated: new Date().toISOString()
+    };
+
+    // Validate required fields
+    if (!userData.firstname || !userData.surname) {
+      throw new Error('First name and surname are required');
+    }
+
+    await setDoc(doc(db, 'students', user.email), userData, { merge: true });
+    showMessage('Profile updated successfully!');
+
+    // Update welcome message and grade display
+    document.getElementById('welcomeMessage').textContent = `Welcome, ${capitalize(userData.firstname)}`;
+    if (userData.form && userData.stream) {
+      document.getElementById('currentGrade').textContent = `${userData.form} ${userData.stream}`;
+    }
+  } catch (error) {
+    console.error('Error saving profile:', error);
+    showMessage(error.message || 'Error saving profile', 'error');
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Save Changes';
+  }
+});
+      // Reset password or setup password for Google-only accounts
+      document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+          // Check if user has password auth method
+          const methods = await fetchSignInMethodsForEmail(auth, user.email);
+
+          if (methods.includes('password')) {
+            // User has password - send reset email
+            await sendPasswordResetEmail(auth, user.email);
+            showMessage('Password reset email sent. Please check your inbox.');
+          } else if (methods.includes('google.com')) {
+            // Google-only user - offer to set up password
+            const { value: newPassword } = await Swal.fire({
+              title: 'Set Up Password',
+              html: 'You currently sign in with Google only. Would you like to set up a password for email/password login?',
+              input: 'password',
+              inputPlaceholder: 'Enter a new password',
+              showCancelButton: true,
+              confirmButtonColor: '#003366',
+              cancelButtonColor: '#dc3545',
+              confirmButtonText: 'Set Password',
+              cancelButtonText: 'Cancel',
+              inputValidator: (value) => {
+                if (!value) {
+                  return 'Please enter a password';
+                }
+                if (value.length < 8) {
+                  return 'Password must be at least 8 characters';
+                }
+              }
+            });
+
+            if (newPassword) {
+              try {
+                const credential = EmailAuthProvider.credential(user.email, newPassword);
+                await user.linkWithCredential(credential); // Use user.linkWithCredential
+
+                await Swal.fire({
+                  title: "Password Set Successfully!",
+                  text: "You can now login with either Google or email/password.",
+                  icon: "success",
+                  confirmButtonColor: "#003366"
+                });
+              } catch (linkError) {
+                console.error('Error setting password:', linkError);
+                showMessage('Failed to set up password. Please try again.', 'error');
+              }
+            }
+          } else {
+            // Other auth methods
+            showMessage('Unable to reset password for this account type.', 'error');
+          }
+        } catch (error) {
+          console.error('Error with password reset/setup:', error);
+          showMessage('Error with password operation', 'error');
+        }
+      });
+
+      // Logout with session tracking
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+          // Track logout activity with current session
+          await trackAccountActivity('logout', { 
+            logoutTime: new Date().toISOString(),
+            sessionDuration: getSessionDuration() 
+          });
+
+          // Clear session data
+          clearSession();
+
+          // Sign out from Firebase
+          await signOut(auth);
+          window.location.href = '/login';
+        } catch (error) {
+          console.error('Error signing out:', error);
+          showMessage('Error signing out', 'error');
+        }
+      });
+
+      // Get session duration helper
+      function getSessionDuration() {
+        const startTime = sessionStorage.getItem('sessionStartTime');
+        if (startTime) {
+          const duration = Date.now() - new Date(startTime).getTime();
+          return Math.round(duration / 1000); // Duration in seconds
+        }
+        return 0;
+      }
+
+      // ========== FEES SECTION FUNCTIONALITY ==========
+
+      // Term System Logic - Enhanced with Calendar-based Terms
+      const TERM_DEFINITIONS = {
+        1: { name: 'Term 1', months: [1, 2, 3, 4], label: 'Jan - Apr' },
+        2: { name: 'Term 2', months: [5, 6, 7, 8], label: 'May - Aug' },
+        3: { name: 'Term 3', months: [9, 10, 11, 12], label: 'Sept - Dec' }
+      };
+
+      // Helper Functions for Account Activity and Device Info
+      function getDeviceInfo() {
+        const userAgent = navigator.userAgent;
+        const platform = navigator.platform;
+        const screen = window.screen;
+
+        return {
+          userAgent: userAgent,
+          deviceType: /Mobile|Android|iPhone|iPad/.test(userAgent) ? 'Mobile' : 'Desktop',
+          browser: getBrowserName(userAgent),
+          os: getOSName(userAgent, platform),
+          screen: {
+            width: screen.width,
+            height: screen.height,
+            colorDepth: screen.colorDepth
+          },
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          language: navigator.language
+        };
+      }
+
+      function getBrowserName(userAgent) {
+        if (userAgent.includes('Chrome')) return 'Chrome';
+        if (userAgent.includes('Firefox')) return 'Firefox';
+        if (userAgent.includes('Safari')) return 'Safari';
+        if (userAgent.includes('Edge')) return 'Edge';
+        return 'Unknown';
+      }
+
+      function getOSName(userAgent, platform) {
+        if (userAgent.includes('Windows')) return 'Windows';
+        if (userAgent.includes('Mac')) return 'macOS';
+        if (userAgent.includes('Linux')) return 'Linux';
+        if (userAgent.includes('Android')) return 'Android';
+        if (userAgent.includes('iOS')) return 'iOS';
+        return platform || 'Unknown';
+      }
+
+      // Session Management - Persistent Session ID
+      function getOrCreateSessionId() {
+        let sessionId = sessionStorage.getItem('studentSessionId');
+        if (!sessionId) {
+          sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          sessionStorage.setItem('studentSessionId', sessionId);
+          sessionStorage.setItem('sessionStartTime', new Date().toISOString());
+        }
+        return sessionId;
+      }
+
+      // Clear session on logout
+      function clearSession() {
+        sessionStorage.removeItem('studentSessionId');
+        sessionStorage.removeItem('sessionStartTime');
+      }
+
+      // Generate session ID (legacy support)
+      function generateSessionId() {
+        return getOrCreateSessionId();
+      }
+
+      // Track account activity
+      async function trackAccountActivity(action, details = {}) {
+        try {
+          const user = auth.currentUser;
+          if (!user) return;
+
+          const deviceInfo = getDeviceInfo();
+          const timestamp = new Date();
+
+          const activityData = {
+            studentEmail: user.email,
+            action: action,
+            timestamp: timestamp.toISOString(),
+            timezone: deviceInfo.timezone,
+            deviceInfo: {
+              type: deviceInfo.deviceType,
+              browser: deviceInfo.browser,
+              os: deviceInfo.os,
+              screen: deviceInfo.screen,
+              userAgent: deviceInfo.userAgent
+            },
+            sessionId: getOrCreateSessionId(),
+            additionalDetails: details,
+            createdAt: serverTimestamp()
+          };
+
+          // Store activity in Firebase
+          await addDoc(collection(db, "accountActivity"), activityData);
+
+          // Also update student fees record with latest activity
+          const feesRef = doc(db, 'fees', user.email);
+          const feesDoc = await getDoc(feesRef);
+
+          if (feesDoc.exists()) {
+            const currentData = feesDoc.data();
+            const accountActivity = currentData.accountActivity || [];
+
+            // Add new activity and keep last 20 activities
+            accountActivity.unshift(activityData);
+            if (accountActivity.length > 20) {
+              accountActivity.splice(20);
+            }
+
+            await updateDoc(feesRef, {
+              accountActivity: accountActivity,
+              lastActivity: activityData,
+              lastLoginAt: timestamp.toISOString()
+            });
+          }
+
+        } catch (err) {
+          console.error("Error tracking account activity:", err);
+        }
+      }
+
+      // Get device icon
+      function getDeviceIcon(deviceType) {
+        const icons = {
+          'Mobile': 'mobile-alt',
+          'Desktop': 'desktop',
+          'Tablet': 'tablet-alt'
+        };
+        return icons[deviceType] || 'question-circle';
+      }
+
+      // Get payment method icon
+      function getPaymentMethodIcon(method) {
+        const icons = {
+          'Cash': 'money-bill',
+          'Bank Transfer': 'university',
+          'Mobile Money': 'mobile-alt',
+          'Credit Card': 'credit-card',
+          'Cheque': 'file-invoice-dollar'
+        };
+        return icons[method] || 'money-bill';
+      }
+
+      // Display enhanced payment history with term info
+      function displayEnhancedPaymentHistory(payments, termInfo) {
+        const tbody = document.getElementById('paymentHistoryBody');
+
+        if (payments.length > 0) {
+          tbody.innerHTML = '';
+
+          payments.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          payments.forEach(payment => {
+            const row = document.createElement('tr');
+            const termLabel = termInfo ? `${termInfo.name} (${termInfo.label})` : `Term ${payment.term || 'N/A'}`;
+            row.innerHTML = `
+              <td>${formatDateTime(payment.date)}</td>
+              <td>${payment.academicYear || 'N/A'} / ${termLabel}</td>
+              <td>$${payment.amount.toFixed(2)}</td>
+              <td>$${payment.remainingBalance.toFixed(2)}</td>
+              <td>
+                <i class="fas fa-${getPaymentMethodIcon(payment.method)}"></i>
+                ${payment.method || 'Cash'}
+              </td>
+              <td><span class="status-badge status-paid">Paid</span></td>
+              <td>
+                <button class="receipt-btn" onclick="downloadReceipt('${payment.id}')">
+                  <i class="fas fa-download"></i> Receipt
+                </button>
+                ${payment.transactionId ? `<br><small>ID: ${payment.transactionId}</small>` : ''}
+              </td>
+            `;
+            tbody.appendChild(row);
+          });
+        } else {
+          const termName = termInfo ? termInfo.name : 'this selection';
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="text-center">
+                <i class="fas fa-info-circle"></i> No payment history for ${termName}
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      // Load account activity - Enhanced
+      async function loadAccountActivity(email) {
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+            const accountActivity = data.accountActivity || [];
+
+            const logContainer = document.getElementById('activityLog');
+            if (!logContainer) {
+              console.warn('Activity log container not found');
+              return;
+            }
+
+            if (accountActivity.length > 0) {
+              logContainer.innerHTML = accountActivity
+                .sort((a, b) => new Date(b.timestamp || b.date) - new Date(a.timestamp || a.date))
+                .slice(0, 15) // Show last 15 activities
+                .map(activity => {
+                  const icon = getActivityIcon(activity.action || activity.type);
+                  const description = getActivityDescription(activity.action || activity.type);
+                  const deviceInfo = activity.deviceInfo || {};
+
+                  return `
+                    <div class="activity-item">
+                      <div class="activity-icon">
+                        <i class="${icon}"></i>
+                      </div>
+                      <div class="activity-content">
+                        <div class="activity-description">${description}</div>
+                        <div class="activity-details">
+                          <span><i class="fas fa-${getDeviceIcon(deviceInfo.type)}"></i> ${deviceInfo.type || 'Unknown'}</span>
+                          <span><i class="fas fa-globe"></i> ${deviceInfo.browser || 'Unknown'}</span>
+                          <span><i class="fas fa-clock"></i> ${formatDateTime(activity.timestamp || activity.date)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                }).join('');
+            } else {
+              logContainer.innerHTML = '<p class="text-center">No activity recorded</p>';
+            }
+          }
+        } catch (error) {
+          console.error('Error loading account activity:', error);
+        }
+      }
+
+      // Load full activity log for Activity section
+      async function loadFullActivityLog(email) {
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+
+          let allActivities = [];
+
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+
+            // Add account activities
+            allActivities = [...(data.accountActivity || [])];
+
+            // Add payment history as activities with full details
+            if (data.paymentHistory && data.paymentHistory.length > 0) {
+              data.paymentHistory.forEach(payment => {
+                // Safely convert to numbers
+                const amount = parseFloat(payment.amount) || 0;
+                const remainingBalance = parseFloat(payment.remainingBalance) || 0;
+
+                allActivities.push({
+                  action: 'payment_made',
+                  type: 'payment_made',
+                  timestamp: payment.date,
+                  description: `Payment of $${amount.toFixed(2)}`,
+                  deviceInfo: payment.deviceInfo || {},
+                  sessionId: payment.sessionId || '',
+                  additionalDetails: {
+                    'Amount Paid': `$${amount.toFixed(2)}`,
+                    'Balance After': `$${remainingBalance.toFixed(2)}`,
+                    'Payment Method': payment.method || 'Cash',
+                    'Academic Year': payment.academicYear || 'N/A',
+                    'Term': payment.term ? `Term ${payment.term}` : 'N/A',
+                    'Transaction ID': payment.transactionId || payment.id || 'N/A'
+                  }
+                });
+              });
+            }
+
+            // Add balance information from academic years - show ALL terms
+            if (data.academicYears) {
+              Object.entries(data.academicYears).forEach(([year, yearData]) => {
+                if (yearData.terms) {
+                  Object.entries(yearData.terms).forEach(([termNum, termData]) => {
+                    // Safely convert to numbers
+                    const balance = parseFloat(termData.balance) || 0;
+                    const paid = parseFloat(termData.paid) || 0;
+                    const termBalance = balance - paid;
+
+                    // Show all terms, not just paid ones
+                    allActivities.push({
+                      action: 'balance_updated',
+                      type: 'balance_updated',
+                      timestamp: termData.lastUpdated || new Date().toISOString(),
+                      description: `${year} Term ${termNum} - Balance Status`,
+                      deviceInfo: {},
+                      additionalDetails: {
+                        'Academic Year': year,
+                        'Term': `Term ${termNum}`,
+                        'Total Balance': `$${balance.toFixed(2)}`,
+                        'Amount Paid': `$${paid.toFixed(2)}`,
+                        'Remaining Balance': `$${termBalance.toFixed(2)}`,
+                        'Status': termData.status || (termBalance <= 0 ? 'paid' : 'unpaid')
+                      }
+                    });
+                  });
+                }
+              });
+            }
+          }
+
+          // Sort activities by timestamp
+          allActivities.sort((a, b) => new Date(b.timestamp || b.date) - new Date(a.timestamp || a.date));
+
+          window.fullActivityData = allActivities;
+          displayFullActivityLog(allActivities);
+
+          // Update current session info
+          const deviceInfo = getDeviceInfo();
+          const currentSessionId = document.getElementById('currentSessionId');
+          const currentLoginTime = document.getElementById('currentLoginTime');
+          const currentDevice = document.getElementById('currentDevice');
+          const currentBrowser = document.getElementById('currentBrowser');
+          const currentOS = document.getElementById('currentOS');
+
+          if (currentSessionId) currentSessionId.textContent = getOrCreateSessionId();
+          if (currentLoginTime) currentLoginTime.textContent = sessionStorage.getItem('sessionStartTime') || new Date().toLocaleString();
+          if (currentDevice) currentDevice.textContent = deviceInfo.deviceType;
+          if (currentBrowser) currentBrowser.textContent = deviceInfo.browser;
+          if (currentOS) currentOS.textContent = deviceInfo.os;
+
+        } catch (error) {
+          console.error('Error loading full activity log:', error);
+          const logContainer = document.getElementById('fullActivityLog');
+          if (logContainer) {
+            logContainer.innerHTML = '<p class="text-center text-danger">Error loading activity log. Please refresh the page.</p>';
+          }
+        }
+      }
+
+      // Display full activity log
+      function displayFullActivityLog(activities) {
+        const logContainer = document.getElementById('fullActivityLog');
+
+        if (activities.length === 0) {
+          logContainer.innerHTML = '<p class="text-center">No activity recorded</p>';
+          return;
+        }
+
+        logContainer.innerHTML = activities.map(activity => {
+          const icon = getActivityIcon(activity.action || activity.type);
+          const description = activity.description || getActivityDescription(activity.action || activity.type);
+          const deviceInfo = activity.deviceInfo || {};
+          const details = activity.additionalDetails || {};
+          const isPayment = (activity.action || activity.type) === 'payment_made';
+          const isBalance = (activity.action || activity.type) === 'balance_updated';
+
+          return `
+            <div class="activity-item" data-action="${activity.action || activity.type}" style="border-left: 4px solid ${isPayment ? 'var(--success)' : isBalance ? 'var(--warning)' : 'var(--primary)'}; margin-bottom: 15px; padding-left: 15px;">
+              <div class="activity-icon">
+                <i class="${icon}"></i>
+              </div>
+              <div class="activity-content">
+                <p class="activity-description" style="font-weight: 600; color: var(--primary); margin-bottom: 8px; font-size: 1rem;">
+                  ${description}
+                </p>
+                <div class="activity-details" style="display: flex; flex-wrap: wrap; gap: 15px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">
+                  ${deviceInfo.type ? `<span><i class="fas fa-${getDeviceIcon(deviceInfo.type)}"></i> ${deviceInfo.type}</span>` : ''}
+                  ${deviceInfo.browser ? `<span><i class="fas fa-globe"></i> ${deviceInfo.browser}${deviceInfo.os ? ' on ' + deviceInfo.os : ''}</span>` : ''}
+                  <span><i class="fas fa-clock"></i> ${formatDateTime(activity.timestamp || activity.date)}</span>
+                  ${activity.sessionId ? `<span><i class="fas fa-fingerprint"></i> ${activity.sessionId.substring(0, 15)}...</span>` : ''}
+                </div>
+                ${Object.keys(details).length > 0 ? `
+                  <div style="margin-top: 10px; padding: 12px; background: ${isPayment ? 'rgba(40, 167, 69, 0.1)' : isBalance ? 'rgba(255, 193, 7, 0.1)' : 'rgba(0, 51, 102, 0.05)'}; border-radius: 6px; border: 1px solid ${isPayment ? 'rgba(40, 167, 69, 0.2)' : isBalance ? 'rgba(255, 193, 7, 0.2)' : 'rgba(0, 51, 102, 0.1)'};">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                      ${Object.entries(details).map(([key, value]) => 
+                        `<div style="display: flex; flex-direction: column;">
+                          <span style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 2px;">${key}</span>
+                          <span style="font-weight: 600; color: var(--primary); font-size: 0.9rem;">${value}</span>
+                        </div>`
+                      ).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Filter activity log
+      window.filterActivityLog = function(type, button) {
+        if (!window.fullActivityData) {
+          console.warn('No activity data loaded yet');
+          return;
+        }
+
+        // Update button states
+        if (button) {
+          document.querySelectorAll('.activity-filter-btn').forEach(btn => {
+            btn.classList.remove('btn-secondary', 'active');
+            btn.classList.add('btn-outline');
+          });
+          button.classList.remove('btn-outline');
+          button.classList.add('btn-secondary', 'active');
+        }
+
+        let filtered = window.fullActivityData;
+
+        if (type !== 'all') {
+          filtered = window.fullActivityData.filter(activity => {
+            const action = (activity.action || activity.type || '').toLowerCase();
+            if (type === 'login') {
+              return action === 'login' || action === 'logout' || action.includes('login') || action.includes('logout');
+            } else if (type === 'payment') {
+              return action === 'payment_made' || 
+                     action === 'balance_updated' || 
+                     action.includes('payment') || 
+                     action.includes('fee') || 
+                     action === 'fees_viewed' ||
+                     action === 'fees_section_viewed';
+            }
+            return false;
+          });
+        }
+
+        displayFullActivityLog(filtered);
+      };
+
+      // Get activity icon based on action type
+      function getActivityIcon(action) {
+        const icons = {
+          'account_created': 'fas fa-user-plus',
+          'fees_section_viewed': 'fas fa-eye',
+          'term_viewed': 'fas fa-calendar-check',
+          'payment_made': 'fas fa-credit-card',
+          'result_viewed': 'fas fa-chart-line',
+          'login': 'fas fa-sign-in-alt',
+          'logout': 'fas fa-sign-out-alt',
+          'profile_updated': 'fas fa-user-edit',
+          'scholarship_awarded': 'fas fa-graduation-cap',
+          'balance_updated': 'fas fa-coins',
+          'form_updated': 'fas fa-edit',
+          'default': 'fas fa-info-circle'
+        };
+        return icons[action] || icons['default'];
+      }
+
+      // Get activity description based on action type
+      function getActivityDescription(action) {
+        const descriptions = {
+          'account_created': 'Account Created',
+          'fees_section_viewed': 'Viewed Fees Section',
+          'term_viewed': 'Viewed Term Information',
+          'payment_made': 'Payment Made',
+          'result_viewed': 'Viewed Results',
+          'login': 'Logged In',
+          'logout': 'Logged Out',
+          'profile_updated': 'Profile Updated',
+          'scholarship_awarded': 'Scholarship Awarded',
+          'balance_updated': 'Balance Updated',
+          'form_updated': 'Profile Updated',
+          'default': 'Activity Recorded'
+        };
+        return descriptions[action] || descriptions['default'];
+      }
+
+      // Enhanced scholarship-aware results access check
+      async function checkResultsAccess(email, studentData) {
+        try {
+          // Check scholarship status from fees record
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+
+          if (feesDoc.exists()) {
+            const feesData = feesDoc.data();
+            const scholarshipInfo = window.studentScholarshipInfo || {};
+
+            // Full scholarship students can always access results
+            if (scholarshipInfo.hasScholarship && scholarshipInfo.canAccessResultsWithoutPayment) {
+              return {
+                allowed: true,
+                reason: 'Access granted - Full scholarship student',
+                isScholarship: true
+              };
+            }
+
+            // Check if scholarship covers the current term fees
+            const currentTerm = getCurrentTerm();
+            const currentYear = new Date().getFullYear();
+            const scholarshipAmount = scholarshipInfo.scholarshipAmount || 0;
+
+            if (feesData.academicYears && feesData.academicYears[currentYear]) {
+              const yearData = feesData.academicYears[currentYear];
+              const termData = yearData.terms[currentTerm.number];
+
+              if (termData) {
+                const termBalance = termData.balance - termData.paid;
+
+                // If scholarship covers this term's fees
+                if (scholarshipAmount >= termBalance) {
+                  return {
+                    allowed: true,
+                    reason: 'Access granted - Scholarship covers current term fees',
+                    isScholarship: true
+                  };
+                }
+              }
+            }
+          }
+
+          // Check traditional fee payment status
+          if (studentData.feesPaid === true || (studentData.feesBalance && studentData.feesBalance <= 0)) {
+            return {
+              allowed: true,
+              reason: 'Access granted - Fees paid in full',
+              isScholarship: false
+            };
+          }
+
+          // Access denied - outstanding balance
+          return {
+            allowed: false,
+            reason: `You cannot view your results as you have a pending fees balance of $${studentData.feesBalance || 0} for ${studentData.year || 'N/A'} ${studentData.term || 'N/A'}. Please settle the outstanding amount to access your results.`,
+            isScholarship: false
+          };
+
+        } catch (error) {
+          console.error('Error checking results access:', error);
+          return {
+            allowed: false,
+            reason: 'Unable to verify payment status. Please contact administration.',
+            isScholarship: false
+          };
+        }
+      }
+
+      // Auto-detect current term based on system date
+      function getCurrentTerm() {
+        const currentMonth = new Date().getMonth() + 1; // getMonth() returns 0-11
+
+        for (const [termNumber, termInfo] of Object.entries(TERM_DEFINITIONS)) {
+          if (termInfo.months.includes(currentMonth)) {
+            return {
+              number: parseInt(termNumber),
+              name: termInfo.name,
+              label: termInfo.label,
+              months: termInfo.months
+            };
+          }
+        }
+        return { number: 1, name: 'Term 1', label: 'Jan - Apr', months: [1, 2, 3, 4] };
+      }
+
+      // Load fees section data - Enhanced
+      window.loadFees = async function() {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+          // Track account activity
+          await trackAccountActivity('fees_section_viewed', { studentEmail: user.email });
+
+          // Load student data to get current form
+          const studentDoc = await getDoc(doc(db, 'students', user.email));
+          let userData = {};
+
+          if (studentDoc.exists()) {
+            userData = studentDoc.data();
+          }
+
+          // Initialize fees data if it doesn't exist
+          await initializeFeesData(user.email, userData.form);
+
+          // Load financial status with admin sync
+          await loadFinancialStatusWithAdminSync(user.email, userData);
+
+          // Load current balance and academic progress with term awareness
+          await loadBalanceAndProgressWithTerms(user.email, userData.form);
+
+          // Setup enhanced term navigation
+          setupEnhancedTermNavigation(userData.form);
+
+          // Load payment history for current term
+          await loadPaymentHistoryWithTermFilter(user.email);
+
+          // Load account activity
+          await loadAccountActivity(user.email);
+
+        } catch (error) {
+          console.error('Error loading fees:', error);
+          showMessage('Error loading fees data', 'error');
+        }
+      };
+
+      // Initialize fees data structure - Enhanced
+      async function initializeFeesData(email, form) {
+        try {
+          const feesRef = doc(db, 'fees', email);
+          const feesDoc = await getDoc(feesRef);
+
+          if (!feesDoc.exists()) {
+            const currentYear = new Date().getFullYear();
+            const currentTerm = getCurrentTerm();
+            const academicYears = getAcademicYears(form, currentYear); // Use the corrected getAcademicYears
+
+            const initialFeesData = {
+              paymentMethod: 'Self-Paid',
+              organization: 'N/A',
+              scholarshipStatus: 'No Scholarship',
+              scholarshipType: null,
+              scholarship: false,
+              scholarshipAmount: 0,
+              academicYears: academicYears,
+              paymentHistory: [],
+              currentTerm: currentTerm,
+              accountActivity: [{
+                type: 'account_created',
+                action: 'account_created',
+                date: new Date().toISOString(),
+                description: 'Student account created',
+                deviceInfo: getDeviceInfo(),
+                sessionId: generateSessionId()
+              }],
+              createdAt: new Date().toISOString(),
+              lastLoginAt: new Date().toISOString()
+            };
+
+            await setDoc(feesRef, initialFeesData);
+
+            // Track account creation
+            await trackAccountActivity('account_created', { studentEmail: email });
+          }
+        } catch (error) {
+          console.error('Error initializing fees data:', error);
+        }
+      }
+
+      // Get academic years based on form
+      function getAcademicYears(form, currentYear) {
+        const years = {};
+
+        if (form) {
+          const formNumber = parseInt(form.replace('Form ', ''));
+
+          if (formNumber >= 1 && formNumber <= 4) {
+            // O-level: Forms 1-4 = Years 1-4
+            for (let i = 1; i <= 4; i++) {
+              const yearNum = formNumber + i - 1;
+              if (yearNum >= 1 && yearNum <= 4) {
+                years[currentYear + i - 1] = {
+                  type: 'O-Level',
+                  year: yearNum,
+                  form: `Form ${yearNum}`,
+                  terms: {
+                    1: { balance: 1500, paid: 0, status: 'unpaid', lastUpdated: new Date().toISOString() },
+                    2: { balance: 1500, paid: 0, status: 'unpaid', lastUpdated: new Date().toISOString() },
+                    3: { balance: 1500, paid: 0, status: 'unpaid', lastUpdated: new Date().toISOString() }
+                  }
+                };
+              }
+            }
+          } else if (formNumber >= 5 && formNumber <= 6) {
+            // A-level: Forms 5-6 = Years 1-2
+            for (let i = 1; i <= 2; i++) {
+              const yearNum = formNumber === 5 ? 1 : 2; // Form 5 is Year 1, Form 6 is Year 2
+              const yearKey = currentYear + i - 1; // Actual calendar year
+              years[yearKey] = {
+                type: 'A-Level',
+                year: yearNum + i - 1, // Academic year number (e.g., 1 or 2)
+                form: `Form ${formNumber + i - 1}`,
+                terms: {
+                  1: { balance: 2000, paid: 0, status: 'unpaid', lastUpdated: new Date().toISOString() },
+                  2: { balance: 2000, paid: 0, status: 'unpaid', lastUpdated: new Date().toISOString() },
+                  3: { balance: 2000, paid: 0, status: 'unpaid', lastUpdated: new Date().toISOString() }
+                }
+              };
+            }
+          }
+        }
+        return years;
+      }
+
+      // Load financial status with admin sync - Enhanced
+      async function loadFinancialStatusWithAdminSync(email, userData) {
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+
+            // Update payment method
+            document.getElementById('paymentMethod').textContent = data.paymentMethod || 'Self-Paid';
+            document.getElementById('organization').textContent = data.organization || 'N/A';
+
+            // Enhanced scholarship status with admin sync
+            const scholarshipElement = document.getElementById('scholarshipStatus');
+            const scholarshipStatus = data.scholarshipStatus || 'No Scholarship';
+            const scholarshipAmount = data.scholarshipAmount || 0;
+            const isFullScholarship = data.scholarship === true || scholarshipAmount > 0;
+
+            // Update scholarship display
+            if (isFullScholarship) {
+              if (scholarshipAmount > 0) {
+                scholarshipElement.textContent = `${scholarshipStatus} ($${scholarshipAmount.toFixed(2)})`;
+              } else {
+                scholarshipElement.textContent = scholarshipStatus;
+              }
+              scholarshipElement.className = 'status-badge status-scholarship';
+            } else if (data.organization && data.organization !== 'N/A') {
+              scholarshipElement.textContent = `Organization: ${data.organization}`;
+              scholarshipElement.className = 'status-badge status-organization';
+            } else {
+              scholarshipElement.textContent = 'No Scholarship';
+              scholarshipElement.className = 'status-badge status-notset';
+            }
+
+            // Store scholarship info globally for results access
+            window.studentScholarshipInfo = {
+              hasScholarship: isFullScholarship,
+              scholarshipAmount: scholarshipAmount,
+              scholarshipType: data.scholarshipType || null,
+              canAccessResultsWithoutPayment: isFullScholarship
+            };
+          }
+        } catch (error) {
+          console.error('Error loading financial status:', error);
+        }
+      }
+
+      // Load balance and academic progress with terms - Enhanced
+      async function loadBalanceAndProgressWithTerms(email, form) {
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+            const currentYear = new Date().getFullYear();
+            const currentTerm = getCurrentTerm();
+            let totalBalance = 0;
+            let currentTermBalance = 0;
+
+            // Calculate total balance across all terms and current term balance
+            if (data.academicYears && data.academicYears[currentYear]) {
+              const yearData = data.academicYears[currentYear];
+              Object.entries(yearData.terms).forEach(([termNum, termData]) => {
+                totalBalance += (termData.balance - termData.paid);
+                if (parseInt(termNum) === currentTerm.number) {
+                  currentTermBalance = termData.balance - termData.paid;
+                }
+              });
+            }
+
+            // Apply scholarship logic for balance calculation
+            const scholarshipInfo = window.studentScholarshipInfo || {};
+            const effectiveBalance = Math.max(0, totalBalance - (scholarshipInfo.scholarshipAmount || 0));
+
+            document.getElementById('currentBalance').textContent = `$${effectiveBalance.toFixed(2)}`;
+            document.getElementById('currentTerm').textContent = `${currentTerm.name} (${currentTerm.label}), ${currentYear}`;
+
+            // Update payment status with scholarship awareness
+            const statusElement = document.getElementById('paymentStatus');
+            if (scholarshipInfo.hasScholarship && scholarshipInfo.scholarshipAmount >= totalBalance) {
+              statusElement.textContent = 'Full Scholarship';
+              statusElement.className = 'status-badge status-scholarship';
+            } else if (effectiveBalance === 0) {
+              statusElement.textContent = 'Paid in Full';
+              statusElement.className = 'status-badge status-paid';
+            } else if (effectiveBalance > 0) {
+              statusElement.textContent = `Balance Due`;
+              statusElement.className = 'status-badge status-unpaid';
+            }
+
+            // Academic progress with term awareness
+            if (form) {
+              const formNumber = parseInt(form.replace('Form ', ''));
+              const isALevel = formNumber >= 5;
+
+              document.getElementById('currentYear').textContent = isALevel ? 
+                `A-Level Year ${formNumber - 4}` : `Year ${formNumber}`;
+
+              const totalYears = isALevel ? 2 : 4;
+              const currentAcademicYear = isALevel ? formNumber - 4 : formNumber;
+
+              document.getElementById('yearsRemaining').textContent = totalYears - currentAcademicYear;
+
+              // Enhanced terms calculation
+              const completedTerms = Math.max(0, (currentAcademicYear - 1) * 3 + (currentTerm.number - 1));
+              document.getElementById('termsCompleted').textContent = `${completedTerms}/${totalYears * 3}`;
+            }
+          }
+        } catch (error) {
+          console.error('Error loading balance and progress:', error);
+        }
+      }
+
+      // Setup enhanced term navigation
+      function setupEnhancedTermNavigation(form) {
+        const yearTabs = document.querySelectorAll('.year-tab');
+        const termTabs = document.querySelectorAll('.term-tab');
+        const currentTerm = getCurrentTerm();
+
+        // Update term tab labels with calendar periods
+        termTabs.forEach(tab => {
+          const termNumber = parseInt(tab.dataset.term);
+          const termInfo = TERM_DEFINITIONS[termNumber];
+          if (termInfo) {
+            tab.innerHTML = `<i class="fas fa-calendar-alt"></i> ${termInfo.name}<br><small>${termInfo.label}</small>`;
+
+            // Highlight current term
+            if (termNumber === currentTerm.number) {
+              tab.classList.add('current-term');
+              tab.title = 'Current Term';
+            }
+          }
+        });
+
+        // Year tab navigation
+        yearTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            yearTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            loadPaymentHistoryForYear(tab.dataset.year);
+          });
+        });
+
+        // Enhanced term tab navigation with activity tracking
+        termTabs.forEach(tab => {
+          tab.addEventListener('click', async () => {
+            termTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Track term view activity
+            await trackAccountActivity('term_viewed', {
+              termNumber: tab.dataset.term,
+              termName: TERM_DEFINITIONS[tab.dataset.term]?.name
+            });
+
+            loadPaymentHistoryForTerm(tab.dataset.term);
+          });
+        });
+
+        // Auto-select current term tab
+        const currentTermTab = document.querySelector(`[data-term="${currentTerm.number}"]`);
+        if (currentTermTab) {
+          currentTermTab.click();
+        }
+      }
+
+      // Load payment history for specific year
+      async function loadPaymentHistoryForYear(year) {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', user.email));
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+            const filteredHistory = data.paymentHistory?.filter(payment => 
+              payment.academicYear === year
+            ) || [];
+            displayPaymentHistory(filteredHistory);
+          }
+        } catch (error) {
+          console.error('Error loading year payment history:', error);
+        }
+      }
+
+      // Load payment history with term filter - Enhanced
+      async function loadPaymentHistoryWithTermFilter(email) {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+            const currentTerm = getCurrentTerm();
+
+            // Filter for current term by default
+            const filteredHistory = data.paymentHistory?.filter(payment => {
+              return payment.term == currentTerm.number || payment.term == currentTerm.number.toString();
+            }) || [];
+
+            displayEnhancedPaymentHistory(filteredHistory, currentTerm);
+          }
+        } catch (error) {
+          console.error('Error loading payment history:', error);
+        }
+      }
+
+      // Load payment history for specific term
+      async function loadPaymentHistoryForTerm(term) {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', user.email));
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+            const termInfo = TERM_DEFINITIONS[term];
+            const filteredHistory = data.paymentHistory?.filter(payment => 
+              payment.term == term || payment.term == term.toString()
+            ) || [];
+            displayEnhancedPaymentHistory(filteredHistory, termInfo);
+          }
+        } catch (error) {
+          console.error('Error loading term payment history:', error);
+        }
+      }
+
+      // Display payment history helper
+      function displayPaymentHistory(payments) {
+        const tbody = document.getElementById('paymentHistoryBody');
+
+        if (payments.length > 0) {
+          tbody.innerHTML = '';
+
+          payments.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          payments.forEach(payment => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${formatDateTime(payment.date)}</td>
+              <td>${payment.academicYear || 'N/A'} / Term ${payment.term || 'N/A'}</td>
+              <td>$${payment.amount.toFixed(2)}</td>
+              <td>$${payment.remainingBalance.toFixed(2)}</td>
+              <td>${payment.method || 'Cash'}</td>
+              <td><span class="status-badge status-paid">Paid</span></td>
+              <td><button class="receipt-btn" onclick="downloadReceipt('${payment.id}')">
+                <i class="fas fa-download"></i> Receipt
+              </button></td>
+            `;
+            tbody.appendChild(row);
+          });
+        } else {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="text-center">
+                <i class="fas fa-info-circle"></i> No payment history for this selection
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      // Load payment history
+      async function loadPaymentHistory(email) {
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+          const tbody = document.getElementById('paymentHistoryBody');
+
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+
+            if (data.paymentHistory && data.paymentHistory.length > 0) {
+              tbody.innerHTML = '';
+
+              data.paymentHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+              data.paymentHistory.forEach(payment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                  <td>${formatDateTime(payment.date)}</td>
+                  <td>${payment.academicYear || 'N/A'} / Term ${payment.term || 'N/A'}</td>
+                  <td>$${payment.amount.toFixed(2)}</td>
+                  <td>$${payment.remainingBalance.toFixed(2)}</td>
+                  <td>${payment.method || 'Cash'}</td>
+                  <td><span class="status-badge status-paid">Paid</span></td>
+                  <td><button class="receipt-btn" onclick="downloadReceipt('${payment.id}')">
+                    <i class="fas fa-download"></i> Receipt
+                  </button></td>
+                `;
+                tbody.appendChild(row);
+              });
+            } else {
+              tbody.innerHTML = `
+                <tr>
+                  <td colspan="7" class="text-center">
+                    <i class="fas fa-info-circle"></i> No payment history available
+                  </td>
+                </tr>
+              `;
+            }
+          }
+        } catch (error) {
+          console.error('Error loading payment history:', error);
+        }
+      }
+
+      // Load activity log
+      async function loadActivityLog(email) {
+        try {
+          const feesDoc = await getDoc(doc(db, 'fees', email));
+          const logContainer = document.getElementById('activityLog');
+
+          if (feesDoc.exists()) {
+            const data = feesDoc.data();
+
+            if (data.activityLog && data.activityLog.length > 0) {
+              logContainer.innerHTML = '';
+
+              data.activityLog.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+              data.activityLog.forEach(activity => {
+                const item = document.createElement('div');
+                item.className = 'activity-item';
+
+                const iconClass = getActivityIcon(activity.type);
+
+                item.innerHTML = `
+                  <div class="activity-icon">
+                    <i class="${iconClass}"></i>
+                  </div>
+                  <div class="activity-content">
+                    <p><strong>${formatActivityTitle(activity.type)}</strong></p>
+                    <p class="activity-meta">${activity.description} - ${formatDateTime(activity.date)}</p>
+                  </div>
+                `;
+
+                logContainer.appendChild(item);
+              });
+            }
+          }
+        } catch (error) {
+          console.error('Error loading activity log:', error);
+        }
+      }
+
+      // Helper functions
+      function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      }
+
+
+      // Export payment history function
+      window.exportPaymentHistory = function() {
+        showMessage('Payment history export feature coming soon!', 'info');
+      };
+
+      // Download receipt function
+      window.downloadReceipt = function(paymentId) {
+        showMessage('Receipt download feature coming soon!', 'info');
+      };
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academics | St. Mary's High School</title>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/4476/4476871.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reuse the same CSS variables and base styles */
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #000000;
+      --accent-color: #4d94ff;
+      --light-color: #ffffff;
+      --dark-color: #121212;
+      --text-color: #333333;
+      --light-gray: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--light-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header - Same as main page */
+    header {
+      background-color: var(--light-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .logo-text span {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 30px;
+      position: relative;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary-color);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary-color);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+    
+    /* Page Header */
+    .page-header {
+      margin-top: 80px;
+      padding: 60px 0;
+      background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                  url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      color: var(--light-color);
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .page-header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease 0.2s forwards;
+      opacity: 0;
+    }
+    
+    /* Academics Overview */
+    .academics-overview {
+      padding: 80px 0;
+      background-color: var(--light-color);
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 3px;
+      background-color: var(--accent-color);
+      transform: translateX(-50%);
+    }
+    
+    .overview-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    
+    .overview-image {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeInLeft 1s ease;
+    }
+    
+    .overview-image img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease;
+    }
+    
+    .overview-image:hover img {
+      transform: scale(1.05);
+    }
+    
+    .overview-text {
+      animation: fadeInRight 1s ease;
+    }
+    
+    .overview-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    
+    .overview-text p {
+      margin-bottom: 15px;
+    }
+    
+    /* Programs Section */
+    .programs {
+      padding: 80px 0;
+      background-color: var(--light-gray);
+    }
+    
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .program-card {
+      background-color: var(--light-color);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .program-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .program-card:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    
+    .program-card:nth-child(4) {
+      animation-delay: 0.6s;
+    }
+    
+    .program-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .program-icon {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      font-size: 3rem;
+    }
+    
+    .program-content {
+      padding: 25px;
+    }
+    
+    .program-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    
+    .program-content p {
+      margin-bottom: 20px;
+    }
+    
+    /* Departments Section */
+    .departments {
+      padding: 80px 0;
+      background-color: var(--light-color);
+    }
+    
+    .departments-accordion {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .accordion-item {
+      margin-bottom: 15px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .accordion-item:hover {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .accordion-header {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+    
+    .accordion-header:hover {
+      background-color: #002244;
+    }
+    
+    .accordion-header h3 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+    
+    .accordion-icon {
+      transition: transform 0.3s;
+    }
+    
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+    
+    .accordion-content {
+      background-color: var(--light-color);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .accordion-inner {
+      padding: 20px;
+    }
+    
+    .department-courses {
+      list-style: none;
+    }
+    
+    .department-courses li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .department-courses li:last-child {
+      border-bottom: none;
+    }
+    
+    .course-name {
+      font-weight: 500;
+    }
+    
+    .course-level {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+    
+    /* Faculty Spotlight */
+    .faculty-spotlight {
+      padding: 80px 0;
+      background-color: var(--light-gray);
+    }
+    
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .faculty-card {
+      background-color: var(--light-color);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .faculty-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .faculty-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .faculty-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .faculty-card:hover .faculty-image img {
+      transform: scale(1.1);
+    }
+    
+    .faculty-info {
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .faculty-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      color: var(--primary-color);
+    }
+    
+    .faculty-info p {
+      color: var(--accent-color);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    
+    .faculty-bio {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    /* CTA Section */
+    .academics-cta {
+      padding: 80px 0;
+      background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                  url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      color: var(--light-color);
+      text-align: center;
+    }
+    
+    .academics-cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .academics-cta p {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      font-size: 1.1rem;
+    }
+    
+    /* Footer - Same as main page */
+    footer {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      padding: 60px 0 30px;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+    
+    .footer-col p {
+      margin-bottom: 15px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light-color);
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: var(--light-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent-color);
+    }
+    
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    
+    .quick-contact i {
+      margin-right: 10px;
+      color: var(--accent-color);
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInLeft {
+      from { 
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeInRight {
+      from { 
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .overview-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light-color);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 40px;
+        transition: left 0.3s ease;
+      }
+      
+      .nav-links.show {
+        left: 0;
+      }
+      
+      .nav-links li {
+        margin: 0 0 30px 0;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .programs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+      
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/academics" class="active">Academics</a></li>
+        <li><a href="/admissions">Admissions</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/calendar">Calendar</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Academic Excellence</h1>
+      <p>Our rigorous curriculum challenges students to think critically, solve problems creatively, and develop a lifelong love of learning.</p>
+    </div>
+  </section>
+
+  <!-- Academics Overview -->
+  <section class="academics-overview">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Academic Approach</h2>
+      </div>
+      <div class="overview-content">
+        <div class="overview-image">
+          <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Students in classroom">
+        </div>
+        <div class="overview-text">
+          <h3>Preparing Students for Success</h3>
+          <p>At St. Mary's High School, we believe in educating the whole person. Our academic program combines rigorous coursework with opportunities for personal growth and character development.</p>
+          <p>With a student-teacher ratio of 12:1, our faculty provide individualized attention to help each student reach their full potential. Our graduates consistently gain admission to top universities and excel in their chosen fields.</p>
+          <p>Our curriculum emphasizes critical thinking, problem-solving, and real-world application of knowledge. Through project-based learning and interdisciplinary studies, students develop the skills needed for success in college and beyond.</p>
+          <a href="admissions.html" class="btn">Learn About Admissions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs Section -->
+  <section class="programs">
+    <div class="container">
+      <div class="section-title">
+        <h2>Academic Programs</h2>
+      </div>
+      <div class="programs-grid">
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div class="program-content">
+            <h3>STEM Program</h3>
+            <p>Our award-winning STEM program prepares students for careers in science, technology, engineering, and mathematics with state-of-the-art labs and partnerships with local universities.</p>
+            <a href="/stem" class="btn">Explore STEM</a>
+          </div>
+        </div>
+        
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <div class="program-content">
+            <h3>Arts & Humanities</h3>
+            <p>From visual arts to performing arts and literature, our comprehensive humanities program fosters creativity and critical thinking skills essential for any career path.</p>
+            <a href="/arts" class="btn">Explore Arts</a>
+          </div>
+        </div>
+        
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="program-content">
+            <h3>Commercial Sciences</h3>
+            <p>Our Commercial Sciences program follows the ZIMSEC curriculum, preparing students for careers in business, accounting, and economics with practical skills and real-world applications.</p>
+            <a href="/commercial" class="btn">Explore Commercial</a>
+          </div>
+        </div>
+        
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="program-content">
+            <h3>College Prep</h3>
+            <p>Our college prep program includes personalized counseling, test prep, and college application support to help students achieve their academic goals and university admissions.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <div class="program-content">
+            <h3>Technology Integration</h3>
+            <p>Our 1:1 device program and technology-integrated curriculum prepare students for the digital world with courses in coding, digital media, and computer science.</p>
+            <a href="#" class="btn">View Courses</a>
+          </div>
+        </div>
+        
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="fas fa-language"></i>
+          </div>
+          <div class="program-content">
+            <h3>World Languages</h3>
+            <p>Students can choose from Spanish, French, Mandarin, and Latin, with opportunities for immersion programs and study abroad experiences.</p>
+            <a href="#" class="btn">Language Options</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Departments Section -->
+  <section class="departments">
+    <div class="container">
+      <div class="section-title">
+        <h2>Academic Departments</h2>
+      </div>
+      <div class="departments-accordion">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <h3>Mathematics</h3>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Our mathematics department offers a comprehensive curriculum from Algebra through Calculus, including AP and honors courses. Students develop strong problem-solving skills applicable to all fields of study.</p>
+              <ul class="department-courses">
+                <li><span class="course-name">Algebra I & II</span> <span class="course-level">Grades 9-10</span></li>
+                <li><span class="course-name">Geometry</span> <span class="course-level">Grades 9-10</span></li>
+                <li><span class="course-name">Pre-Calculus</span> <span class="course-level">Grades 10-11</span></li>
+                <li><span class="course-name">AP Calculus AB/BC</span> <span class="course-level">Grades 11-12</span></li>
+                <li><span class="course-name">Statistics</span> <span class="course-level">Grades 11-12</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <h3>Science</h3>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Our science program emphasizes hands-on learning in state-of-the-art laboratories. Students explore biology, chemistry, physics, and environmental science through inquiry-based instruction.</p>
+              <ul class="department-courses">
+                <li><span class="course-name">Biology</span> <span class="course-level">Grade 9</span></li>
+                <li><span class="course-name">Chemistry</span> <span class="course-level">Grade 10</span></li>
+                <li><span class="course-name">Physics</span> <span class="course-level">Grade 11</span></li>
+                <li><span class="course-name">AP Environmental Science</span> <span class="course-level">Grades 11-12</span></li>
+                <li><span class="course-name">Forensic Science</span> <span class="course-level">Grades 11-12</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <h3>English</h3>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Our English curriculum develops critical reading, writing, and communication skills. Students analyze literature from diverse cultures and time periods while honing their own writing abilities.</p>
+              <ul class="department-courses">
+                <li><span class="course-name">World Literature</span> <span class="course-level">Grade 9</span></li>
+                <li><span class="course-name">American Literature</span> <span class="course-level">Grade 10</span></li>
+                <li><span class="course-name">British Literature</span> <span class="course-level">Grade 11</span></li>
+                <li><span class="course-name">AP English Literature</span> <span class="course-level">Grade 12</span></li>
+                <li><span class="course-name">Creative Writing</span> <span class="course-level">Grades 11-12</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <h3>Social Studies</h3>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Our social studies program helps students understand historical contexts, cultural diversity, and civic responsibility. Courses emphasize analytical thinking and evidence-based argumentation.</p>
+              <ul class="department-courses">
+                <li><span class="course-name">World History</span> <span class="course-level">Grade 9</span></li>
+                <li><span class="course-name">U.S. History</span> <span class="course-level">Grade 10</span></li>
+                <li><span class="course-name">Government & Economics</span> <span class="course-level">Grade 11</span></li>
+                <li><span class="course-name">AP European History</span> <span class="course-level">Grades 11-12</span></li>
+                <li><span class="course-name">Psychology</span> <span class="course-level">Grades 11-12</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <h3>World Languages</h3>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Our language program develops proficiency in speaking, listening, reading, and writing while fostering cultural understanding. Many students achieve fluency by graduation.</p>
+              <ul class="department-courses">
+                <li><span class="course-name">Spanish I-IV</span> <span class="course-level">Grades 9-12</span></li>
+                <li><span class="course-name">French I-IV</span> <span class="course-level">Grades 9-12</span></li>
+                <li><span class="course-name">Mandarin Chinese I-IV</span> <span class="course-level">Grades 9-12</span></li>
+                <li><span class="course-name">Latin I-III</span> <span class="course-level">Grades 9-12</span></li>
+                <li><span class="course-name">AP Language Courses</span> <span class="course-level">Grades 11-12</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Faculty Spotlight -->
+  <section class="faculty-spotlight">
+    <div class="container">
+      <div class="section-title">
+        <h2>Meet Our Faculty</h2>
+      </div>
+      <div class="faculty-grid">
+        <div class="faculty-card">
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Dr. Sarah Johnson">
+          </div>
+          <div class="faculty-info">
+            <h3>Dr. Sarah Johnson</h3>
+            <p>Department Chair, Mathematics</p>
+            <div class="faculty-bio">
+              PhD in Mathematics Education from Stanford University. 15 years teaching experience with a passion for making math accessible to all students.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faculty-card">
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Mr. David Chen">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. David Chen</h3>
+            <p>Science Department</p>
+            <div class="faculty-bio">
+              Former research scientist with publications in biochemistry. Brings real-world lab experience to the classroom to inspire future scientists.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faculty-card">
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Ms. Elena Rodriguez">
+          </div>
+          <div class="faculty-info">
+            <h3>Ms. Elena Rodriguez</h3>
+            <p>English Department</p>
+            <div class="faculty-bio">
+              MFA in Creative Writing from Iowa Writers' Workshop. Published author who helps students find their unique voice through writing.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faculty-card">
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Mr. James Wilson">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. James Wilson</h3>
+            <p>History Department</p>
+            <div class="faculty-bio">
+              Fulbright Scholar with expertise in European history. Makes historical events come alive through engaging storytelling and primary source analysis.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="academics-cta">
+    <div class="container">
+      <h2>Ready to Join Our Academic Community?</h2>
+      <p>Applications for the 2023-2024 school year are now being accepted. Schedule a tour to learn more about our academic programs.</p>
+      <div class="cta-buttons">
+        <a href="admissions.html" class="btn">Apply Now</a>
+        <a href="tour.html" class="btn btn-outline">Schedule a Tour</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/academics">Academics</a></li>
+            <li><a href="/admissions">Admissions</a></li>
+            <li><a href="/calendar">School Calendar</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Education Way, Academic City, AC 12345</p>
+            <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    // Accordion functionality
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    
+    accordionItems.forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      
+      header.addEventListener('click', () => {
+        // Close all other accordion items
+        accordionItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            otherItem.querySelector('.accordion-content').style.maxHeight = null;
+          }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('active');
+        const content = item.querySelector('.accordion-content');
+        
+        if (item.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = null;
+        }
+      });
+    });
+
+    // Initialize first accordion item as open
+    document.querySelector('.accordion-item').classList.add('active');
+    document.querySelector('.accordion-content').style.maxHeight = 
+      document.querySelector('.accordion-content').scrollHeight + 'px';
+
+    // Animate elements on scroll
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.program-card, .faculty-card, .section-title');
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>St. Mary's High AI Assistant</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" />
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        /* School Color Scheme */
+        :root {
+            --primary: #003366;
+            --primary-light: #3d5d8a;
+            --primary-dark: #001a33;
+            --secondary: #FFD700;
+            --secondary-light: #ffeb99;
+            --accent: #87CEEB;
+            --accent-dark: #5aa5d1;
+            --text: #333333;
+            --text-light: #6c757d;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark: #212529;
+            
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-xxl: 3rem;
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+            
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+        }
+
+        .dark-mode {
+            --primary: #4d94ff;
+            --primary-light: #7ab3ff;
+            --primary-dark: #0052cc;
+            --text: #f8f9fa;
+            --text-light: #adb5bd;
+            --light: #212529;
+            --light-gray: #343a40;
+            --dark: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--transition-slow), color var(--transition-slow);
+        }
+
+        /* Chat Container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .chat-header {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: var(--space-md) var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .chat-title {
+            font-size: var(--text-lg);
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: var(--text-lg);
+            cursor: pointer;
+            transition: transform var(--transition-normal);
+            padding: var(--space-sm);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            transform: scale(1.1);
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Theme toggle in header */
+        .theme-toggle-header {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: var(--text-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            padding: var(--space-sm);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle-header:hover {
+            transform: scale(1.1);
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-lg);
+            background-color: var(--light);
+            background-image: linear-gradient(rgba(0, 51, 102, 0.03), rgba(0, 51, 102, 0.03));
+            scroll-behavior: smooth;
+        }
+
+        /* Message Bubbles */
+        .message {
+            max-width: 80%;
+            margin-bottom: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s var(--transition-bounce) forwards;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-message {
+            background-color: var(--primary);
+            color: var(--light);
+            margin-left: auto;
+            border-bottom-right-radius: var(--radius-sm);
+        }
+
+        .ai-message {
+            background-color: var(--light-gray);
+            color: var(--text);
+            margin-right: auto;
+            border-bottom-left-radius: var(--radius-sm);
+        }
+
+        .message-content {
+            word-wrap: break-word;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: var(--space-xs);
+            text-align: right;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: inline-block;
+            padding: var(--space-md) var(--space-lg);
+            background-color: var(--light-gray);
+            color: var(--text);
+            border-radius: var(--radius-lg);
+            border-bottom-left-radius: var(--radius-sm);
+            margin-bottom: var(--space-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .typing-dots {
+            display: inline-flex;
+            align-items: center;
+            height: 1rem;
+        }
+
+        .typing-dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--text);
+            border-radius: 50%;
+            margin: 0 2px;
+            opacity: 0.4;
+        }
+
+        .typing-dots span:nth-child(1) {
+            animation: pulse 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation: pulse 1.4s infinite ease-in-out 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation: pulse 1.4s infinite ease-in-out 0.4s;
+        }
+
+        /* Input Area */
+        .input-container {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md);
+            background-color: var(--light);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+            gap: var(--space-md);
+        }
+
+        .message-input {
+            flex: 1;
+            padding: var(--space-md) var(--space-lg);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-full);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all var(--transition-normal);
+            background-color: var(--light-gray);
+            height: 48px;
+        }
+
+        .message-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2);
+        }
+
+        .send-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            background-color: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 60px;
+            right: var(--space-md);
+            background-color: var(--light);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px);
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .dropdown-item {
+            padding: var(--space-md) var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            color: var(--text);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-header {
+                padding: var(--space-sm) var(--space-md);
+            }
+            
+            .logo-img {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .chat-title {
+                font-size: 1rem;
+            }
+            
+            .message {
+                max-width: 90%;
+                padding: var(--space-sm) var(--space-md);
+            }
+
+            .header-btn, 
+            .theme-toggle-header {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .input-container {
+                padding: var(--space-sm);
+            }
+
+            .send-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .message-input {
+                height: 44px;
+            }
+        }
+
+        /* Code Block Styling */
+        .code-block {
+            background: #1e1e1e;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin: var(--space-md) 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Welcome Message Styling */
+        .welcome-message {
+            text-align: center;
+            padding: var(--space-xl);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--light);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .welcome-message h2 {
+            margin-bottom: var(--space-md);
+            font-size: 1.5rem;
+        }
+
+        .welcome-message p {
+            margin-bottom: var(--space-md);
+        }
+
+        .welcome-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-md);
+            color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+                <h1 class="chat-title">St. Mary's AI Assistant</h1>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle-header" id="theme-toggle-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="header-btn" id="menu-btn">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+            </div>
+            
+            <!-- Dropdown Menu -->
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="#" class="dropdown-item" id="clear-chat-btn">
+                    <i class="fas fa-trash-alt"></i> Clear Chat
+                </a>
+                <a href="https://wa.me/263719647303" class="dropdown-item" target="_blank">
+                    <i class="fas fa-headset"></i> Contact Support
+                </a>
+                <a href="#" class="dropdown-item" id="about-btn">
+                    <i class="fas fa-info-circle"></i> About
+                </a>
+            </div>
+        </header>
+        
+        <!-- Chat Area -->
+        <div class="chat-area" id="chat-area">
+            <!-- Welcome Message -->
+            <div class="welcome-message">
+                <div class="welcome-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h2>Welcome to St. Mary's AI Assistant</h2>
+                <p>I'm here to help with school information, academics, and more!</p>
+                <p>Ask me anything about St. Mary's High School.</p>
+            </div>
+            
+            <!-- Messages will be inserted here dynamically -->
+        </div>
+        
+        <!-- Input Area -->
+        <div class="input-container">
+            <input type="text" class="message-input" id="message-input" placeholder="Type your message here..." autocomplete="off">
+            <button class="send-btn" id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        // DOM Elements
+        const chatArea = document.getElementById('chat-area');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const menuBtn = document.getElementById('menu-btn');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const clearChatBtn = document.getElementById('clear-chat-btn');
+        const aboutBtn = document.getElementById('about-btn');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        
+        // Chat history - using in-memory storage for Claude environment
+        let chatHistory = [];
+
+        // Initialize the chat
+        function initChat() {
+            // Set up event listeners
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && messageInput.value.trim() !== '') {
+                    sendMessage();
+                }
+            });
+            
+            sendBtn.addEventListener('click', () => {
+                if (messageInput.value.trim() !== '') {
+                    sendMessage();
+                }
+            });
+            
+            menuBtn.addEventListener('click', toggleDropdown);
+            clearChatBtn.addEventListener('click', clearChat);
+            aboutBtn.addEventListener('click', showAbout);
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!dropdownMenu.contains(e.target) && e.target !== menuBtn) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // Toggle dropdown menu
+        function toggleDropdown() {
+            dropdownMenu.classList.toggle('active');
+        }
+
+        // Add a message to the chat
+        function addMessage(role, content, saveToHistory = true) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}-message`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = formatMessageContent(content);
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = getCurrentTime();
+            
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timeDiv);
+            chatArea.appendChild(messageDiv);
+            
+            if (saveToHistory) {
+                chatHistory.push({ role, content });
+            }
+            
+            scrollToBottom();
+        }
+
+        // Format message content (basic markdown support)
+        function formatMessageContent(content) {
+            // Simple markdown parsing
+            content = content.replace(/`([^`]+)`/g, '<code>$1</code>');
+            content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
+            content = content.replace(/\n/g, '<br>');
+            return content;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <span>St. Mary's AI is typing</span>
+                <span class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            `;
+            chatArea.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Get current time in HH:MM format
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Scroll to bottom of chat
+        function scrollToBottom() {
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Send message to AI
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage('user', message);
+            messageInput.value = '';
+            sendBtn.disabled = true;
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                // Your original prompt and API
+                const prompt = "I am the St. Mary's High AI Chatbot, created to assist students at St. Mary's High School. Founded in 1962, our school is located in Chitungwiza (Zengeza 2), has an enrollment of 1200, a pass rate over 98%, and excellent learning facilities. THERE ARE 5 CLASSES G,W,E,Z,U. HEAD MR NYABAKO. DEPUTY MR GOCHA. SENIOOURS ARE MR TAPERA, MRS CHIWESHE, MR MUKURUNGE, MR SIBANDA. Feel free to ask any question.You were made by DARRELL MUCHERI AKA (MR FRANK) a st marys HiGH STUDENT CURRENT DOING LOWER 6 SCIENCES (PRAISE HIM). HE MADE YOU AFTER SLEEPLESS NIGHTS. IF ANYONE ASKS YOU MORE PERSONAL STUFF ABOUT HIM BE ENIGMATIC. YOU ARE LATEST VERSION 1.1.0 AS OF october 2025.YOUR SC IS PRIVATE CONTACT DARRELL FOR MORE ON +263719647303 OR darrelmucheri@gmail.com website mrfrankinc.vercel.app. ALAWAYS RESPOND IN ENGLISH NO OTHER LANGUAGE.";
+                const apiUrl = `https://api.bk9.dev/ai/BK93?BK9=${encodeURIComponent(prompt)}&q=${encodeURIComponent(message)}`;
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Hide typing indicator and add AI response
+                hideTypingIndicator();
+                
+                if (data.status && data.BK9) {
+                    addMessage('ai', data.BK9);
+                } else {
+                    throw new Error("No response from AI");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                hideTypingIndicator();
+                addMessage('ai', "Sorry, I'm having trouble connecting. Please try again later.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: 'Failed to connect to the AI service. Please check your internet connection.',
+                });
+            } finally {
+                sendBtn.disabled = false;
+                messageInput.focus();
+            }
+        }
+
+        // Clear chat history
+        function clearChat() {
+            Swal.fire({
+                title: 'Clear Chat History?',
+                text: "This will permanently delete all your conversation history.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, clear it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    chatHistory = [];
+                    // Clear the chat area except welcome message
+                    const messages = document.querySelectorAll('.message');
+                    messages.forEach(msg => msg.remove());
+                    Swal.fire(
+                        'Cleared!',
+                        'Your chat history has been cleared.',
+                        'success'
+                    );
+                }
+                dropdownMenu.classList.remove('active');
+            });
+        }
+
+        // Show about information
+        function showAbout() {
+            Swal.fire({
+                title: 'About St. Mary\'s AI Assistant',
+                html: `
+                    <div style="text-align: left;">
+                        <p><strong>Version:</strong> 2.0.0</p>
+                        <p><strong>Developed by:</strong> Darrell Mucheri (Mr. Frank)</p>
+                        <p><strong>School:</strong> St. Mary's High School, Chitungwiza</p>
+                        <p><strong>Contact:</strong> <a href="https://wa.me/263719647303" target="_blank">+263 719 647 303</a></p>
+                        <hr>
+                        <p>This AI assistant was created to help students and staff with school-related information.</p>
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+            dropdownMenu.classList.remove('active');
+        }
+
+        // Toggle dark/light theme
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            
+            // Update theme icon
+            const themeIcon = themeToggleBtn.querySelector('i');
+            themeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Initialize the chat when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initChat);
+    </script>
+</body>
+</html>

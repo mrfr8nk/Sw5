@@ -1,0 +1,1048 @@
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | St. Mary's High School</title>
+  
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#003366">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <style>
+    :root {
+      /* Color System */
+      --primary: #003366;
+      --primary-light: #3d5d8a;
+      --primary-dark: #001a33;
+      --secondary: #FFD700;
+      --secondary-light: #ffeb99;
+      --accent: #87CEEB;
+      --accent-dark: #5aa5d1;
+      --text: #333333;
+      --text-light: #6c757d;
+      --light: #ffffff;
+      --light-gray: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --info: #17a2b8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+      
+      /* Typography */
+      --font-primary: 'Poppins', sans-serif;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --text-5xl: 3rem;
+      --text-6xl: 3.75rem;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+      
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+      --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      
+      /* Border Radius */
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --primary: #4d94ff;
+      --primary-light: #7ab3ff;
+      --primary-dark: #0052cc;
+      --text: #f8f9fa;
+      --text-light: #adb5bd;
+      --light: #212529;
+      --light-gray: #343a40;
+      --dark: #f8f9fa;
+    }
+
+    /* Base Styles */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text);
+      background-color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color var(--transition-slow), color var(--transition-slow);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    ul, ol {
+      padding-left: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Utility Classes */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .section {
+      padding: var(--space-xxl) 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-title h2 {
+      font-size: var(--text-4xl);
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      transform: translateX(-50%);
+      border-radius: var(--radius-full);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 { margin-top: var(--space-xs); }
+    .mt-2 { margin-top: var(--space-sm); }
+    .mt-3 { margin-top: var(--space-md); }
+    .mt-4 { margin-top: var(--space-lg); }
+    .mt-5 { margin-top: var(--space-xl); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid transparent;
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      color: var(--light);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-light);
+      color: var(--dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-lg {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-lg);
+    }
+
+    .btn-icon {
+      margin-right: var(--space-sm);
+    }
+
+    /* Header & Navigation */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--light);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .header.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dark-mode .header.scrolled {
+      background-color: rgba(33, 37, 41, 0.95);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .logo-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links > li:not(:last-child) {
+      margin-right: var(--space-md);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: var(--space-md);
+      bottom: 0;
+      width: calc(100% - 2 * var(--space-md));
+      height: 2px;
+      background-color: var(--primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-normal);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-links .dropdown {
+      position: relative;
+    }
+
+    .nav-links .dropdown-content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background-color: var(--light);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all var(--transition-normal);
+      z-index: 100;
+    }
+
+    .nav-links .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-links .dropdown-content a {
+      padding: var(--space-sm) var(--space-md);
+      color: var(--text);
+    }
+
+    .nav-links .dropdown-content a:hover {
+      background-color: var(--light-gray);
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: var(--text-2xl);
+      cursor: pointer;
+      color: var(--primary);
+      z-index: 1001;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background-color: var(--light-gray);
+      margin-top: 80px;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-xl);
+    }
+
+    .contact-info {
+      background-color: var(--light);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-info h3 {
+      font-size: var(--text-2xl);
+      color: var(--primary);
+      margin-bottom: var(--space-lg);
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--space-lg);
+    }
+
+    .contact-info-icon {
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      color: var(--light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xl);
+      margin-right: var(--space-md);
+      flex-shrink: 0;
+    }
+
+    .contact-info-content h4 {
+      font-size: var(--text-lg);
+      color: var(--primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .contact-info-content p {
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+
+    .contact-info-content a {
+      color: var(--text);
+      transition: color var(--transition-normal);
+    }
+
+    .contact-info-content a:hover {
+      color: var(--primary);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background-color: var(--light);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact-form h3 {
+      font-size: var(--text-2xl);
+      color: var(--primary);
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: var(--space-sm);
+      color: var(--primary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--space-md);
+      border: 1px solid #ddd;
+      border-radius: var(--radius-md);
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      transition: border-color var(--transition-normal);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    /* Map Section */
+    .map-section {
+      padding: 0;
+      height: 500px;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark);
+      color: var(--light);
+      padding: var(--space-xxl) 0 var(--space-lg);
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .footer-col h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    .footer-col p {
+      margin-bottom: var(--space-md);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light);
+      transition: all var(--transition-normal);
+    }
+
+    .social-links a:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links a {
+      color: var(--light);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .quick-contact i {
+      margin-right: var(--space-sm);
+      color: var(--accent);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: var(--space-xxl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: var(--space-xl);
+      right: var(--space-xl);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+            color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      transition: all var(--transition-normal);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+        transition: left var(--transition-normal);
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .nav-links .dropdown-content {
+        position: static;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+      }
+
+      .nav-links .dropdown:hover .dropdown-content,
+      .nav-links .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .section {
+        padding: var(--space-xl) 0;
+      }
+
+      .section-title h2 {
+        font-size: var(--text-3xl);
+      }
+
+      .contact-info,
+      .contact-form {
+        padding: var(--space-lg);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title h2 {
+        font-size: var(--text-2xl);
+      }
+
+      .contact-info-icon {
+        width: 40px;
+        height: 40px;
+        font-size: var(--text-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li class="dropdown">
+          <a href="/academics"><i class="fas fa-book-open"></i> Academics <i class="fas fa-chevron-down"></i></a>
+         
+        </li>
+        <li><a href="/admissions"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+        <li><a href="/news"><i class="fas fa-newspaper"></i> News</a></li>
+        <li><a href="/contact" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="/login" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Student Portal</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Contact Section -->
+    <section class="section contact-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact Us</h2>
+          <p>We'd love to hear from you. Reach out to us with any questions or inquiries.</p>
+        </div>
+        
+        <div class="contact-container">
+          <div class="contact-info fade-in">
+            <h3>Our Contact Information</h3>
+            
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-info-content">
+                <h4>Address</h4>
+                <p>Mubvumira Road, Zengeza,<br>Chitungwiza, Zimbabwe</p>
+              </div>
+            </div>
+            
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div class="contact-info-content">
+                <h4>Phone</h4>
+                <p><a href="tel:+263719647303">+263 719 647 303</a></p>
+                <p><a href="tel:+263772123456">+263 772 123 456</a></p>
+              </div>
+            </div>
+            
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-info-content">
+                <h4>Email</h4>
+                <p><a href="mailto:info@stmaryshs.edu">info@stmaryshs.edu</a></p>
+                <p><a href="mailto:admissions@stmaryshs.edu">admissions@stmaryshs.edu</a></p>
+              </div>
+            </div>
+            
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="contact-info-content">
+                <h4>Office Hours</h4>
+                <p>Monday - Friday: 8:00 AM - 4:30 PM</p>
+                <p>Saturday: 8:00 AM - 12:00 PM</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="contact-form fade-in delay-1">
+            <h3>Send Us a Message</h3>
+            <form id="contactForm" action="https://formspree.io/f/xdkeolyj" method="POST">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="_replyto" class="form-control" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" class="form-control" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" class="form-control" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-paper-plane btn-icon"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Map Section -->
+    <section class="map-section fade-in delay-2">
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.755774635245!2d31.07587631544146!3d-17.99384788769677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1931a5e8b5d5e5e5%3A0x5e5e5e5e5e5e5e5!2sSt.%20Mary&#39;s%20High%20School!5e0!3m2!1sen!2szw!4v1620000000000!5m2!1sen!2szw" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/academics">Academics</a></li>
+            <li><a href="/admissions">Admissions</a></li>
+            <li><a href="/news">News & Events</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> Mubvumira Road, Zengeza, Chitungwiza</p>
+            <p><i class="fas fa-phone"></i> +263 719 647 303</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+        <p class="mt-2">Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by <a href="https://wa.me/263719647303" target="_blank" style="color: var(--accent);">Darrell Mucheri</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('show');
+      mobileMenuBtn.innerHTML = navLinks.classList.contains('show') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Dropdown Menus
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('a');
+      link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // Sticky Header
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    themeToggle.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+      
+      // Save preference to localStorage
+      const isDarkMode = body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+      
+      // Update icon
+      themeToggle.innerHTML = isDarkMode 
+        ? '<i class="fas fa-sun"></i>' 
+        : '<i class="fas fa-moon"></i>';
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Scroll Animations
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => {
+      fadeObserver.observe(el);
+    });
+
+    // Form Submission
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(contactForm);
+      
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Your message has been sent successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          contactForm.reset();
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'There was a problem sending your message. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'There was a network error. Please check your connection and try again.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  </script>
+</body>
+</html>

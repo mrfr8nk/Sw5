@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Sciences | St. Mary's High School</title>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/4476/4476871.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #000000;
+      --accent-color: #4d94ff;
+      --light-color: #ffffff;
+      --dark-color: #121212;
+      --text-color: #333333;
+      --light-gray: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--light-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background-color: var(--light-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .logo-text span {
+      color: var(--accent-color);
+    }
+    
+    .page-header {
+      margin-top: 80px;
+      padding: 60px 0;
+      background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                  url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3') no-repeat center center/cover;
+      color: var(--light-color);
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .content-section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+    }
+    
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .program-card {
+      background: var(--light-color);
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .program-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .program-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 12px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn:hover {
+      background-color: var(--accent-color);
+    }
+    
+    footer {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      padding: 40px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Commercial Sciences</h1>
+      <p>Business, Economics & Entrepreneurship</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Commercial Sciences Excellence</h2>
+        <p>Following the ZIMSEC curriculum, our Commercial Sciences program prepares students for careers in business, economics, and entrepreneurship with practical skills and real-world applications.</p>
+      </div>
+      
+      <div class="program-grid">
+        <div class="program-card">
+          <h3><i class="fas fa-calculator"></i> Accounting</h3>
+          <p>Comprehensive accounting principles, bookkeeping, and financial management skills essential for business success.</p>
+          <a href="/contact" class="btn">Learn More</a>
+        </div>
+        
+        <div class="program-card">
+          <h3><i class="fas fa-chart-line"></i> Economics</h3>
+          <p>Understanding economic principles, market forces, and financial systems in local and global contexts.</p>
+          <a href="/contact" class="btn">Learn More</a>
+        </div>
+        
+        <div class="program-card">
+          <h3><i class="fas fa-briefcase"></i> Business Studies</h3>
+          <p>Entrepreneurship, business management, and organizational behavior skills for future business leaders.</p>
+          <a href="/contact" class="btn">Learn More</a>
+        </div>
+        
+        <div class="program-card">
+          <h3><i class="fas fa-handshake"></i> Commerce</h3>
+          <p>Trade, marketing, and commercial practices that form the foundation of modern business operations.</p>
+          <a href="/contact" class="btn">Learn More</a>
+        </div>
+        
+        <div class="program-card">
+          <h3><i class="fas fa-keyboard"></i> Office Practice</h3>
+          <p>Essential office skills including typing, computer applications, and business communication.</p>
+          <a href="/contact" class="btn">Learn More</a>
+        </div>
+        
+        <div class="program-card">
+          <h3><i class="fas fa-lightbulb"></i> Entrepreneurship</h3>
+          <p>Innovation, business planning, and startup skills to develop the next generation of entrepreneurs.</p>
+          <a href="/contact" class="btn">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

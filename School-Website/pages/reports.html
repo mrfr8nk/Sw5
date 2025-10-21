@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Report</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" />
+  <style>
+    /* ==============================
+       Enhanced Color & Theme Variables
+       ============================== */
+    :root {
+      --primary: #1a365d;
+      --secondary: #d69e2e;
+      --accent: #9f7aea;
+      --danger: #e53e3e;
+      --success: #38a169;
+      --info: #3182ce;
+      --glass: rgba(26, 54, 93, 0.15);
+      --bg-gradient: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+      --text-color: #ffffff;
+      --table-text: #ffffff;
+      --overlay: rgba(0, 0, 0, 0.5);
+      --modal-bg: #2d3748;
+      --modal-text: #ffffff;
+      --input-bg: #4a5568;
+      --input-border: #718096;
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --border-radius: 12px;
+      --header-height: 80px;
+    }
+    
+    [data-theme="light"] {
+      --primary: #3182ce;
+      --secondary: #dd6b20;
+      --accent: #805ad5;
+      --glass: rgba(237, 242, 247, 0.9);
+      --bg-gradient: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+      --text-color: #2d3748;
+      --table-text: #2d3748;
+      --overlay: rgba(255, 255, 255, 0.4);
+      --modal-bg: #ffffff;
+      --modal-text: #2d3748;
+      --input-bg: #f9f9f9;
+      --input-border: #cbd5e0;
+    }
+
+    /* ==============================
+       General Styles
+       ============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      min-height: 100vh;
+      line-height: 1.6;
+      transition: var(--transition);
+      padding: 0;
+    }
+
+    /* ==============================
+       Report Form Container
+       ============================== */
+    .report-container {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      width: 100%;
+      max-width: 600px;
+      margin: 50px auto;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ==============================
+       Header & Title
+       ============================== */
+    .report-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--secondary);
+    }
+    
+    .report-header img {
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--secondary);
+    }
+    
+    .report-header h2 {
+      margin: 0;
+      color: var(--secondary);
+      font-size: 1.8rem;
+    }
+
+    /* ==============================
+       Form Elements
+       ============================== */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--input-border);
+      border-radius: var(--border-radius);
+      background-color: var(--input-bg);
+      color: var(--modal-text);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.3);
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    /* Checkbox Group */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .checkbox-group input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--secondary);
+    }
+    
+    .checkbox-group label {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-color);
+    }
+
+    /* File Input */
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .file-input-wrapper input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-input-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      background: var(--input-bg);
+      border: 1px dashed var(--input-border);
+      border-radius: var(--border-radius);
+      color: var(--modal-text);
+      text-align: center;
+      transition: var(--transition);
+    }
+    
+    .file-input-wrapper:hover .file-input-label {
+      border-color: var(--secondary);
+      background: rgba(214, 158, 46, 0.1);
+    }
+    
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: var(--border-radius);
+      background: var(--secondary);
+      color: #1a365d;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+      box-shadow: var(--card-shadow);
+    }
+    
+    .submit-btn:hover {
+      background: #b7791f;
+      transform: translateY(-2px);
+    }
+    
+    .submit-btn i {
+      font-size: 1.1rem;
+    }
+
+    /* ==============================
+       Footer
+       ============================== */
+    .report-footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+    
+    .report-footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .report-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==============================
+       Responsive Adjustments
+       ============================== */
+    @media (max-width: 768px) {
+      .report-container {
+        padding: 20px;
+        margin: 20px auto;
+      }
+      
+      .report-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .report-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .report-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="report-container">
+    <div class="report-header">
+      <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="School Logo" />
+      <h2>Student Report Form</h2>
+    </div>
+    
+    <form id="reportForm">
+      <div class="checkbox-group">
+        <input type="checkbox" id="anonymous" name="anonymous" />
+        <label for="anonymous">Submit Anonymously</label>
+      </div>
+      
+      <div class="form-group" id="nameGroup">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" />
+      </div>
+      
+      <div class="form-group" id="classGroup">
+        <label for="class">Class Information</label>
+        <div class="form-row" style="display: flex; gap: 15px;">
+          <select id="form" style="flex: 1;">
+            <option value="">Select Form</option>
+            <option value="FORM 1">FORM 1</option>
+            <option value="FORM 2">FORM 2</option>
+            <option value="FORM 3">FORM 3</option>
+            <option value="FORM 4">FORM 4</option>
+            <option value="FORM 5">FORM 5</option>
+            <option value="FORM 6">FORM 6</option>
+          </select>
+          <select id="stream" style="flex: 1;">
+            <option value="">Select Stream</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="G">G</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Report Details</label>
+        <textarea id="message" name="message" placeholder="Please provide detailed information about your report..." required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="image">Attach Supporting Documents (Optional)</label>
+        <div class="file-input-wrapper">
+          <input type="file" id="image" name="image" accept="image/*,.pdf,.doc,.docx" />
+          <label for="image" class="file-input-label">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <span>Click to upload files or drag and drop</span>
+          </label>
+        </div>
+        <small style="display: block; margin-top: 5px; color: var(--secondary);">Max file size: 5MB (Images, PDF, Word)</small>
+      </div>
+      
+      <div class="form-group">
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i>
+          Submit Report
+        </button>
+      </div>
+    </form>
+    
+    <div class="report-footer">
+      <p>&copy; 2025 St. Mary's High School. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase services and functions from centralized config
+    import {
+      db,
+      storage,
+      collection,
+      addDoc,
+      ref,
+      uploadBytes,
+      getDownloadURL
+    } from "/db/firebase.js";
+
+    // Toggle visibility of name and class fields
+    const anonymousCheckbox = document.getElementById("anonymous");
+    const nameGroup = document.getElementById("nameGroup");
+    const classGroup = document.getElementById("classGroup");
+
+    anonymousCheckbox.addEventListener("change", () => {
+      if (anonymousCheckbox.checked) {
+        nameGroup.style.display = "none";
+        classGroup.style.display = "none";
+      } else {
+        nameGroup.style.display = "block";
+        classGroup.style.display = "block";
+      }
+    });
+
+    // Handle file selection
+    const fileInput = document.getElementById("image");
+    const fileInputLabel = fileInput.nextElementSibling;
+    
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length > 0) {
+        const fileName = fileInput.files[0].name;
+        fileInputLabel.innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
+        fileInputLabel.style.border = "1px solid var(--secondary)";
+        fileInputLabel.style.background = "rgba(214, 158, 46, 0.1)";
+      } else {
+        fileInputLabel.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Click to upload files or drag and drop';
+        fileInputLabel.style.border = "1px dashed var(--input-border)";
+        fileInputLabel.style.background = "var(--input-bg)";
+      }
+    });
+
+    // Submit report
+    document.getElementById("reportForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const form = document.getElementById("form").value;
+      const stream = document.getElementById("stream").value;
+      const message = document.getElementById("message").value;
+      const imageFile = document.getElementById("image").files[0];
+      const isAnonymous = document.getElementById("anonymous").checked;
+
+      // Validate required fields
+      if (!message) {
+        Swal.fire({
+          icon: "error",
+          title: "Missing Information",
+          text: "Please provide the details of your report.",
+        });
+        return;
+      }
+
+      if (!isAnonymous && (!name || !form)) {
+        Swal.fire({
+          icon: "error",
+          title: "Missing Information",
+          text: "Please provide your name and class information.",
+        });
+        return;
+      }
+
+      // Show loading state
+      const submitBtn = document.querySelector(".submit-btn");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+      try {
+        let imageUrl = null;
+        
+        // Upload image if provided
+        if (imageFile) {
+          const storageRef = ref(storage, `reports/${Date.now()}_${imageFile.name}`);
+          await uploadBytes(storageRef, imageFile);
+          imageUrl = await getDownloadURL(storageRef);
+        }
+
+        // Prepare report data
+        const reportData = {
+          name: isAnonymous ? "Anonymous" : name,
+          class: isAnonymous ? "Anonymous" : `${form} ${stream}`.trim(),
+          message,
+          imageUrl: imageUrl || null,
+          timestamp: new Date().toISOString(),
+          status: "pending",
+          isAnonymous
+        };
+
+        // Add to Firestore
+        await addDoc(collection(db, "reports"), reportData);
+
+        // Show success message
+        Swal.fire({
+          icon: "success",
+          title: "Report Submitted!",
+          text: "Your report has been received successfully. We will review it shortly.",
+          confirmButtonColor: "var(--secondary)",
+        });
+
+        // Reset form
+        document.getElementById("reportForm").reset();
+        fileInputLabel.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Click to upload files or drag and drop';
+        fileInputLabel.style.border = "1px dashed var(--input-border)";
+        fileInputLabel.style.background = "var(--input-bg)";
+        
+      } catch (error) {
+        console.error("Error submitting report:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Submission Failed",
+          text: "An error occurred while submitting your report. Please try again.",
+          confirmButtonColor: "var(--danger)",
+        });
+      } finally {
+        // Reset button state
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Report';
+      }
+    });
+  </script>
+</body>
+</html>.

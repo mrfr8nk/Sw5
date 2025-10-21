@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admissions - St. Mary's High School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366;
+      --primary-light: #3d5d8a;
+      --primary-dark: #001a33;
+      --secondary: #FFD700;
+      --secondary-light: #ffeb99;
+      --accent: #87CEEB;
+      --accent-dark: #5aa5d1;
+      --text: #333333;
+      --text-light: #6c757d;
+      --light: #ffffff;
+      --light-gray: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --info: #17a2b8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+      --font-primary: 'Poppins', sans-serif;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --text-5xl: 3rem;
+      --text-6xl: 3.75rem;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text);
+      background-color: var(--light);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--light);
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .logo-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links > li:not(:last-child) {
+      margin-right: var(--space-md);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: var(--text-2xl);
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 60vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                  url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      color: var(--light);
+      margin-top: 80px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Admissions Content */
+    .section {
+      padding: var(--space-xxl) 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-title h2 {
+      font-size: var(--text-3xl);
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      transform: translateX(-50%);
+      border-radius: var(--radius-full);
+    }
+
+    .admission-level {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-md);
+    }
+
+    .requirements-list {
+      margin: var(--space-lg) 0;
+    }
+
+    .requirements-list li {
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .requirements-list i {
+      color: var(--primary);
+      margin-right: var(--space-sm);
+      margin-top: 3px;
+    }
+
+    .application-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .application-option {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .application-option:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .application-option i {
+      font-size: var(--text-4xl);
+      color: var(--primary);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-primary);
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      border: 2px solid transparent;
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-light);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: var(--dark);
+      color: var(--light);
+      padding: var(--space-xxl) 0 var(--space-lg);
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .footer-col h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light);
+      transition: all var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      background-color: var(--accent);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links a {
+      color: var(--light);
+      transition: color var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .quick-contact i {
+      margin-right: var(--space-sm);
+      color: var(--accent);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: var(--space-xxl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+        transition: left 0.3s ease;
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .application-options {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: var(--text-3xl);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="/admissions" class="active"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+        <li><a href="/staff"><i class="fas fa-chalkboard-teacher"></i> Our Staff</a></li>
+        <li><a href="/schoolview"><i class="fas fa-school"></i> School Atmosphere</a></li>
+        <li><a href="/news"><i class="fas fa-newspaper"></i> News & Events</a></li>
+        <li><a href="/calendar"><i class="fas fa-calendar-alt"></i> School Calendar</a></li>
+        <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Admissions Process</h1>
+      <p>Join our community of learners and discover the St. Mary's difference</p>
+    </div>
+  </section>
+
+  <!-- Admissions Content -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Admission Requirements</h2>
+        <p>Below are the requirements for our O-Level and A-Level programs</p>
+      </div>
+
+      <!-- O-Level Requirements -->
+      <div class="admission-level">
+        <h3><i class="fas fa-graduation-cap"></i> O-Level (Form 1-4) Requirements</h3>
+        <div class="requirements-list">
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Completed primary school education</li>
+            <li><i class="fas fa-check-circle"></i> Original and copy of birth certificate</li>
+            <li><i class="fas fa-check-circle"></i> Copy of Grade 7 report card or results slip</li>
+            <li><i class="fas fa-check-circle"></i> Four (4) recent passport-sized photos</li>
+            <li><i class="fas fa-check-circle"></i> Completed application form</li>
+            <li><i class="fas fa-check-circle"></i> Medical report from recognized health practitioner</li>
+            <li><i class="fas fa-check-circle"></i> Recommendation letter from previous school (if applicable)</li>
+          </ul>
+        </div>
+        <p><strong>Application Deadline:</strong> December 1st for the following academic year</p>
+      </div>
+
+      <!-- A-Level Requirements -->
+      <div class="admission-level">
+        <h3><i class="fas fa-university"></i> A-Level (Form 5-6) Requirements</h3>
+        <div class="requirements-list">
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Minimum of 5 O-Level passes including English and Mathematics</li>
+            <li><i class="fas fa-check-circle"></i> Original and copy of birth certificate</li>
+            <li><i class="fas fa-check-circle"></i> Copy of O-Level certificate or results slip</li>
+            <li><i class="fas fa-check-circle"></i> Four (4) recent passport-sized photos</li>
+            <li><i class="fas fa-check-circle"></i> Completed application form</li>
+            <li><i class="fas fa-check-circle"></i> Medical report from recognized health practitioner</li>
+            <li><i class="fas fa-check-circle"></i> Recommendation letter from O-Level school</li>
+            <li><i class="fas fa-check-circle"></i> Personal statement (minimum 300 words)</li>
+          </ul>
+        </div>
+        <p><strong>Application Deadline:</strong> November 30th for the following academic year</p>
+      </div>
+
+      <!-- Application Options -->
+      <div class="section-title">
+        <h2>How to Apply</h2>
+        <p>Choose your preferred application method</p>
+      </div>
+
+      <div class="application-options">
+        <!-- Online Application -->
+        <div class="application-option">
+          <i class="fas fa-laptop"></i>
+          <h3>Apply Online</h3>
+          <p>Complete our digital application form and submit all required documents electronically</p>
+          <a href="/apply" class="btn btn-primary">Apply Now</a>
+        </div>
+
+        <!-- Download Form -->
+        <div class="application-option">
+          <i class="fas fa-file-download"></i>
+          <h3>Download Form</h3>
+          <p>Download the application form, complete it, and return it to our admissions office</p>
+          <a href="/downloads-application" class="btn btn-secondary" download>Download Form</a>
+        </div>
+
+        <!-- Visit School -->
+        <div class="application-option">
+          <i class="fas fa-school"></i>
+          <h3>Visit Our School</h3>
+          <p>Come to our campus to collect forms, tour facilities, and meet our staff</p>
+          <a href="/contact" class="btn btn-outline">Get Directions</a>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="admission-level" style="margin-top: var(--space-xxl);">
+        <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+        <div class="requirements-list">
+          <ul>
+            <li><i class="fas fa-calendar-alt"></i> <strong>Entrance Exams:</strong> All applicants must sit for entrance exams held every first Saturday of the month</li>
+            <li><i class="fas fa-money-bill-wave"></i> <strong>Application Fee:</strong> $10 for O-Level, $20 for A-Level (non-refundable)</li>
+            <li><i class="fas fa-clock"></i> <strong>Office Hours:</strong> Monday-Friday, 8:00 AM - 4:00 PM</li>
+            <li><i class="fas fa-phone"></i> <strong>Admissions Office:</strong> +263 719 647 303</li>
+            <li><i class="fas fa-envelope"></i> <strong>Email:</strong> admissions@stmaryshs.edu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="/academics"><i class="fas fa-book"></i> Academics</a></li>
+            <li><a href="/admissions"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+            <li><a href="/schoolview"><i class="fas fa-running"></i> School View </a></li>
+            <li><a href="/staff"><i class="fas fa-paint-brush"></i> Gallery</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> Harare, Chitungwiza Zengeza 1</p>
+            <p><i class="fas fa-phone"></i> +263 719 647 303</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+        <p class="mt-2">Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by <a href="https://wa.me/263719647303" target="_blank" style="color: var(--accent);">Darrell Mucheri</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('show');
+      mobileMenuBtn.innerHTML = navLinks.classList.contains('show') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

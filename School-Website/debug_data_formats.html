@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Class Data Formats</title>
+</head>
+<body>
+    <h2>Investigating Class Data Formats</h2>
+    <div id="results"></div>
+
+    <script type="module">
+        import {
+            db,
+            collection,
+            getDocs,
+            query,
+            where
+        } from "/db/firebase.js";
+
+        async function investigateClassFormats() {
+            try {
+                console.log("Loading all students to investigate class formats...");
+                
+                // Load ALL students like the working student users page does
+                const studentsRef = collection(db, "students");
+                const querySnapshot = await getDocs(studentsRef);
+                
+                const classFormats = new Map();
+                const form5and6Students = [];
+                
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const form = data.form;
+                    const stream = data.stream;
+                    
+                    if (form) {
+                        // Track all unique class formats
+                        const key = `${form}${stream ? ` ${stream}` : ''}`;
+                        if (!classFormats.has(key)) {
+                            classFormats.set(key, []);
+                        }
+                        classFormats.get(key).push({
+                            id: doc.id,
+                            firstname: data.firstname,
+                            surname: data.surname,
+                            form: form,
+                            stream: stream || ''
+                        });
+                        
+                        // Specifically track Form 5 and 6 students
+                        if (form.includes('5') || form.includes('6')) {
+                            form5and6Students.push({
+                                id: doc.id,
+                                firstname: data.firstname,
+                                surname: data.surname,
+                                form: form,
+                                stream: stream || '',
+                                fullClass: key
+                            });
+                        }
+                    }
+                });
+                
+                // Display results
+                const resultsDiv = document.getElementById('results');
+                
+                let html = '<h3>All Class Formats Found:</h3>';
+                const sortedClasses = Array.from(classFormats.keys()).sort();
+                sortedClasses.forEach(className => {
+                    const students = classFormats.get(className);
+                    html += `<p><strong>${className}</strong>: ${students.length} students</p>`;
+                });
+                
+                html += '<h3>Form 5 and 6 Students (A-Level):</h3>';
+                if (form5and6Students.length === 0) {
+                    html += '<p style="color: red;">NO Form 5 or Form 6 students found!</p>';
+                } else {
+                    html += `<p>Found ${form5and6Students.length} Form 5/6 students:</p>`;
+                    form5and6Students.forEach(student => {
+                        html += `<div>- ${student.firstname} ${student.surname} | Form: "${student.form}" | Stream: "${student.stream}" | Full: "${student.fullClass}"</div>`;
+                    });
+                }
+                
+                html += '<h3>Sample Class Assignment Test:</h3>';
+                html += '<p>Testing if teacher assigned to "Form 5" or "Form 6" would find students:</p>';
+                
+                // Test what teacher classes might be assigned as
+                const teacherClassOptions = ["Form 5", "Form 6", "FORM 5", "FORM 6", "Form 5 Sciences", "Form 6 Arts"];
+                teacherClassOptions.forEach(teacherClass => {
+                    const matchingStudents = [];
+                    sortedClasses.forEach(actualClass => {
+                        // Test different matching strategies
+                        const exactMatch = actualClass === teacherClass;
+                        const upperMatch = actualClass.toUpperCase() === teacherClass.toUpperCase();
+                        const containsMatch = actualClass.toLowerCase().includes(teacherClass.toLowerCase());
+                        
+                        if (exactMatch || upperMatch || containsMatch) {
+                            matchingStudents.push(actualClass);
+                        }
+                    });
+                    
+                    html += `<div>Teacher class: "${teacherClass}" → Matches: ${matchingStudents.join(', ') || 'NONE'}</div>`;
+                });
+                
+                resultsDiv.innerHTML = html;
+                
+                console.log("Investigation complete. Check the page for results.");
+                
+            } catch (error) {
+                console.error("Error investigating class formats:", error);
+                document.getElementById('results').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Run investigation when page loads
+        investigateClassFormats();
+    </script>
+</body>
+</html>

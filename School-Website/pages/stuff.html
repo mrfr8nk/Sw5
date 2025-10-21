@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Faculty | St. Mary's High School</title>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/4476/4476871.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #003366; /* Navy blue */
+      --secondary-color: #000000;
+      --accent-color: #4d94ff; /* Light blue */
+      --light-color: #ffffff;
+      --dark-color: #121212;
+      --text-color: #333333;
+      --light-gray: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--light-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header */
+    header {
+      background-color: var(--light-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .logo-text span {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 30px;
+      position: relative;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary-color);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary-color);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+    
+    /* Page Header */
+    .page-header {
+      margin-top: 80px;
+      padding: 80px 0;
+      background: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), 
+                  url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80') no-repeat center center/cover;
+      color: var(--light-color);
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .page-header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease 0.3s forwards;
+      opacity: 0;
+    }
+    
+    /* Faculty Section */
+    .faculty {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 3px;
+      background-color: var(--accent-color);
+      transform: translateX(-50%);
+    }
+    
+    .faculty-categories {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .category-btn {
+      padding: 8px 20px;
+      background-color: var(--light-gray);
+      border: none;
+      border-radius: 30px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .category-btn.active,
+    .category-btn:hover {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+    }
+    
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    
+    .faculty-card {
+      background-color: var(--light-color);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .faculty-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .admin-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .senior-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #ff9f43;
+      color: var(--light-color);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .deputy-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #2ecc71;
+      color: var(--light-color);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .faculty-image {
+      height: 250px;
+      overflow: hidden;
+    }
+    
+    .faculty-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .faculty-card:hover .faculty-image img {
+      transform: scale(1.1);
+    }
+    
+    .faculty-info {
+      padding: 20px;
+    }
+    
+    .faculty-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      color: var(--primary-color);
+    }
+    
+    .faculty-position {
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .faculty-subject {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .faculty-subject i {
+      margin-right: 5px;
+      color: var(--primary-color);
+    }
+    
+    .faculty-contact {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .faculty-contact a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      background-color: var(--light-gray);
+      border-radius: 50%;
+      color: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    
+    .faculty-contact a:hover {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      transform: translateY(-3px);
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      padding: 60px 0 30px;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light-color);
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: var(--light-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent-color);
+    }
+    
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    
+    .quick-contact i {
+      margin-right: 10px;
+      color: var(--accent-color);
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light-color);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 40px;
+        transition: left 0.3s ease;
+      }
+      
+      .nav-links.show {
+        left: 0;
+      }
+      
+      .nav-links li {
+        margin: 0 0 30px 0;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      
+      .faculty-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/staff" class="active">Faculty</a></li>
+        <li><a href="/academics">Academics</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Our Dedicated Faculty</h1>
+      <p>Meet the exceptional teachers and administrators who make St. Mary's High School a center of excellence.</p>
+    </div>
+  </section>
+
+  <!-- Faculty Section -->
+  <section class="faculty">
+    <div class="container">
+      <div class="section-title">
+        <h2>Faculty & Administration</h2>
+      </div>
+      
+      <div class="faculty-categories">
+        <button class="category-btn active" data-category="all">All Faculty</button>
+        <button class="category-btn" data-category="admin">Administration</button>
+        <button class="category-btn" data-category="senior">Senior Teachers</button>
+        <button class="category-btn" data-category="deputy">Deputy Heads</button>
+        <button class="category-btn" data-category="teachers">Teaching Staff</button>
+      </div>
+      
+      <div class="faculty-grid">
+        <!-- Principal -->
+        <div class="faculty-card" data-category="admin">
+          <div class="admin-badge">Principal</div>
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Dr. Sarah Johnson">
+          </div>
+          <div class="faculty-info">
+            <h3>Dr. Sarah Johnson</h3>
+            <div class="faculty-position">School Principal</div>
+            <div class="faculty-subject">
+              <i class="fas fa-book-open"></i> Educational Leadership
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:s.johnson@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Vice Principal -->
+        <div class="faculty-card" data-category="admin">
+          <div class="admin-badge">Vice Principal</div>
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Mr. David Thompson">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. David Thompson</h3>
+            <div class="faculty-position">Vice Principal</div>
+            <div class="faculty-subject">
+              <i class="fas fa-book-open"></i> Administration
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:d.thompson@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Senior Teacher - Head of Science -->
+        <div class="faculty-card" data-category="senior">
+          <div class="senior-badge">Head of Science</div>
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Mrs. Elizabeth Parker">
+          </div>
+          <div class="faculty-info">
+            <h3>Mrs. Elizabeth Parker</h3>
+            <div class="faculty-position">Senior Teacher</div>
+            <div class="faculty-subject">
+              <i class="fas fa-flask"></i> Chemistry & Physics
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:e.parker@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Deputy Head - Mathematics -->
+        <div class="faculty-card" data-category="deputy">
+          <div class="deputy-badge">Deputy Head</div>
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Mr. Robert Chen">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. Robert Chen</h3>
+            <div class="faculty-position">Deputy Head - Academics</div>
+            <div class="faculty-subject">
+              <i class="fas fa-square-root-alt"></i> Mathematics
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:r.chen@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- English Teacher -->
+        <div class="faculty-card" data-category="teachers">
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Ms. Angela Martin">
+          </div>
+          <div class="faculty-info">
+            <h3>Ms. Angela Martin</h3>
+            <div class="faculty-position">English Department</div>
+            <div class="faculty-subject">
+              <i class="fas fa-book"></i> Literature & Composition
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:a.martin@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- History Teacher -->
+        <div class="faculty-card" data-category="teachers">
+          <div class="faculty-image">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Mr. James Wilson">
+          </div>
+          <div class="faculty-info">
+            <h3>Mr. James Wilson</h3>
+            <div class="faculty-position">Social Sciences</div>
+            <div class="faculty-subject">
+              <i class="fas fa-landmark"></i> World History
+            </div>
+            <div class="faculty-contact">
+              <a href="mailto:j.wilson@stmaryshs.edu"><i class="fas fa-envelope"></i></a>
+              <a href="#"><i class="fas fa-phone"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/staff">Faculty</a></li>
+            <li><a href="/academics">Academics</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Education Way, Academic City, AC 12345</p>
+            <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    // Faculty category filtering
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const facultyCards = document.querySelectorAll('.faculty-card');
+    
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        categoryBtns.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        const category = btn.dataset.category;
+        
+        // Filter faculty cards
+        facultyCards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

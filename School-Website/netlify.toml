@@ -1,0 +1,114 @@
+[[redirects]]
+     from = "/about"
+     to = "/pages/about.html"
+     status = 200
+
+   [[redirects]]
+     from = "/download-application"
+     to = "https://github.com/mrfrank-ofc/STM/raw/main/admin/stmarys_application_form.pdf"
+     status = 302
+
+   [[redirects]]
+     from = "/faculty"
+     to = "/pages/faculty.html"
+     status = 200
+
+   [[redirects]]
+     from = "/staff"
+     to = "/pages/stuff.html"
+     status = 200
+
+   [[redirects]]
+     from = "/report"
+     to = "/pages/reports.html"
+     status = 200
+
+   [[redirects]]
+     from = "/viewreports"
+     to = "/pages/viewreports.html"
+     status = 200
+
+   [[redirects]]
+     from = "/contact"
+     to = "/pages/contact.html"
+     status = 200
+
+   [[redirects]]
+     from = "/gallery"
+     to = "/pages/gallery.html"
+     status = 200
+
+   [[redirects]]
+     from = "/apply"
+     to = "/pages/student-application.html"
+     status = 200
+
+   [[redirects]]
+     from = "/adminapplication"
+     to = "/pages/admin-application.html"
+     status = 200
+
+   [[redirects]]
+     from = "/reportcard"
+     to = "/reportcard.html"
+     status = 200
+
+   [[redirects]]
+     from = "/setreportcard"
+     to = "/pages/teacher-set-report.html"
+     status = 200
+
+   [[redirects]]
+     from = "/login"
+     to = "/pages/student-login.html"
+     status = 200
+
+   [[redirects]]
+     from = "/signup"
+     to = "/pages/student-signup.html"
+     status = 200
+
+   [[redirects]]
+     from = "/teacherslogin"
+     to = "/admin/admin-login.html"
+     status = 200
+
+   [[redirects]]
+     from = "/admin"
+     to = "/admin/admin.html"
+     status = 200
+
+   [[redirects]]
+     from = "/credits"
+     to = "/admin/credits.html"
+     status = 200
+
+   [[redirects]]
+     from = "/teacherssignup"
+     to = "/admin/admin-signup.html"
+     status = 200
+
+   [[redirects]]
+     from = "/teachersdashboard"
+     to = "/admin/teachers-dashboard.html"
+     status = 200
+
+   [[redirects]]
+     from = "/dashboard"
+     to = "/pages/student-dashboard.html"
+     status = 200
+
+   [[redirects]]
+     from = "/teacherusers"
+     to = "/admin/teacher-users.html"
+     status = 200
+
+   [[redirects]]
+     from = "/studentusers"
+     to = "/pages/student-users.html"
+     status = 200
+
+   [[redirects]]
+     from = "/*"
+     to = "/index.html"
+     status = 200

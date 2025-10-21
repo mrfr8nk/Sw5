@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Administrator - St. Mary's High School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  
+  <style>
+    :root {
+      --primary: #003366;
+      --primary-light: #3d5d8a;
+      --primary-dark: #001a33;
+      --secondary: #FFD700;
+      --secondary-light: #ffeb99;
+      --accent: #87CEEB;
+      --accent-dark: #5aa5d1;
+      --text: #333333;
+      --text-light: #6c757d;
+      --light: #ffffff;
+      --light-gray: #f8f9fa;
+      --dark: #212529;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+      --font-primary: 'Poppins', sans-serif;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+      --transition-normal: 0.3s ease;
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 1rem;
+      --radius-full: 9999px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text);
+      background-color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--light);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .logo-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links > li:not(:last-child) {
+      margin-right: var(--space-md);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      transition: color var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: var(--text-2xl);
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .teacher-account-section {
+      padding: var(--space-xxl) 0;
+      background-color: var(--light-gray);
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      margin-top: 80px;
+    }
+
+    .teacher-account-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 var(--space-md);
+    }
+
+    .teacher-account-title {
+      font-size: var(--text-4xl);
+      color: var(--primary);
+      margin-bottom: var(--space-xl);
+      position: relative;
+      display: inline-block;
+    }
+
+    .teacher-account-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      transform: translateX(-50%);
+      border-radius: var(--radius-full);
+    }
+
+    .account-card {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: var(--space-xl);
+      transition: transform var(--transition-normal);
+    }
+
+    .account-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .account-info h2 {
+      font-size: var(--text-3xl);
+      color: var(--primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .account-info p {
+      font-size: var(--text-lg);
+      color: var(--text-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .account-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--space-md);
+      background-color: var(--light-gray);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-normal);
+    }
+
+    .step-item:hover {
+      background-color: var(--primary-light);
+      color: var(--light);
+    }
+
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary);
+      color: var(--light);
+      border-radius: 50%;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+
+    .step-text {
+      text-align: center;
+      font-size: var(--text-base);
+    }
+
+    .developer-profile {
+      margin: var(--space-xl) 0;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .developer-profile img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid var(--primary);
+      box-shadow: var(--shadow-lg);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .developer-profile img:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .whatsapp-btn {
+      background-color: #25D366;
+      color: var(--light);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: #128C7E;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      color: var(--light);
+    }
+
+    .whatsapp-btn i {
+      margin-right: var(--space-sm);
+      font-size: var(--text-xl);
+    }
+
+    .footer {
+      background-color: var(--primary);
+      color: var(--light);
+      padding: 0.5rem 0;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      opacity: 0.8;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      color: var(--secondary);
+      opacity: 1;
+    }
+
+    .footer p {
+      margin: 2px 0;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: var(--space-xl);
+      right: var(--space-xl);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      transition: all var(--transition-normal);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+        transition: left var(--transition-normal);
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .teacher-account-title {
+        font-size: var(--text-3xl);
+      }
+
+      .account-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-buttons {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .teacher-account-title {
+        font-size: var(--text-2xl);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/teachersdashboard">Teacher Dashboard</a></li>
+        <li><a href="/setreportcard">Set Report Card</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Contact Administrator Section -->
+  <section class="teacher-account-section">
+    <div class="teacher-account-container">
+      <h1 class="teacher-account-title">Contact Administrator</h1>
+      
+      <div class="account-card fade-in">
+        <div class="account-info">
+          <h2>Need to Create Admin or Teacher Account?</h2>
+          <p>To create a new admin or teacher account for St. Mary's High School management system, please follow these steps to contact the administrator.</p>
+          
+          <div class="account-steps">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-text">Contact via WhatsApp</div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-text">Provide your credentials</div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-text">Await approval & setup</div>
+            </div>
+          </div>
+          
+          <div class="developer-profile">
+            <img src="https://i.ibb.co/yFJryv1y/mrfrankofc.jpg" alt="Administrator - Darrell Mucheri">
+          </div>
+          
+          <div class="contact-buttons">
+            <a href="https://wa.me/263719647303?text=Hi%20Darrell,%20I%20need%20to%20create%20an%20admin%20or%20teacher%20account%20for%20St.%20Mary's%20High%20School%20management%20system.%20Please%20help%20me%20with%20the%20setup." target="_blank" class="whatsapp-btn">
+              <i class="fab fa-whatsapp"></i> Contact Administrator
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <p>
+      <a href="https://wa.me/263719647303?text=hi%20darrell%20i%20would%20want%20you%20to%20create%20me%20a%20site%20like%20that%20of%20st%20marys.%20It%20wonderful" target="_blank">Made By Darrell Mucheri</a>
+    </p>
+    <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+  </footer>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (mobileMenuBtn && navLinks) {
+      mobileMenuBtn.addEventListener('click', function() {
+        navLinks.classList.toggle('show');
+        mobileMenuBtn.innerHTML = navLinks.classList.contains('show') 
+          ? '<i class="fas fa-times"></i>' 
+          : '<i class="fas fa-bars"></i>';
+      });
+    }
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        const icon = themeToggle.querySelector('i');
+        icon.className = body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
+      });
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('.header');
+      if (header) {
+        if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Form | St. Mary's High School</title>
+  
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#003366">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <style>
+    :root {
+      /* Color System */
+      --primary: #003366;
+      --primary-light: #3d5d8a;
+      --primary-dark: #001a33;
+      --secondary: #FFD700;
+      --secondary-light: #ffeb99;
+      --accent: #87CEEB;
+      --accent-dark: #5aa5d1;
+      --text: #333333;
+      --text-light: #6c757d;
+      --light: #ffffff;
+      --light-gray: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --info: #17a2b8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+      
+      /* Typography */
+      --font-primary: 'Poppins', sans-serif;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --text-5xl: 3rem;
+      --text-6xl: 3.75rem;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+      
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+      --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      
+      /* Border Radius */
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --primary: #4d94ff;
+      --primary-light: #7ab3ff;
+      --primary-dark: #0052cc;
+      --text: #f8f9fa;
+      --text-light: #adb5bd;
+      --light: #212529;
+      --light-gray: #343a40;
+      --dark: #f8f9fa;
+    }
+
+    /* Base Styles */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text);
+      background-color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color var(--transition-slow), color var(--transition-slow);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    ul, ol {
+      padding-left: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Utility Classes */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .section {
+      padding: var(--space-xxl) 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-title h2 {
+      font-size: var(--text-4xl);
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      transform: translateX(-50%);
+      border-radius: var(--radius-full);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 { margin-top: var(--space-xs); }
+    .mt-2 { margin-top: var(--space-sm); }
+    .mt-3 { margin-top: var(--space-md); }
+    .mt-4 { margin-top: var(--space-lg); }
+    .mt-5 { margin-top: var(--space-xl); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid transparent;
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      color: var(--light);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-light);
+      color: var(--dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-lg {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-lg);
+    }
+
+    .btn-icon {
+      margin-right: var(--space-sm);
+    }
+
+    /* Header & Navigation */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--light);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .header.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dark-mode .header.scrolled {
+      background-color: rgba(33, 37, 41, 0.95);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .logo-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links > li:not(:last-child) {
+      margin-right: var(--space-md);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      transition: color var(--transition-normal);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: var(--space-md);
+      bottom: 0;
+      width: calc(100% - 2 * var(--space-md));
+      height: 2px;
+      background-color: var(--primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-normal);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: var(--text-2xl);
+      cursor: pointer;
+      color: var(--primary);
+      z-index: 1001;
+    }
+
+    /* Application Form Section */
+    .application-section {
+      background-color: var(--light-gray);
+      margin-top: 80px;
+    }
+
+    .application-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .application-form {
+      background-color: var(--light);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .application-form h3 {
+      font-size: var(--text-2xl);
+      color: var(--primary);
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: var(--space-sm);
+      color: var(--primary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--space-md);
+      border: 1px solid #ddd;
+      border-radius: var(--radius-md);
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      transition: border-color var(--transition-normal);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .input-icon {
+      position: relative;
+    }
+
+    .input-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+    }
+
+    .input-icon input,
+    .input-icon select,
+    .input-icon textarea {
+      padding-left: 40px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+    }
+
+    .radio-option input {
+      margin-right: var(--space-sm);
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: var(--radius-full);
+      height: 8px;
+      margin-bottom: var(--space-xl);
+    }
+
+    .dark-mode .progress-container {
+      background-color: var(--light-gray);
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background-color: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* File Input */
+    .file-input {
+      display: none;
+    }
+
+    .file-label {
+      display: inline-block;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--light-gray);
+      border: 1px dashed #ccc;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .dark-mode .file-label {
+      background-color: var(--light);
+      border-color: var(--text-light);
+    }
+
+    .file-label:hover {
+      border-color: var(--primary);
+    }
+
+    .file-name {
+      margin-top: var(--space-sm);
+      font-size: var(--text-base);
+      color: var(--text-light);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: var(--space-xl);
+      right: var(--space-xl);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      transition: all var(--transition-normal);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark);
+      color: var(--light);
+      padding: var(--space-xxl) 0 var(--space-lg);
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .footer-col h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    .footer-col p {
+      margin-bottom: var(--space-md);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light);
+      transition: all var(--transition-normal);
+    }
+
+    .social-links a:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: var(--space-xxl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+        transition: left var(--transition-normal);
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .section {
+        padding: var(--space-xl) 0;
+      }
+
+      .section-title h2 {
+        font-size: var(--text-3xl);
+      }
+
+      .application-form {
+        padding: var(--space-lg);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title h2 {
+        font-size: var(--text-2xl);
+      }
+
+      .radio-group {
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/" class="active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="/admissions"><i class="fas fa-user-graduate"></i> Admissions</a></li>
+        <li><a href="/staff"><i class="fas fa-chalkboard-teacher"></i> Our Staff</a></li>
+        <li><a href="/schoolview"><i class="fas fa-school"></i> School View</a></li>
+        <li><a href="/news"><i class="fas fa-newspaper"></i> News & Events</a></li>
+        <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="/dashboard" class="btn btn-outline"><i class="fas fa-user-graduate"></i> Student Portal</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Application Form Section -->
+    <section class="section application-section">
+      <div class="container application-container">
+        <div class="section-title">
+          <h2>Application Form</h2>
+          <p>Complete this form to apply for admission to St. Mary's High School</p>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="application-form fade-in">
+          <!-- Hidden field to store the auto-generated application number -->
+          <input type="hidden" id="applicationNumber" />
+          <form id="applicationForm">
+            <!-- Personal Information -->
+            <h3>Personal Information</h3>
+            
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <div class="input-icon">
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" class="form-control" placeholder="Enter your full name" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="idNumber">Birth/ID Number</label>
+              <div class="input-icon">
+                <i class="fas fa-id-card"></i>
+                <input type="text" id="idNumber" class="form-control" placeholder="Enter your birth/ID number" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="nationality">Nationality</label>
+              <div class="input-icon">
+                <i class="fas fa-flag"></i>
+                <input type="text" id="nationality" class="form-control" placeholder="Enter your nationality" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Gender</label>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="male" name="gender" value="Male" required />
+                  <label for="male">Male</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="female" name="gender" value="Female" required />
+                  <label for="female">Female</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <div class="input-icon">
+                <i class="fas fa-calendar"></i>
+                <input type="date" id="dob" class="form-control" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email (Optional)</label>
+              <div class="input-icon">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <div class="input-icon">
+                <i class="fas fa-phone"></i>
+                <input type="text" id="phone" class="form-control" placeholder="Enter your phone number" required />
+              </div>
+            </div>
+            
+            <!-- Academic Information -->
+            <h3>Academic Information</h3>
+            
+            <div class="form-group">
+              <label for="level">Level</label>
+              <div class="input-icon">
+                <i class="fas fa-graduation-cap"></i>
+                <select id="level" class="form-control" required>
+                  <option value="">Select Level</option>
+                  <option value="O Level">O Level</option>
+                  <option value="A Level">A Level</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="form">Form/Place Seeking</label>
+              <div class="input-icon">
+                <i class="fas fa-building"></i>
+                <select id="form" class="form-control" required>
+                  <option value="">Select Form/Place</option>
+                  <option value="1">Form 1</option>
+                  <option value="2">Form 2</option>
+                  <option value="3">Form 3</option>
+                  <option value="4">Form 4</option>
+                  <option value="5">Form 5</option>
+                  <option value="6">Form 6</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="previousSchool">Previous School</label>
+              <div class="input-icon">
+                <i class="fas fa-school"></i>
+                <input type="text" id="previousSchool" class="form-control" placeholder="Enter previous school name" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="previousResults">
+                Previous Results
+                <small style="color: var(--text-light); font-size: 0.875rem;">(Enter grades or upload an image)</small>
+              </label>
+              <div class="input-icon">
+                <i class="fas fa-file-alt"></i>
+                <textarea id="previousResults" class="form-control" rows="3" placeholder="Enter previous results (e.g., Maths A, English C)"></textarea>
+              </div>
+              
+              <label for="previousResultsFile" class="file-label" style="margin-top: var(--space-md);">
+                <i class="fas fa-upload"></i> Upload Results Image
+              </label>
+              <input type="file" id="previousResultsFile" class="file-input" accept="image/*" />
+              <div id="fileName" class="file-name"></div>
+            </div>
+            
+            <!-- Parent/Guardian Information -->
+            <h3>Parent/Guardian Information</h3>
+            
+            <div class="form-group">
+              <label for="parentName">Parent/Guardian Name</label>
+              <div class="input-icon">
+                <i class="fas fa-user"></i>
+                <input type="text" id="parentName" class="form-control" placeholder="Enter parent/guardian name" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="parentPhone">Parent/Guardian Phone</label>
+              <div class="input-icon">
+                <i class="fas fa-phone"></i>
+                <input type="text" id="parentPhone" class="form-control" placeholder="Enter parent/guardian phone" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="parentEmail">Parent/Guardian Email (Optional)</label>
+              <div class="input-icon">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="parentEmail" class="form-control" placeholder="Enter parent/guardian email" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-paper-plane btn-icon"></i> Submit Application
+              </button>
+            </div>
+          </form>
+          
+          <div class="form-group">
+            <a href="application-form.pdf" download class="btn btn-secondary btn-lg">
+              <i class="fas fa-download btn-icon"></i> Download Application Form (PDF)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/admissions">Admissions</a></li>
+            <li><a href="/staff">Our Staff</a></li>
+            <li><a href="/news">News & Events</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> Mubvumira Road, Zengeza, Chitungwiza</p>
+            <p><i class="fas fa-phone"></i> +263 719 647 303</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+        <p class="mt-2">Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by <a href="https://wa.me/263719647303" target="_blank" style="color: var(--accent);">Darrell Mucheri</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module">
+    // Import Firebase services and functions from centralized config
+    import {
+      db,
+      collection,
+      addDoc
+    } from "/db/firebase.js";
+
+    // Helper function to convert file to Base64
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Auto-generate application number and store in hidden field
+    function generateApplicationNumber() {
+      const appNumber = "APP-" + Date.now();
+      document.getElementById("applicationNumber").value = appNumber;
+      return appNumber;
+    }
+
+    // Progress Indicator Logic
+    const requiredFields = [
+      "name", "idNumber", "nationality", "dob",
+      "phone", "level", "form", "previousSchool",
+      "parentName", "parentPhone"
+    ];
+    
+    function updateProgress() {
+      let filled = 0;
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field && field.value.trim() !== "") {
+          filled++;
+        }
+      });
+      const genderSelected = document.querySelector('input[name="gender"]:checked') ? 1 : 0;
+      const total = requiredFields.length + 1;
+      const progressPercent = ((filled + genderSelected) / total) * 100;
+      document.getElementById("progressBar").style.width = progressPercent + "%";
+    }
+
+    document.querySelectorAll("input, select, textarea").forEach(el => {
+      el.addEventListener("input", updateProgress);
+      el.addEventListener("change", updateProgress);
+    });
+
+    // File input display
+    document.getElementById('previousResultsFile').addEventListener('change', function(e) {
+      const fileName = document.getElementById('fileName');
+      if (this.files.length > 0) {
+        fileName.textContent = this.files[0].name;
+      } else {
+        fileName.textContent = '';
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('show');
+      mobileMenuBtn.innerHTML = navLinks.classList.contains('show') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      
+      // Save preference to localStorage
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+      
+      // Update icon
+      themeToggle.innerHTML = isDarkMode 
+        ? '<i class="fas fa-sun"></i>' 
+        : '<i class="fas fa-moon"></i>';
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Form submission
+    document.getElementById("applicationForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const applicationNumber = generateApplicationNumber();
+      const name = document.getElementById("name").value;
+      const idNumber = document.getElementById("idNumber").value;
+      const nationality = document.getElementById("nationality").value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+      const dob = document.getElementById("dob").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const level = document.getElementById("level").value;
+      const formValue = document.getElementById("form").value;
+      const previousSchool = document.getElementById("previousSchool").value;
+      const previousResultsText = document.getElementById("previousResults").value.trim();
+      const previousResultsFileInput = document.getElementById("previousResultsFile");
+      let previousResultsImage = null;
+      
+      if (previousResultsFileInput.files.length > 0) {
+        try {
+          previousResultsImage = await toBase64(previousResultsFileInput.files[0]);
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'File Upload Error',
+            text: 'Error processing file: ' + error.message
+          });
+          return;
+        }
+      }
+      
+      if (!previousResultsText && !previousResultsImage) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Validation Error',
+          text: 'Please provide previous results either as text or by uploading an image.'
+        });
+        return;
+      }
+      
+      const parentName = document.getElementById("parentName").value;
+      const parentPhone = document.getElementById("parentPhone").value;
+      const parentEmail = document.getElementById("parentEmail").value;
+
+      try {
+        await addDoc(collection(db, "applications"), {
+          applicationNumber,
+          name,
+          idNumber,
+          nationality,
+          gender,
+          dob,
+          email,
+          phone,
+          level,
+          form: formValue,
+          previousSchool,
+          previousResultsText,
+          previousResultsImage,
+          parentName,
+          parentPhone,
+          parentEmail,
+          status: "pending",
+          timestamp: new Date()
+        });
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Application Submitted',
+          html: `
+            <p>Your application has been submitted successfully!</p>
+            <p><strong>Application Number:</strong> ${applicationNumber}</p>
+            <p>Please save this number for future reference.</p>
+          `,
+          confirmButtonText: 'OK'
+        });
+
+        // Reset form after successful submission
+        document.getElementById("applicationForm").reset();
+        document.getElementById("fileName").textContent = '';
+        updateProgress();
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: 'Error submitting application: ' + error.message
+        });
+      }
+    });
+
+    // Initialize progress bar
+    updateProgress();
+  </script>
+</body>
+</html>

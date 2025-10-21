@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Report Card - St. Mary's High School</title>
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" type="image/jpeg" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- jsPDF and autoTable plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --secondary: #d69e2e;
+      --accent: #9f7aea;
+      --glass: rgba(26, 54, 93, 0.15);
+      --bg-gradient: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+      --text-color: #ffffff;
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+      --header-height: 80px;
+    }
+    [data-theme="light"] {
+      --primary: #3182ce;
+      --secondary: #dd6b20;
+      --accent: #805ad5;
+      --glass: rgba(237, 242, 247, 0.9);
+      --bg-gradient: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+      --text-color: #2d3748;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      min-height: 100vh;
+      transition: all 0.6s ease;
+      line-height: 1.6;
+    }
+
+    header {
+      background: rgba(26, 54, 93, 0.9);
+      backdrop-filter: blur(12px);
+      padding: 0 5%;
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--card-shadow);
+      border-bottom: 2px solid var(--secondary);
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+    
+    .logo span {
+      color: var(--secondary);
+    }
+    
+    .header-logo {
+      height: 50px;
+      margin-right: 15px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .main-container {
+      padding: calc(var(--header-height) + 40px) 5% 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .unavailable-message {
+      text-align: center;
+      background: var(--glass);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .unavailable-message i {
+      font-size: 4rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+
+    .unavailable-message h2 {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .unavailable-message p {
+      color: white;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .report-card-container {
+      background: var(--glass);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+      display: none;
+    }
+
+    .report-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--secondary);
+    }
+
+    .school-info {
+      margin-bottom: 1rem;
+    }
+
+    .school-info h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .school-info p {
+      color: white;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .student-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .student-info p {
+      color: white;
+      font-size: 1rem;
+    }
+
+    .student-info p span {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .marks-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .marks-table th,
+    .marks-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .marks-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .marks-table td {
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    .marks-table tr:nth-child(even) {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .marks-table tr:hover {
+      background: rgba(214, 158, 46, 0.1);
+    }
+
+    .grade-a { color: #48bb78; font-weight: 600; }
+    .grade-b { color: #4299e1; font-weight: 600; }
+    .grade-c { color: #ed8936; font-weight: 600; }
+    .grade-d { color: #f56565; font-weight: 600; }
+    .grade-u { color: #e53e3e; font-weight: 600; }
+    .grade-f { color: #e53e3e; font-weight: 600; }
+    .grade-o { color: #f56565; font-weight: 600; }
+
+    .summary-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-card {
+      background: rgba(255,255,255,0.1);
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .summary-card h3 {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .summary-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-card .label {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+    }
+
+    .comments-section {
+      background: rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .comments-section h3 {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .comments-section p {
+      color: white;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .chart-container {
+      width: 100%;
+      height: 300px;
+      margin: 2rem 0;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.9rem 1.8rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #2c5282;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: #1a365d;
+    }
+
+    .btn-secondary:hover {
+      background: #e69c2a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn i {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        padding: calc(var(--header-height) + 20px) 3% 40px;
+      }
+      
+      .student-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .summary-section {
+        grid-template-columns: 1fr;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .marks-table {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="Logo" class="header-logo" />
+      My <span>Report Card</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Unavailable Message (shown when reports are not active) -->
+    <div class="unavailable-message" id="unavailableMessage">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>Report Card Not Available</h2>
+      <p>Your report card is not yet available for viewing.</p>
+      <p>Please check back later or contact your teacher for more information.</p>
+    </div>
+
+    <!-- Report Card Container (shown when reports are active) -->
+    <div class="report-card-container" id="reportCardContainer">
+      <!-- Report Header -->
+      <div class="report-header">
+        <div class="school-info">
+          <h1>St. Mary's High School</h1>
+          <p>Excellence in Education Since 1950</p>
+        </div>
+      </div>
+
+      <!-- Student Information -->
+      <div class="student-info" id="studentInfo">
+        <p>Name: <span id="studentName">Loading...</span></p>
+        <p>Surname: <span id="studentSurname">Loading...</span></p>
+        <p>Form: <span id="studentForm">Loading...</span></p>
+        <p>Stream: <span id="studentStream">Loading...</span></p>
+        <p>Year: <span id="academicYear">Loading...</span></p>
+        <p>Term: <span id="academicTerm">Loading...</span></p>
+      </div>
+
+      <!-- Marks Table -->
+      <table class="marks-table" id="marksTable">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Grade</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody id="marksTableBody">
+          <!-- Marks will be populated here -->
+        </tbody>
+      </table>
+
+      <!-- Summary Section -->
+      <div class="summary-section">
+        <div class="summary-card">
+          <h3>Total Marks</h3>
+          <div class="value" id="totalMarks">0</div>
+          <div class="label">Out of <span id="totalPossible">0</span></div>
+        </div>
+        <div class="summary-card">
+          <h3>Average</h3>
+          <div class="value" id="averageMarks">0%</div>
+          <div class="label">Class Average</div>
+        </div>
+        <div class="summary-card">
+          <h3>Rank</h3>
+          <div class="value" id="classRank">-</div>
+          <div class="label">In Class</div>
+        </div>
+        <div class="summary-card">
+          <h3>Overall Grade</h3>
+          <div class="value" id="overallGrade">-</div>
+          <div class="label">Final Grade</div>
+        </div>
+      </div>
+
+      <!-- Performance Chart -->
+      <div class="chart-container">
+        <canvas id="performanceChart"></canvas>
+      </div>
+
+      <!-- Teacher Comments -->
+      <div class="comments-section">
+        <h3><i class="fas fa-comment"></i> Teacher's Comments</h3>
+        <p id="teacherComments">Loading comments...</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="exportPDF()">
+          <i class="fas fa-file-pdf"></i> Download PDF
+        </button>
+        <a href="/dashboard" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase and App Script -->
+  <script type="module">
+    // Import Firebase services and functions from centralized config
+    import {
+      db,
+      collection,
+      getDocs,
+      getDoc,
+      doc
+    } from "/db/firebase.js";
+
+    // Global variables
+    let studentData = null;
+    let reportData = null;
+    let performanceChart = null;
+    let gradingScales = {};
+
+    // Initialize page
+    window.addEventListener('DOMContentLoaded', async function() {
+      await loadGradingSettings();
+      await checkReportAvailability();
+    });
+
+    // Load grading settings from database
+    async function loadGradingSettings() {
+      try {
+        const settingsDoc = await getDoc(doc(db, 'settings', 'gradingScales'));
+        if (settingsDoc.exists()) {
+          gradingScales = settingsDoc.data();
+        } else {
+          // Set default grading scales
+          setDefaultGradingScales();
+        }
+      } catch (error) {
+        console.error('Error loading grading settings:', error);
+        setDefaultGradingScales();
+      }
+    }
+
+    // Set default grading scales
+    function setDefaultGradingScales() {
+      gradingScales = {
+        zjc: {
+          A: { min: 75, max: 100 },
+          B: { min: 65, max: 74 },
+          C: { min: 50, max: 64 },
+          D: { min: 40, max: 49 },
+          U: { min: 0, max: 39 }
+        },
+        olevel: {
+          A: { min: 70, max: 100 },
+          B: { min: 60, max: 69 },
+          C: { min: 50, max: 59 },
+          D: { min: 40, max: 49 },
+          U: { min: 0, max: 39 }
+        },
+        alevel: {
+          A: { min: 75, max: 100 },
+          B: { min: 65, max: 74 },
+          C: { min: 55, max: 64 },
+          D: { min: 45, max: 54 },
+          F: { min: 35, max: 44 },
+          O: { min: 0, max: 34 }
+        }
+      };
+    }
+
+    // Get appropriate grading scale based on student form
+    function getGradingScale(studentForm) {
+      if (!studentForm) return gradingScales.zjc || {};
+      
+      const form = studentForm.toLowerCase();
+      if (form.includes('form 1') || form.includes('form 2')) {
+        return gradingScales.zjc || {};
+      } else if (form.includes('form 3') || form.includes('form 4')) {
+        return gradingScales.olevel || {};
+      } else if (form.includes('form 5') || form.includes('form 6')) {
+        return gradingScales.alevel || {};
+      }
+      
+      // Default to ZJC
+      return gradingScales.zjc || {};
+    }
+
+    // Check if reports are available for viewing
+    async function checkReportAvailability() {
+      try {
+        // Check global report settings first
+        const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
+        let globalReportsActive = false;
+        let adminMessage = '';
+        
+        if (globalSettingsDoc.exists()) {
+          const settings = globalSettingsDoc.data();
+          globalReportsActive = settings.reportsActive || false;
+          adminMessage = settings.adminMessage || '';
+        }
+
+        // If global reports are disabled, show unavailable message with admin notice
+        if (!globalReportsActive) {
+          showUnavailableMessage('Reports are currently disabled by the administration.', adminMessage);
+          return;
+        }
+
+        // Get student email from localStorage
+        const studentEmail = localStorage.getItem('studentEmail');
+        if (!studentEmail) {
+          console.log('No student email found');
+          showUnavailableMessage('Please log in to view your report card.');
+          return;
+        }
+
+        // Get student data and check individual report status
+        const studentDoc = await getDoc(doc(db, 'students', studentEmail));
+        if (!studentDoc.exists()) {
+          console.log('Student document not found');
+          showUnavailableMessage('Student record not found.');
+          return;
+        }
+
+        studentData = studentDoc.data();
+        const individualReportActive = studentData.reportCardActive || false;
+
+        // Check if student has marks data
+        const hasMarksData = studentData.marks && Object.keys(studentData.marks).length > 0;
+
+        // Show report if individual report is active AND student has marks
+        if (individualReportActive && hasMarksData) {
+          showReportCard();
+        } else if (!individualReportActive) {
+          showUnavailableMessage('Your report card has not been activated yet.', 'Please contact your teacher or check back later.');
+        } else {
+          showUnavailableMessage('Your report card is being prepared.', 'Your teacher is still entering your marks.');
+        }
+
+      } catch (error) {
+        console.error('Error checking report availability:', error);
+        showUnavailableMessage('Unable to load report card at this time.', 'Please try again later or contact support.');
+      }
+    }
+
+    // Show unavailable message with custom text
+    function showUnavailableMessage(mainMessage = '', additionalMessage = '') {
+      const messageDiv = document.getElementById('unavailableMessage');
+      const titleEl = messageDiv.querySelector('h2');
+      const paragraphs = messageDiv.querySelectorAll('p');
+      
+      if (mainMessage) {
+        paragraphs[0].textContent = mainMessage;
+      }
+      
+      if (additionalMessage) {
+        paragraphs[1].textContent = additionalMessage;
+      } else {
+        paragraphs[1].textContent = 'Please check back later or contact your teacher for more information.';
+      }
+      
+      messageDiv.style.display = 'block';
+      document.getElementById('reportCardContainer').style.display = 'none';
+    }
+
+    // Show report card
+    function showReportCard() {
+      document.getElementById('unavailableMessage').style.display = 'none';
+      document.getElementById('reportCardContainer').style.display = 'block';
+      
+      populateReportCard();
+    }
+
+    // Populate report card with student data
+    function populateReportCard() {
+      if (!studentData) return;
+
+      // Populate student information
+      document.getElementById('studentName').textContent = studentData.name || 'N/A';
+      document.getElementById('studentSurname').textContent = studentData.surname || 'N/A';
+      document.getElementById('studentForm').textContent = studentData.form || 'N/A';
+      document.getElementById('studentStream').textContent = studentData.stream || 'N/A';
+      document.getElementById('academicYear').textContent = studentData.year || 'N/A';
+      document.getElementById('academicTerm').textContent = studentData.term || 'N/A';
+
+      // Populate marks table
+      populateMarksTable();
+
+      // Calculate and display summary
+      calculateSummary();
+
+      // Display teacher comments
+      document.getElementById('teacherComments').textContent = 
+        studentData.teacherComments || 'No comments available at this time.';
+
+      // Create performance chart
+      createPerformanceChart();
+    }
+
+    // Populate marks table
+    function populateMarksTable() {
+      const tableBody = document.getElementById('marksTableBody');
+      tableBody.innerHTML = '';
+
+      if (!studentData.marks) {
+        tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No marks available</td></tr>';
+        return;
+      }
+
+      let totalMarks = 0;
+      let totalPossible = 0;
+      const subjects = [];
+
+      Object.entries(studentData.marks).forEach(([subject, mark]) => {
+        const numericMark = parseInt(mark) || 0;
+        const grade = calculateGrade(numericMark);
+        const comment = getGradeComment(grade);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${subject}</td>
+          <td>${numericMark}</td>
+          <td class="grade-${grade.toLowerCase()}">${grade}</td>
+          <td>${comment}</td>
+        `;
+        tableBody.appendChild(row);
+
+        totalMarks += numericMark;
+        totalPossible += 100; // Assuming each subject is out of 100
+        subjects.push({ name: subject, mark: numericMark, grade: grade });
+      });
+
+      // Store for summary calculation
+      reportData = {
+        totalMarks,
+        totalPossible,
+        subjects,
+        average: totalPossible > 0 ? (totalMarks / totalPossible * 100) : 0
+      };
+    }
+
+    // Calculate grade based on marks using dynamic grading scales
+    function calculateGrade(marks) {
+      if (!studentData || !studentData.form) {
+        // Fallback to default grading if no student form available
+        const scale = gradingScales.zjc || {};
+        for (const [grade, range] of Object.entries(scale)) {
+          if (marks >= range.min && marks <= range.max) {
+            return grade;
+          }
+        }
+        return 'U';
+      }
+      
+      const scale = getGradingScale(studentData.form);
+      
+      for (const [grade, range] of Object.entries(scale)) {
+        if (marks >= range.min && marks <= range.max) {
+          return grade;
+        }
+      }
+      
+      return 'U'; // Default grade if no match found
+    }
+
+    // Get grade comment
+    function getGradeComment(grade) {
+      const comments = {
+        'A': 'Excellent work!',
+        'B': 'Good performance',
+        'C': 'Satisfactory',
+        'D': 'Needs improvement',
+        'U': 'Ungraded - Requires attention',
+        'F': 'Fail - Requires attention',
+        'O': 'Ordinary level - Requires improvement'
+      };
+      return comments[grade] || 'No comment';
+    }
+
+    // Calculate and display summary
+    function calculateSummary() {
+      if (!reportData) return;
+
+      document.getElementById('totalMarks').textContent = reportData.totalMarks;
+      document.getElementById('totalPossible').textContent = reportData.totalPossible;
+      document.getElementById('averageMarks').textContent = `${reportData.average.toFixed(1)}%`;
+      
+      // Calculate overall grade
+      const overallGrade = calculateGrade(reportData.average);
+      document.getElementById('overallGrade').textContent = overallGrade;
+
+      // For now, set a placeholder rank (would need class data to calculate properly)
+      document.getElementById('classRank').textContent = 'N/A';
+    }
+
+    // Create performance chart
+    function createPerformanceChart() {
+      if (!reportData || !reportData.subjects.length) return;
+
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      
+      if (performanceChart) {
+        performanceChart.destroy();
+      }
+
+      performanceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: reportData.subjects.map(s => s.name),
+          datasets: [{
+            label: 'Marks',
+            data: reportData.subjects.map(s => s.mark),
+            backgroundColor: 'rgba(214, 158, 46, 0.7)',
+            borderColor: 'rgba(214, 158, 46, 1)',
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Subject Performance',
+              color: '#ffffff',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            },
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                color: '#ffffff'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            x: {
+              ticks: {
+                color: '#ffffff'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Export to PDF function
+    window.exportPDF = function() {
+      if (!studentData || !reportData) {
+        alert('No report data available to export');
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Set font
+      doc.setFont("helvetica");
+
+      // Header
+      doc.setFontSize(20);
+      doc.setTextColor(26, 54, 93);
+      doc.text("St. Mary's High School", 105, 20, { align: "center" });
+      
+      doc.setFontSize(12);
+      doc.setTextColor(100);
+      doc.text("Student Report Card", 105, 30, { align: "center" });
+
+      // Student Information
+      doc.setFontSize(12);
+      doc.setTextColor(0);
+      const studentInfo = [
+        `Name: ${studentData.name || 'N/A'} ${studentData.surname || ''}`,
+        `Form: ${studentData.form || 'N/A'} - ${studentData.stream || 'N/A'}`,
+        `Year: ${studentData.year || 'N/A'} | Term: ${studentData.term || 'N/A'}`
+      ];
+
+      let yPos = 50;
+      studentInfo.forEach(info => {
+        doc.text(info, 20, yPos);
+        yPos += 10;
+      });
+
+      // Marks Table
+      if (reportData.subjects.length > 0) {
+        const tableData = reportData.subjects.map(subject => [
+          subject.name,
+          subject.mark.toString(),
+          subject.grade,
+          getGradeComment(subject.grade)
+        ]);
+
+        doc.autoTable({
+          head: [['Subject', 'Marks', 'Grade', 'Comment']],
+          body: tableData,
+          startY: yPos + 10,
+          theme: 'striped',
+          headStyles: { fillColor: [26, 54, 93] },
+          margin: { left: 20, right: 20 }
+        });
+
+        // Summary
+        const finalY = doc.lastAutoTable.finalY + 20;
+        doc.text(`Total Marks: ${reportData.totalMarks}/${reportData.totalPossible}`, 20, finalY);
+        doc.text(`Average: ${reportData.average.toFixed(1)}%`, 20, finalY + 10);
+        doc.text(`Overall Grade: ${calculateGrade(reportData.average)}`, 20, finalY + 20);
+
+        // Teacher Comments
+        if (studentData.teacherComments) {
+          doc.text("Teacher's Comments:", 20, finalY + 35);
+          const splitComments = doc.splitTextToSize(studentData.teacherComments, 170);
+          doc.text(splitComments, 20, finalY + 45);
+        }
+      }
+
+      // Save the PDF
+      const fileName = `${studentData.name || 'Student'}_${studentData.surname || 'Report'}_${studentData.term || 'Term'}.pdf`;
+      doc.save(fileName);
+    };
+  </script>
+</body>
+</html>

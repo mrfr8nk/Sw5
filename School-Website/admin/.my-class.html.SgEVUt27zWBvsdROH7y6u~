@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Class - Teacher Dashboard</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- html2pdf Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <style>
+    /* ==============================
+       Enhanced Color & Theme Variables
+       ============================== */
+    :root {
+      --primary: #1a365d;
+      --secondary: #d69e2e;
+      --accent: #9f7aea;
+      --danger: #e53e3e;
+      --success: #38a169;
+      --info: #3182ce;
+      --glass: rgba(26, 54, 93, 0.15);
+      --bg-gradient: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+      --text-color: #ffffff;
+      --table-text: #ffffff;
+      --overlay: rgba(0, 0, 0, 0.5);
+      --modal-bg: #2d3748;
+      --modal-text: #ffffff;
+      --input-bg: #4a5568;
+      --input-border: #718096;
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --border-radius: 12px;
+      --header-height: 80px;
+    }
+    
+    [data-theme="light"] {
+      --primary: #3182ce;
+      --secondary: #dd6b20;
+      --accent: #805ad5;
+      --glass: rgba(237, 242, 247, 0.9);
+      --bg-gradient: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+      --text-color: #2d3748;
+      --table-text: #2d3748;
+      --overlay: rgba(255, 255, 255, 0.4);
+      --modal-bg: #ffffff;
+      --modal-text: #2d3748;
+      --input-bg: #f9f9f9;
+      --input-border: #cbd5e0;
+    }
+
+    /* ==============================
+       General Styles
+       ============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      min-height: 100vh;
+      line-height: 1.6;
+      transition: var(--transition);
+      padding: 0;
+    }
+
+    /* ==============================
+       Layout & Container
+       ============================== */
+    .container {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      max-width: 1400px;
+      margin: var(--header-height) auto 100px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ==============================
+       Header & Navigation
+       ============================== */
+    header {
+      background: rgba(26, 54, 93, 0.9);
+      backdrop-filter: blur(12px);
+      padding: 0 5%;
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--card-shadow);
+      border-bottom: 2px solid var(--secondary);
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+    
+    .logo span {
+      color: var(--secondary);
+    }
+    
+    .header-logo {
+      height: 50px;
+      margin-right: 15px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    
+    .menu-btn {
+      font-size: 1.8rem;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: white;
+      transition: var(--transition);
+    }
+    
+    .menu-btn:hover {
+      transform: scale(1.1);
+      color: var(--secondary);
+    }
+
+    /* Side Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -350px;
+      width: 350px;
+      height: 100%;
+      background: rgba(26, 54, 93, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2000;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      border-left: 1px solid rgba(214, 158, 46, 0.3);
+    }
+    
+    .side-menu.active {
+      right: 0;
+    }
+    
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .menu-header h3 {
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .close-btn {
+      font-size: 1.8rem;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: white;
+      transition: var(--transition);
+    }
+    
+    .close-btn:hover {
+      transform: rotate(90deg);
+      color: var(--secondary);
+    }
+    
+    .menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .menu-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 12px 15px;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .menu-links a i {
+      width: 25px;
+      text-align: center;
+    }
+    
+    .menu-links a:hover {
+      background: rgba(214, 158, 46, 0.2);
+      transform: translateX(5px);
+    }
+    
+    .menu-links a.active {
+      background: var(--secondary);
+      color: #1a365d;
+      font-weight: 600;
+    }
+
+    /* ==============================
+       Typography & Content
+       ============================== */
+    h1 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--secondary);
+    }
+    
+    .teacher-info {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      border: 1px solid rgba(214, 158, 46, 0.3);
+    }
+    
+    .teacher-info h2 {
+      color: var(--secondary);
+      margin-bottom: 10px;
+    }
+    
+    .assigned-classes {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    
+    .class-badge {
+      background: var(--primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid var(--secondary);
+    }
+    
+    .total-count {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    /* ==============================
+       Control Bar & Search
+       ============================== */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius);
+    }
+    
+    .search-sort-container {
+      display: flex;
+      gap: 15px;
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .search-bar {
+      flex: 2;
+      position: relative;
+    }
+    
+    .search-bar input {
+      width: 100%;
+      padding: 10px 15px 10px 40px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--modal-text);
+      transition: var(--transition);
+    }
+    
+    .search-bar input:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.3);
+    }
+    
+    .search-bar i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--secondary);
+    }
+    
+    .filter-options {
+      display: flex;
+      gap: 10px;
+      flex: 2;
+      min-width: 200px;
+    }
+    
+    .filter-options select {
+      flex: 1;
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--modal-text);
+      transition: var(--transition);
+      min-width: 120px;
+    }
+    
+    .filter-options select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .sort-options {
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .sort-options select {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--modal-text);
+      transition: var(--transition);
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==============================
+       Buttons & Actions
+       ============================== */
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: var(--card-shadow);
+    }
+    
+    .btn i {
+      font-size: 0.9rem;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    
+    .btn-primary:hover {
+      background: #1e3a8a;
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+      color: #fff;
+    }
+    
+    .btn-secondary:hover {
+      background: #b7791f;
+      transform: translateY(-2px);
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+    
+    .btn-danger:hover {
+      background: #c53030;
+      transform: translateY(-2px);
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+    
+    .btn-success:hover {
+      background: #2f855a;
+      transform: translateY(-2px);
+    }
+    
+    .btn-info {
+      background: var(--info);
+      color: #fff;
+    }
+    
+    .btn-info:hover {
+      background: #2c5282;
+      transform: translateY(-2px);
+    }
+
+    /* ==============================
+       Loading Spinner
+       ============================== */
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2500;
+      display: none;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ==============================
+       Table & Group Styles
+       ============================== */
+    .group-section {
+      margin-bottom: 30px;
+      border: 1px solid var(--primary);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .group-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .group-header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .group-header h2 i {
+      color: var(--secondary);
+    }
+    
+    .group-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      min-width: 1200px;
+    }
+    
+    thead th {
+      position: sticky;
+      top: 0;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px;
+      border: 1px solid var(--input-border);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    thead th:hover {
+      background: #1e3a8a;
+    }
+    
+    thead th i {
+      margin-left: 5px;
+      opacity: 0.7;
+    }
+    
+    table td {
+      border: 1px solid var(--input-border);
+      padding: 10px;
+      font-size: 0.9rem;
+      color: var(--table-text);
+    }
+    
+    table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    
+    table tr:hover {
+      background: rgba(214, 158, 46, 0.1);
+    }
+    
+    /* Profile column */
+    .profile-col {
+      width: 60px;
+      text-align: center;
+    }
+    
+    .profile-col img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--secondary);
+    }
+    
+    /* Action buttons column */
+    .action-col {
+      width: 200px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    
+    .action-buttons button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+    
+    .action-buttons button i {
+      font-size: 0.8rem;
+    }
+
+    /* Report Card Toggle */
+    .report-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background: #ccc;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .toggle-switch.active {
+      background: var(--success);
+    }
+    
+    .toggle-switch::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .toggle-switch.active::before {
+      transform: translateX(20px);
+    }
+
+    /* ==============================
+       Modal Styles
+       ============================== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: var(--overlay);
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-content {
+      background-color: var(--modal-bg);
+      color: var(--modal-text);
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      width: 90%;
+      max-width: 600px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--secondary);
+      animation: modalFadeIn 0.3s ease-out;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--input-border);
+    }
+    
+    .modal-header h2 {
+      margin: 0;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .close {
+      color: var(--modal-text);
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .close:hover {
+      color: var(--secondary);
+      transform: rotate(90deg);
+    }
+    
+    .modal-body {
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--input-border);
+      border-radius: var(--border-radius);
+      background-color: var(--input-bg);
+      color: var(--modal-text);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.3);
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    .form-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid var(--input-border);
+    }
+
+    /* ==============================
+       Theme Toggle
+       ============================== */
+    .theme-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 1000;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .theme-toggle:hover {
+      transform: scale(1.1) rotate(15deg);
+    }
+    
+    .theme-toggle i {
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+
+    /* ==============================
+       Responsive Adjustments
+       ============================== */
+    @media (max-width: 1200px) {
+      .container {
+        padding: 15px;
+      }
+      
+      table {
+        min-width: 1000px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .controls {
+        flex-direction: column;
+      }
+      
+      .search-sort-container {
+        width: 100%;
+        flex-direction: column;
+      }
+      
+      .btn-group {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      
+      .modal-content {
+        padding: 20px;
+        width: 95%;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .side-menu {
+        width: 280px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .modal-content {
+        margin: 10% auto;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="Logo" class="header-logo" />
+      My <span>Class</span>
+    </div>
+    <button class="menu-btn" id="menuBtn">
+      <i class="fas fa-user-cog"></i>
+    </button>
+  </header>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <h3>Teacher Controls</h3>
+      <button class="close-btn" id="closeBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="menu-links">
+      <a href="/teachersdashboard">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="/myclass" class="active">
+        <i class="fas fa-users"></i> My Class
+      </a>
+      <a href="/teacherusers">
+        <i class="fas fa-chalkboard-teacher"></i> Manage Teachers
+      </a>
+      <a href="/studentusers">
+        <i class="fas fa-user-graduate"></i> All Students
+      </a>
+      <a href="/admin/settings">
+        <i class="fas fa-cog"></i> Settings
+      </a>
+      <a href="/teacherslogin" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1><i class="fas fa-users"></i> My Class</h1>
+    
+    <!-- Teacher Info -->
+    <div class="teacher-info" id="teacherInfo">
+      <h2 id="teacherName">Loading teacher information...</h2>
+      <p>Your assigned classes:</p>
+      <div class="assigned-classes" id="assignedClasses">
+        <!-- Class badges will be loaded here -->
+      </div>
+      <button class="btn btn-secondary" id="changeClassesBtn" style="margin-top: 15px; display: none;">
+        <i class="fas fa-edit"></i> Change Classes
+      </button>
+    </div>
+    
+    <!-- Control Bar -->
+    <div class="controls">
+      <div class="search-sort-container">
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search students by name, email, phone, or national ID..." />
+        </div>
+        <div class="filter-options">
+          <select id="formFilter">
+            <option value="">All Forms</option>
+            <!-- Form options will be populated dynamically -->
+          </select>
+          <select id="streamFilter" disabled>
+            <option value="">All Streams</option>
+            <!-- Stream options will be populated based on selected form -->
+          </select>
+        </div>
+        <div class="sort-options">
+          <select id="sortBy">
+            <option value="surname">Sort by Surname A-Z</option>
+            <option value="firstname">Sort by First Name A-Z</option>
+            <option value="surname-desc">Sort by Surname Z-A</option>
+            <option value="firstname-desc">Sort by First Name Z-A</option>
+            <option value="form">Sort by Class</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" id="addStudentBtn">
+          <i class="fas fa-plus"></i> Add Student
+        </button>
+        <button class="btn btn-secondary" id="exportPDFBtn">
+          <i class="fas fa-file-pdf"></i> Export PDF
+        </button>
+        <button class="btn btn-success" id="activateAllReportsBtn">
+          <i class="fas fa-clipboard-check"></i> Activate All Reports
+        </button>
+        <button class="btn btn-danger" id="bulkDeleteBtn">
+          <i class="fas fa-trash"></i> Bulk Delete
+        </button>
+      </div>
+    </div>
+    
+    <div class="total-count" id="totalCount">Loading student data...</div>
+    
+    <!-- Students List -->
+    <div id="studentsList">
+      <!-- Student groups will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Add/Edit Student Modal -->
+  <div id="studentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-user-plus"></i> <span id="modalTitle">Add Student</span></h2>
+        <span class="close" id="studentModalClose">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="studentForm">
+          <input type="hidden" id="studentId" />
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstname">First Name *</label>
+              <input type="text" id="firstname" required />
+            </div>
+            <div class="form-group">
+              <label for="surname">Surname *</label>
+              <input type="text" id="surname" required />
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="birthNumber">National ID / Birth Number</label>
+            <input type="text" id="birthNumber" placeholder="Enter national ID or birth certificate number" />
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="form">Class/Form *</label>
+              <select id="form" required>
+                <option value="">Select Class</option>
+                <!-- Teacher's classes will be populated here -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="stream">Stream</label>
+              <input type="text" id="stream" placeholder="e.g., A, B, C" />
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input type="date" id="dob" />
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select id="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="parentName">Parent/Guardian Name</label>
+            <input type="text" id="parentName" />
+          </div>
+          
+          <div class="form-footer">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Save Student
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="spinner" id="spinner"></div>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <!-- Firebase and JavaScript -->
+  <script type="module">
+    // Import Firebase services
+    import {
+      db,
+      auth,
+      collection,
+      getDocs,
+      doc,
+      setDoc,
+      updateDoc,
+      deleteDoc,
+      query,
+      where,
+      orderBy,
+      serverTimestamp,
+      onAuthStateChanged,
+      getDoc
+    } from "/db/firebase.js";
+
+    // Global variables
+    let currentTeacher = null;
+    let teacherClasses = [];
+    let studentsData = [];
+    let filteredData = [];
+
+    // ========================
+    // Authentication Check
+    // ========================
+    async function checkAuth() {
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          console.error('Authentication timeout - Firebase may not be connected');
+          Swal.fire({
+            icon: 'error',
+            title: 'Connection Error',
+            text: 'Unable to connect to authentication service. Please check your internet connection and try again.',
+            confirmButtonColor: '#d69e2e'
+          }).then(() => {
+            window.location.href = "/teacherslogin";
+          });
+          reject(new Error('Authentication timeout'));
+        }, 10000); // 10 second timeout
+
+        onAuthStateChanged(auth, async (user) => {
+          clearTimeout(timeout);
+          
+          if (!user) {
+            console.log('No authenticated user found, redirecting to login');
+            window.location.href = "/teacherslogin";
+            return;
+          }
+
+          try {
+            showSpinner(true);
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            
+            if (!userDoc.exists()) {
+              console.error('User document not found in database');
+              Swal.fire({
+                icon: 'error',
+                title: 'Account Error',
+                text: 'Your account information was not found. Please contact the administrator to set up your teacher account.',
+                confirmButtonColor: '#d69e2e'
+              }).then(() => {
+                window.location.href = "/teacherslogin";
+              });
+              return;
+            }
+
+            const userData = userDoc.data();
+            
+            if (!userData.role || !['admin', 'teacher'].includes(userData.role.toLowerCase())) {
+              console.error('Invalid user role:', userData.role);
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'You do not have permission to access this page.',
+                confirmButtonColor: '#d69e2e'
+              }).then(() => {
+                window.location.href = "/teacherslogin";
+              });
+              return;
+            }
+
+            currentTeacher = { ...userData, id: user.uid };
+            teacherClasses = userData.classesTeaching || userData.classes || [];
+            
+            console.log('Authentication successful for:', userData.firstname, userData.surname);
+            showSpinner(false);
+            resolve();
+          } catch (error) {
+            console.error('Error checking authentication:', error);
+            showSpinner(false);
+            
+            // Show offline indicator but don't allow access - security first
+            if (error.code === 'unavailable' || error.code === 'deadline-exceeded') {
+              Swal.fire({
+                icon: 'warning',
+                title: 'Connection Issue',
+                text: 'Unable to verify your account permissions. Please check your connection and try again.',
+                confirmButtonColor: '#d69e2e',
+                allowOutsideClick: false
+              }).then(() => {
+                window.location.reload(); // Retry
+              });
+              return;
+            }
+            
+            Swal.fire({
+              icon: 'error',
+              title: 'Database Error',
+              text: 'Failed to load your account information. Please try again.',
+              confirmButtonColor: '#d69e2e'
+            }).then(() => {
+              window.location.href = "/teacherslogin";
+            });
+            reject(error);
+          }
+        }, (error) => {
+          clearTimeout(timeout);
+          console.error('Firebase auth state change error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Authentication Error',
+            text: 'Authentication service error. Please try again.',
+            confirmButtonColor: '#d69e2e'
+          }).then(() => {
+            window.location.href = "/teacherslogin";
+          });
+          reject(error);
+        });
+      });
+    }
+
+    // ========================
+    // Helper Functions
+    // ========================
+    
+    function showSpinner(show = true) {
+      document.getElementById("spinner").style.display = show ? "block" : "none";
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return "N/A";
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+      return date.toLocaleDateString();
+    }
+
+    function highlightText(text, searchTerm) {
+      if (!searchTerm || !text) return text;
+      const regex = new RegExp(`(${searchTerm})`, "gi");
+      return text.toString().replace(regex, "<mark>$1</mark>");
+    }
+
+    // ========================
+    // Class Selection Modal
+    // ========================
+    
+    async function showClassSelectionModal(availableClasses) {
+      // Load all students once and count them in JavaScript for reliable matching
+      let allStudentsForCounting = [];
+      try {
+        const studentsRef = collection(db, "students");
+        const querySnapshot = await getDocs(studentsRef);
+        querySnapshot.forEach(doc => {
+          const data = doc.data();
+          allStudentsForCounting.push(data);
+        });
+      } catch (error) {
+        console.warn("Could not load students for counting:", error);
+      }
+      
+      // Count students for each class using flexible matching
+      const classOptions = [];
+      for (const cls of availableClasses) {
+        const count = allStudentsForCounting.filter(student => {
+          if (!student.form) return false;
+          
+          const studentForm = student.form.trim();
+          const studentStream = (student.stream || '').trim();
+          const studentFullClass = `${studentForm}${studentStream ? ` ${studentStream}` : ''}`;
+          const clsTrimmed = cls.trim();
+          
+          // Use same flexible matching as main loading logic
+          return studentFullClass.toLowerCase() === clsTrimmed.toLowerCase() ||
+                 studentForm.toLowerCase() === clsTrimmed.toLowerCase() ||
+                 clsTrimmed.toLowerCase().includes(studentForm.toLowerCase());
+        }).length;
+        
+        classOptions.push({
+          class: cls,
+          count: count
+        });
+      }
+      
+      classOptions.sort((a, b) => a.class.localeCompare(b.class));
+
+      const checkboxOptions = classOptions.map(option => 
+        `<label style="display: flex; align-items: center; margin: 10px 0; padding: 10px; background: rgba(214, 158, 46, 0.1); border-radius: 8px; cursor: pointer;">
+          <input type="checkbox" value="${option.class}" style="margin-right: 10px; transform: scale(1.2);">
+          <span style="font-weight: 500;">${option.class}</span>
+          <span style="margin-left: auto; color: var(--secondary); font-size: 0.9rem;">(${option.count} students)</span>
+        </label>`
+      ).join('');
+
+      const result = await Swal.fire({
+        title: 'Choose Your Classes',
+        html: `
+          <div style="text-align: left; max-height: 400px; overflow-y: auto;">
+            <p style="margin-bottom: 20px; text-align: center; color: var(--secondary);">
+              Select the classes you want to manage:
+            </p>
+            ${checkboxOptions}
+          </div>
+        `,
+        showCancelButton: true,
+        confirmButtonColor: '#d69e2e',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Save Selection',
+        cancelButtonText: 'Cancel',
+        width: 600,
+        preConfirm: () => {
+          const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+          const selectedClasses = Array.from(checkedBoxes).map(cb => cb.value);
+          
+          if (selectedClasses.length === 0) {
+            Swal.showValidationMessage('Please select at least one class');
+            return false;
+          }
+          
+          return selectedClasses;
+        }
+      });
+
+      if (result.isConfirmed) {
+        teacherClasses = result.value;
+        
+        // Save selected classes to teacher profile
+        try {
+          await setDoc(doc(db, "users", currentTeacher.id), {
+            classesTeaching: teacherClasses,
+            classes: teacherClasses, // Keep for backward compatibility
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+          
+          // Reload teacher info and students
+          loadTeacherInfo();
+          await loadStudents();
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Classes Updated!',
+            text: `You are now managing ${teacherClasses.length} class(es)`,
+            confirmButtonColor: '#d69e2e',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          
+        } catch (error) {
+          console.error("Error saving class selection:", error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Save Failed',
+            text: 'Failed to save your class selection. Please try again.',
+            confirmButtonColor: '#d69e2e'
+          });
+        }
+      } else {
+        // User cancelled, redirect to dashboard
+        window.location.href = "/teachersdashboard";
+      }
+    }
+
+    // ========================
+    // Data Loading
+    // ========================
+    
+    async function loadTeacherInfo() {
+      if (!currentTeacher) return;
+      
+      const teacherName = `${currentTeacher.firstname || ""} ${currentTeacher.surname || ""}`.trim();
+      document.getElementById("teacherName").textContent = `Welcome, ${teacherName}!`;
+      
+      const classesContainer = document.getElementById("assignedClasses");
+      const changeClassesBtn = document.getElementById("changeClassesBtn");
+      
+      if (teacherClasses.length === 0) {
+        classesContainer.innerHTML = '<span class="class-badge">No classes assigned</span>';
+        changeClassesBtn.style.display = "none";
+      } else {
+        classesContainer.innerHTML = teacherClasses
+          .map(cls => `<span class="class-badge">${cls}</span>`)
+          .join("");
+        changeClassesBtn.style.display = "inline-flex";
+      }
+      
+      // Populate form dropdown with teacher's classes
+      const formSelect = document.getElementById("form");
+      formSelect.innerHTML = '<option value="">Select Class</option>' +
+        teacherClasses.map(cls => `<option value="${cls}">${cls}</option>`).join("");
+    }
+
+    async function loadStudents() {
+      showSpinner(true);
+      
+      try {
+        // If teacher has no classes assigned, show them all available classes to choose from
+        if (teacherClasses.length === 0) {
+          const studentsRef = collection(db, "students");
+          const querySnapshot = await getDocs(studentsRef);
+          
+          const allClasses = new Set();
+          querySnapshot.forEach(docSnap => {
+            const student = docSnap.data();
+            if (student.form) {
+              allClasses.add(student.form);
+            }
+          });
+          
+          await showClassSelectionModal(Array.from(allClasses));
+          return;
+        }
+        
+        // Use simple approach like the working student users page - load ALL students first
+        console.log("Loading all students for teacher classes:", teacherClasses);
+        studentsData = [];
+        const studentsRef = collection(db, "students");
+        
+        // Simple query that works reliably (same as student users page)
+        const querySnapshot = await getDocs(studentsRef);
+        
+        // Load all students first
+        const allStudents = [];
+        querySnapshot.forEach(doc => {
+          const data = doc.data();
+          data.id = doc.id;
+          allStudents.push(data);
+        });
+        
+        console.log(`Loaded ${allStudents.length} total students from database`);
+        
+        // Filter students based on teacher's assigned classes using flexible matching
+        studentsData = allStudents.filter(student => {
+          if (!student.form) return false;
+          
+          const studentForm = student.form.trim();
+          const studentStream = (student.stream || '').trim();
+          const studentFullClass = `${studentForm}${studentStream ? ` ${studentStream}` : ''}`;
+          
+          // Check if student belongs to any of the teacher's assigned classes
+          return teacherClasses.some(teacherClass => {
+            const teacherClassTrimmed = teacherClass.trim();
+            
+            // Multiple matching strategies for reliability:
+            
+            // 1. Exact match (case-insensitive)
+            if (studentFullClass.toLowerCase() === teacherClassTrimmed.toLowerCase()) {
+              return true;
+            }
+            
+            // 2. Form-only match (handles "Form 5" teacher assignment with "Form 5 Sciences" students)
+            if (studentForm.toLowerCase() === teacherClassTrimmed.toLowerCase()) {
+              return true;
+            }
+            
+            // 3. Partial match for teacher class containing student form (handles "Form 5 Sciences" teacher assignment)
+            if (teacherClassTrimmed.toLowerCase().includes(studentForm.toLowerCase())) {
+              return true;
+            }
+            
+            // 4. Handle case where teacher has specific stream but student has same form
+            // "Form 1 G" teacher should see "Form 1" students and "Form 1 G" students
+            if (teacherClassTrimmed.toLowerCase().includes(studentForm.toLowerCase()) &&
+                studentForm.toLowerCase().includes(teacherClassTrimmed.split(' ')[0].toLowerCase() + ' ' + teacherClassTrimmed.split(' ')[1])) {
+              return true;
+            }
+            
+            return false;
+          });
+        });
+        
+        console.log(`Filtered to ${studentsData.length} students for teacher's classes:`, teacherClasses);
+        
+        filteredData = studentsData;
+        sortAndRenderStudents();
+      } catch (error) {
+        console.error("Error loading students:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to load students. Please try again.',
+          confirmButtonColor: '#d69e2e'
+        });
+      }
+      
+      showSpinner(false);
+    }
+
+    // ========================
+    // Sorting and Rendering
+    // ========================
+    
+    function sortStudents(students, sortBy) {
+      return [...students].sort((a, b) => {
+        switch (sortBy) {
+          case 'surname':
+            return (a.surname || '').localeCompare(b.surname || '');
+          case 'surname-desc':
+            return (b.surname || '').localeCompare(a.surname || '');
+          case 'firstname':
+            return (a.firstname || '').localeCompare(b.firstname || '');
+          case 'firstname-desc':
+            return (b.firstname || '').localeCompare(a.firstname || '');
+          case 'form':
+            return (a.form || '').localeCompare(b.form || '');
+          default:
+            return (a.surname || '').localeCompare(b.surname || '');
+        }
+      });
+    }
+    
+    function sortAndRenderStudents() {
+      const sortBy = document.getElementById("sortBy").value;
+      const sortedData = sortStudents(filteredData, sortBy);
+      renderStudents(sortedData);
+    }
+    
+    function renderStudents(students = null) {
+      const dataToRender = students || filteredData;
+      const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+      
+      // Clear bulk selections when re-rendering
+      selectedStudents.clear();
+      updateBulkActions();
+      
+      // Update total count
+      document.getElementById("totalCount").textContent = 
+        `Showing ${dataToRender.length} students from your ${teacherClasses.length} assigned class${teacherClasses.length !== 1 ? 'es' : ''}`;
+      
+      // Group students by class
+      const groups = {};
+      dataToRender.forEach(student => {
+        const className = student.form || "Unassigned";
+        if (!groups[className]) {
+          groups[className] = [];
+        }
+        groups[className].push(student);
+      });
+      
+      // Render groups
+      const container = document.getElementById("studentsList");
+      container.innerHTML = "";
+      
+      if (dataToRender.length === 0) {
+        container.innerHTML = 
+          '<div style="text-align: center; padding: 40px; color: var(--secondary);">' +
+          '<i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px;"></i>' +
+          '<h3>No Students Found</h3>' +
+          '<p>No students match your search criteria.</p>' +
+          '</div>';
+        return;
+      }
+      
+      Object.keys(groups).sort().forEach(className => {
+        const classStudents = groups[className];
+        const groupSection = document.createElement("div");
+        groupSection.className = "group-section";
+        
+        // Group header
+        const header = document.createElement("div");
+        header.className = "group-header";
+        header.innerHTML = `
+          <h2><i class="fas fa-users"></i> ${className} (${classStudents.length} students)</h2>
+          <div class="group-actions">
+            <button class="btn btn-secondary" onclick="exportClassPDF('${className}')">
+              <i class="fas fa-file-pdf"></i> Export Class
+            </button>
+            <button class="btn btn-success" onclick="activateClassReports('${className}')">
+              <i class="fas fa-clipboard-check"></i> Activate Reports
+            </button>
+          </div>
+        `;
+        
+        // Table
+        const tableWrapper = document.createElement("div");
+        tableWrapper.className = "table-responsive";
+        
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th style="width: 40px;">
+                <input type="checkbox" onchange="selectAllStudents()" title="Select All" />
+              </th>
+              <th class="profile-col">Photo</th>
+              <th>#</th>
+              <th onclick="sortByColumn('firstname')">First Name <i class="fas fa-sort"></i></th>
+              <th onclick="sortByColumn('surname')">Surname <i class="fas fa-sort"></i></th>
+              <th>National ID</th>
+              <th>Class</th>
+              <th>Stream</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Parent/Guardian</th>
+              <th>Report Card</th>
+              <th class="action-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${classStudents.map((student, idx) => `
+              <tr>
+                <td style="text-align: center;">
+                  <input type="checkbox" class="student-checkbox" 
+                         data-student-id="${student.id}" 
+                         onchange="toggleStudentSelection('${student.id}', this.checked)" />
+                </td>
+                <td class="profile-col">
+                  <img src="${student.profilePic || 'https://i.postimg.cc/28gm27sy/2993763.png'}" 
+                       alt="${student.firstname}" 
+                       loading="lazy" />
+                </td>
+                <td>${idx + 1}</td>
+                <td>${highlightText(student.firstname || '', searchTerm)}</td>
+                <td>${highlightText(student.surname || '', searchTerm)}</td>
+                <td>${highlightText(student.birthNumber || 'Not provided', searchTerm)}</td>
+                <td>${student.form || 'N/A'}</td>
+                <td>${student.stream || 'N/A'}</td>
+                <td>${highlightText(student.email || '', searchTerm)}</td>
+                <td>${highlightText(student.phone || '', searchTerm)}</td>
+                <td>${student.parentName || 'N/A'}</td>
+                <td>
+                  <div class="report-toggle">
+                    <div class="toggle-switch ${student.reportCardActive ? 'active' : ''}" 
+                         onclick="toggleReportCard('${student.id}')" 
+                         data-student-id="${student.id}">
+                    </div>
+                    <span style="font-size: 0.8rem; margin-left: 5px;">
+                      ${student.reportCardActive ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
+                </td>
+                <td class="action-buttons">
+                  <button class="btn btn-primary" onclick="editStudent('${student.id}')">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                  <button class="btn btn-info" onclick="viewStudent('${student.id}')">
+                    <i class="fas fa-eye"></i> View
+                  </button>
+                  <button class="btn btn-danger" onclick="deleteStudent('${student.id}')">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        `;
+        
+        tableWrapper.appendChild(table);
+        groupSection.append(header, tableWrapper);
+        container.appendChild(groupSection);
+      });
+    }
+
+    // ========================
+    // Column Sorting Function
+    // ========================
+    function sortByColumn(columnName) {
+      const sortBy = document.getElementById("sortBy");
+      sortBy.value = columnName;
+      sortAndRenderStudents();
+    }
+    
+    window.sortByColumn = sortByColumn;
+
+    // ========================
+    // Search Functionality
+    // ========================
+    function searchStudents() {
+      const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+      
+      if (!searchTerm) {
+        filteredData = studentsData;
+      } else {
+        filteredData = studentsData.filter(student => {
+          return (
+            (student.firstname && student.firstname.toLowerCase().includes(searchTerm)) ||
+            (student.surname && student.surname.toLowerCase().includes(searchTerm)) ||
+            (student.email && student.email.toLowerCase().includes(searchTerm)) ||
+            (student.phone && student.phone.includes(searchTerm)) ||
+            (student.form && student.form.toLowerCase().includes(searchTerm)) ||
+            (student.stream && student.stream.toLowerCase().includes(searchTerm)) ||
+            (student.parentName && student.parentName.toLowerCase().includes(searchTerm)) ||
+            (student.birthNumber && String(student.birthNumber).toLowerCase().includes(searchTerm))
+          );
+        });
+      }
+      
+      sortAndRenderStudents();
+    }
+
+    // ========================
+    // Student CRUD Operations
+    // ========================
+    
+    async function saveStudent(studentData, isEdit = false) {
+      try {
+        showSpinner(true);
+        
+        if (isEdit) {
+          const studentId = document.getElementById("studentId").value;
+          await setDoc(doc(db, "students", studentId), {
+            ...studentData,
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Student updated successfully',
+            confirmButtonColor: '#d69e2e'
+          });
+        } else {
+          const docRef = doc(collection(db, "students"));
+          await setDoc(docRef, {
+            ...studentData,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Student added successfully',
+            confirmButtonColor: '#d69e2e'
+          });
+        }
+        
+        document.getElementById("studentModal").style.display = "none";
+        loadStudents();
+      } catch (error) {
+        console.error("Error saving student:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Failed to ${isEdit ? 'update' : 'add'} student. Please try again.`,
+          confirmButtonColor: '#d69e2e'
+        });
+      } finally {
+        showSpinner(false);
+      }
+    }
+
+    // ========================
+    // Report Card Functions
+    // ========================
+    
+    async function toggleReportCard(studentId) {
+      try {
+        const student = studentsData.find(s => s.id === studentId);
+        if (!student) return;
+        
+        const newStatus = !student.reportCardActive;
+        
+        await setDoc(doc(db, "students", studentId), {
+          reportCardActive: newStatus,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        
+        // Update local data
+        student.reportCardActive = newStatus;
+        
+        // Update UI
+        const toggle = document.querySelector(`[data-student-id="${studentId}"]`);
+        const statusText = toggle.parentElement.querySelector('span');
+        
+        if (newStatus) {
+          toggle.classList.add('active');
+          statusText.textContent = 'Active';
+        } else {
+          toggle.classList.remove('active');
+          statusText.textContent = 'Inactive';
+        }
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: `Report card ${newStatus ? 'activated' : 'deactivated'} for ${student.firstname} ${student.surname}`,
+          confirmButtonColor: '#d69e2e',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        
+      } catch (error) {
+        console.error("Error toggling report card:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to update report card status',
+          confirmButtonColor: '#d69e2e'
+        });
+      }
+    }
+    
+    window.toggleReportCard = toggleReportCard;
+
+    async function activateClassReports(className) {
+      try {
+        const result = await Swal.fire({
+          title: 'Activate All Report Cards?',
+          text: `This will activate report cards for all students in ${className}`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#d69e2e',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, activate all!'
+        });
+        
+        if (result.isConfirmed) {
+          showSpinner(true);
+          
+          const classStudents = studentsData.filter(s => s.form === className);
+          const updatePromises = classStudents.map(student => 
+            setDoc(doc(db, "students", student.id), {
+              reportCardActive: true,
+              updatedAt: serverTimestamp()
+            }, { merge: true })
+          );
+          
+          await Promise.all(updatePromises);
+          
+          // Update local data
+          classStudents.forEach(student => {
+            student.reportCardActive = true;
+          });
+          
+          sortAndRenderStudents();
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: `Report cards activated for all students in ${className}`,
+            confirmButtonColor: '#d69e2e'
+          });
+        }
+      } catch (error) {
+        console.error("Error activating class reports:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to activate report cards',
+          confirmButtonColor: '#d69e2e'
+        });
+      } finally {
+        showSpinner(false);
+      }
+    }
+    
+    window.activateClassReports = activateClassReports;
+
+    // ========================
+    // Modal Functions
+    // ========================
+    
+    function openStudentModal(isEdit = false, studentData = null) {
+      const modal = document.getElementById("studentModal");
+      const title = document.getElementById("modalTitle");
+      const form = document.getElementById("studentForm");
+      
+      if (isEdit && studentData) {
+        title.textContent = "Edit Student";
+        document.getElementById("studentId").value = studentData.id;
+        document.getElementById("firstname").value = studentData.firstname || "";
+        document.getElementById("surname").value = studentData.surname || "";
+        document.getElementById("email").value = studentData.email || "";
+        document.getElementById("phone").value = studentData.phone || "";
+        document.getElementById("birthNumber").value = studentData.birthNumber || "";
+        document.getElementById("form").value = studentData.form || "";
+        document.getElementById("stream").value = studentData.stream || "";
+        document.getElementById("dob").value = studentData.dob || "";
+        document.getElementById("gender").value = studentData.gender || "";
+        document.getElementById("parentName").value = studentData.parentName || "";
+      } else {
+        title.textContent = "Add Student";
+        form.reset();
+        document.getElementById("studentId").value = "";
+      }
+      
+      modal.style.display = "block";
+    }
+
+    function editStudent(studentId) {
+      const student = studentsData.find(s => s.id === studentId);
+      if (student) {
+        openStudentModal(true, student);
+      }
+    }
+    
+    window.editStudent = editStudent;
+
+    function viewStudent(studentId) {
+      const student = studentsData.find(s => s.id === studentId);
+      if (!student) return;
+      
+      const info = `
+        <div style="text-align: left;">
+          <p><strong>Name:</strong> ${student.firstname} ${student.surname}</p>
+          <p><strong>Email:</strong> ${student.email || 'N/A'}</p>
+          <p><strong>Phone:</strong> ${student.phone || 'N/A'}</p>
+          <p><strong>National ID:</strong> ${student.birthNumber || 'Not provided'}</p>
+          <p><strong>Class:</strong> ${student.form || 'N/A'}</p>
+          <p><strong>Stream:</strong> ${student.stream || 'N/A'}</p>
+          <p><strong>Date of Birth:</strong> ${formatDate(student.dob)}</p>
+          <p><strong>Gender:</strong> ${student.gender || 'N/A'}</p>
+          <p><strong>Parent/Guardian:</strong> ${student.parentName || 'N/A'}</p>
+          <p><strong>Report Card:</strong> ${student.reportCardActive ? 'Active' : 'Inactive'}</p>
+        </div>
+      `;
+      
+      Swal.fire({
+        title: 'Student Details',
+        html: info,
+        icon: 'info',
+        confirmButtonColor: '#d69e2e',
+        confirmButtonText: 'Close'
+      });
+    }
+    
+    window.viewStudent = viewStudent;
+
+    async function deleteStudent(studentId) {
+      try {
+        const student = studentsData.find(s => s.id === studentId);
+        if (!student) return;
+        
+        const result = await Swal.fire({
+          title: 'Confirm Delete',
+          html: `Are you sure you want to delete <strong>${student.firstname} ${student.surname}</strong>?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d69e2e',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete!'
+        });
+        
+        if (result.isConfirmed) {
+          showSpinner(true);
+          
+          await deleteDoc(doc(db, "students", studentId));
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Student has been deleted successfully',
+            confirmButtonColor: '#d69e2e'
+          });
+          
+          loadStudents();
+        }
+      } catch (error) {
+        console.error("Error deleting student:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to delete student',
+          confirmButtonColor: '#d69e2e'
+        });
+      } finally {
+        showSpinner(false);
+      }
+    }
+    
+    window.deleteStudent = deleteStudent;
+
+    // ========================
+    // Export Functions
+    // ========================
+    
+    function exportClassPDF(className) {
+      const classStudents = studentsData.filter(s => s.form === className);
+      
+      if (classStudents.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Students',
+          text: `No students found in ${className}`,
+          confirmButtonColor: '#d69e2e'
+        });
+        return;
+      }
+      
+      // Create PDF content
+      const content = document.createElement('div');
+      content.innerHTML = `
+        <div style="padding: 20px; font-family: Arial, sans-serif;">
+          <h1 style="text-align: center; color: #1a365d;">St. Mary's High School</h1>
+          <h2 style="text-align: center; color: #d69e2e;">Class List - ${className}</h2>
+          <p style="text-align: center; margin-bottom: 30px;">Generated on ${new Date().toLocaleDateString()}</p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+              <tr style="background: #1a365d; color: white;">
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">#</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">First Name</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Surname</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Email</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Phone</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Parent/Guardian</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${classStudents.map((student, idx) => `
+                <tr style="${idx % 2 === 0 ? 'background: #f9f9f9;' : ''}">
+                  <td style="border: 1px solid #ddd; padding: 8px;">${idx + 1}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.firstname || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.surname || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.email || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.phone || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.parentName || ''}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          
+          <div style="margin-top: 30px; text-align: center; color: #666;">
+            <p>Total Students: ${classStudents.length}</p>
+            <p>Teacher: ${currentTeacher.firstname} ${currentTeacher.surname}</p>
+          </div>
+        </div>
+      `;
+      
+      const opt = {
+        margin: 1,
+        filename: `${className}_students_${new Date().toISOString().split('T')[0]}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      
+      html2pdf().set(opt).from(content).save();
+    }
+    
+    window.exportClassPDF = exportClassPDF;
+
+    // ========================
+    // Bulk Operations
+    // ========================
+    
+    let selectedStudents = new Set();
+    
+    function toggleStudentSelection(studentId, isSelected) {
+      if (isSelected) {
+        selectedStudents.add(studentId);
+      } else {
+        selectedStudents.delete(studentId);
+      }
+      updateBulkActions();
+    }
+    
+    function updateBulkActions() {
+      const bulkDeleteBtn = document.getElementById("bulkDeleteBtn");
+      bulkDeleteBtn.textContent = selectedStudents.size > 0 
+        ? `Delete Selected (${selectedStudents.size})` 
+        : 'Bulk Delete';
+      bulkDeleteBtn.disabled = selectedStudents.size === 0;
+    }
+    
+    function selectAllStudents() {
+      const checkboxes = document.querySelectorAll('.student-checkbox');
+      const allSelected = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+      
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = !allSelected;
+        toggleStudentSelection(checkbox.dataset.studentId, checkbox.checked);
+      });
+    }
+    
+    async function bulkDeleteStudents() {
+      if (selectedStudents.size === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Students Selected',
+          text: 'Please select students to delete',
+          confirmButtonColor: '#d69e2e'
+        });
+        return;
+      }
+      
+      const result = await Swal.fire({
+        title: 'Confirm Bulk Delete',
+        html: `Are you sure you want to delete <strong>${selectedStudents.size}</strong> selected students?<br><br><span style="color: red;">This action cannot be undone!</span>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d69e2e',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete them!'
+      });
+      
+      if (result.isConfirmed) {
+        try {
+          showSpinner(true);
+          
+          const deletePromises = Array.from(selectedStudents).map(studentId => 
+            deleteDoc(doc(db, "students", studentId))
+          );
+          
+          await Promise.all(deletePromises);
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: `${selectedStudents.size} students deleted successfully`,
+            confirmButtonColor: '#d69e2e'
+          });
+          
+          selectedStudents.clear();
+          loadStudents();
+        } catch (error) {
+          console.error("Error deleting students:", error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to delete some students. Please try again.',
+            confirmButtonColor: '#d69e2e'
+          });
+        } finally {
+          showSpinner(false);
+        }
+      }
+    }
+    
+    window.toggleStudentSelection = toggleStudentSelection;
+    window.selectAllStudents = selectAllStudents;
+    window.bulkDeleteStudents = bulkDeleteStudents;
+
+    // ========================
+    // Event Listeners
+    // ========================
+    
+    // Search input
+    document.getElementById("searchInput").addEventListener("input", searchStudents);
+    
+    // Sort dropdown
+    document.getElementById("sortBy").addEventListener("change", sortAndRenderStudents);
+    
+    // Add student button
+    document.getElementById("addStudentBtn").addEventListener("click", () => {
+      openStudentModal(false);
+    });
+    
+    // Student form submission
+    document.getElementById("studentForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const studentData = {
+        firstname: document.getElementById("firstname").value.trim(),
+        surname: document.getElementById("surname").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        birthNumber: document.getElementById("birthNumber").value.trim(),
+        form: document.getElementById("form").value,
+        stream: document.getElementById("stream").value.trim(),
+        dob: document.getElementById("dob").value,
+        gender: document.getElementById("gender").value,
+        parentName: document.getElementById("parentName").value.trim(),
+        reportCardActive: false
+      };
+      
+      const isEdit = document.getElementById("studentId").value !== "";
+      await saveStudent(studentData, isEdit);
+    });
+    
+    // Modal close events
+    document.getElementById("studentModalClose").addEventListener("click", () => {
+      document.getElementById("studentModal").style.display = "none";
+    });
+    
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      document.getElementById("studentModal").style.display = "none";
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener("click", (e) => {
+      const modal = document.getElementById("studentModal");
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+    
+    // Activate all reports button
+    document.getElementById("activateAllReportsBtn").addEventListener("click", async () => {
+      try {
+        const result = await Swal.fire({
+          title: 'Activate All Report Cards?',
+          text: `This will activate report cards for all students in your classes`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#d69e2e',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, activate all!'
+        });
+        
+        if (result.isConfirmed) {
+          showSpinner(true);
+          
+          const updatePromises = studentsData.map(student => 
+            setDoc(doc(db, "students", student.id), {
+              reportCardActive: true,
+              updatedAt: serverTimestamp()
+            }, { merge: true })
+          );
+          
+          await Promise.all(updatePromises);
+          
+          // Update local data
+          studentsData.forEach(student => {
+            student.reportCardActive = true;
+          });
+          
+          sortAndRenderStudents();
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: `Report cards activated for all your students`,
+            confirmButtonColor: '#d69e2e'
+          });
+        }
+      } catch (error) {
+        console.error("Error activating all reports:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to activate report cards',
+          confirmButtonColor: '#d69e2e'
+        });
+      } finally {
+        showSpinner(false);
+      }
+    });
+    
+    // Bulk Delete button
+    document.getElementById("bulkDeleteBtn").addEventListener("click", bulkDeleteStudents);
+    
+    // Change Classes button
+    document.getElementById("changeClassesBtn").addEventListener("click", async () => {
+      try {
+        showSpinner(true);
+        const studentsRef = collection(db, "students");
+        const querySnapshot = await getDocs(studentsRef);
+        
+        // Get all available classes from students
+        const allClasses = new Set();
+        const allStudentsData = [];
+        
+        querySnapshot.forEach(docSnap => {
+          const student = { id: docSnap.id, ...docSnap.data() };
+          allStudentsData.push(student);
+          if (student.form) {
+            allClasses.add(student.form);
+          }
+        });
+        
+        showSpinner(false);
+        await showClassSelectionModal(Array.from(allClasses), allStudentsData);
+        
+      } catch (error) {
+        console.error("Error loading classes:", error);
+        showSpinner(false);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to load available classes. Please try again.',
+          confirmButtonColor: '#d69e2e'
+        });
+      }
+    });
+    
+    // Export PDF button
+    document.getElementById("exportPDFBtn").addEventListener("click", () => {
+      if (studentsData.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Students',
+          text: 'No students to export',
+          confirmButtonColor: '#d69e2e'
+        });
+        return;
+      }
+      
+      // Export all students from teacher's classes
+      const content = document.createElement('div');
+      content.innerHTML = `
+        <div style="padding: 20px; font-family: Arial, sans-serif;">
+          <h1 style="text-align: center; color: #1a365d;">St. Mary's High School</h1>
+          <h2 style="text-align: center; color: #d69e2e;">My Class Students</h2>
+          <p style="text-align: center; margin-bottom: 30px;">Teacher: ${currentTeacher.firstname} ${currentTeacher.surname}</p>
+          <p style="text-align: center; margin-bottom: 30px;">Generated on ${new Date().toLocaleDateString()}</p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+              <tr style="background: #1a365d; color: white;">
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">#</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">First Name</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Surname</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Class</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Email</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Phone</th>
+                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Parent/Guardian</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${studentsData.map((student, idx) => `
+                <tr style="${idx % 2 === 0 ? 'background: #f9f9f9;' : ''}">
+                  <td style="border: 1px solid #ddd; padding: 8px;">${idx + 1}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.firstname || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.surname || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.form || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.email || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.phone || ''}</td>
+                  <td style="border: 1px solid #ddd; padding: 8px;">${student.parentName || ''}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          
+          <div style="margin-top: 30px; text-align: center; color: #666;">
+            <p>Total Students: ${studentsData.length}</p>
+            <p>Classes: ${teacherClasses.join(', ')}</p>
+          </div>
+        </div>
+      `;
+      
+      const opt = {
+        margin: 1,
+        filename: `my_class_students_${new Date().toISOString().split('T')[0]}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      
+      html2pdf().set(opt).from(content).save();
+    });
+
+    // Menu functionality
+    const menuBtn = document.getElementById("menuBtn");
+    const sideMenu = document.getElementById("sideMenu");
+    const closeBtn = document.getElementById("closeBtn");
+    
+    menuBtn.addEventListener("click", () => {
+      sideMenu.classList.toggle("active");
+    });
+    
+    closeBtn.addEventListener("click", () => {
+      sideMenu.classList.remove("active");
+    });
+    
+    document.addEventListener("click", (e) => {
+      if (!sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        sideMenu.classList.remove("active");
+      }
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById("themeToggle");
+    let isDark = true;
+    
+    themeToggle.addEventListener("click", () => {
+      isDark = !isDark;
+      document.body.setAttribute("data-theme", isDark ? "dark" : "light");
+      themeToggle.innerHTML = isDark
+        ? '<i class="fas fa-moon"></i>'
+        : '<i class="fas fa-sun"></i>';
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    
+    if (localStorage.getItem("theme")) {
+      const savedTheme = localStorage.getItem("theme");
+      document.body.setAttribute("data-theme", savedTheme);
+      isDark = savedTheme === "dark";
+      themeToggle.innerHTML = isDark
+        ? '<i class="fas fa-moon"></i>'
+        : '<i class="fas fa-sun"></i>';
+    }
+
+    // Logout functionality
+    document.getElementById("logoutBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Logout Confirmation',
+        text: 'Are you sure you want to logout?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d69e2e',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, logout'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.clear();
+          window.location.href = "/teacherslogin";
+        }
+      });
+    });
+
+    // ========================
+    // Initialize App
+    // ========================
+    
+    async function initApp() {
+      try {
+        await checkAuth();
+        loadTeacherInfo();
+        await loadStudents();
+      } catch (error) {
+        console.error("Error initializing app:", error);
+        window.location.href = "/teacherslogin";
+      }
+    }
+
+    // Start the application
+    initApp();
+  </script>
+</body>
+</html>

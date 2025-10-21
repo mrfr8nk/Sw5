@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Calendar | St. Mary's High School</title>
+  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/4476/4476871.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reuse the same CSS variables and base styles from the main page */
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #000000;
+      --accent-color: #4d94ff;
+      --light-color: #ffffff;
+      --dark-color: #121212;
+      --text-color: #333333;
+      --light-gray: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--light-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header - Same as main page */
+    header {
+      background-color: var(--light-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .logo-text span {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 30px;
+      position: relative;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary-color);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary-color);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+    
+    /* Page Header */
+    .page-header {
+      margin-top: 80px;
+      padding: 60px 0;
+      background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                  url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      color: var(--light-color);
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease;
+    }
+    
+    .page-header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease 0.2s forwards;
+      opacity: 0;
+    }
+    
+    /* Calendar Section */
+    .calendar-section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 3px;
+      background-color: var(--accent-color);
+      transform: translateX(-50%);
+    }
+    
+    /* Calendar Navigation */
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease;
+    }
+    
+    .calendar-nav h3 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+    }
+    
+    .calendar-nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .calendar-nav-btn {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .calendar-nav-btn:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+    
+    /* Calendar Grid */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 15px;
+      animation: fadeIn 1s ease 0.2s forwards;
+      opacity: 0;
+    }
+    
+    .calendar-day-header {
+      text-align: center;
+      font-weight: 600;
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      border-radius: 5px;
+    }
+    
+    .calendar-day {
+      background-color: var(--light-gray);
+      border-radius: 5px;
+      padding: 10px;
+      min-height: 120px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .calendar-day:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .day-number {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--primary-color);
+    }
+    
+    .event {
+      background-color: var(--accent-color);
+      color: var(--light-color);
+      padding: 3px 6px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .event:hover {
+      background-color: var(--primary-color);
+    }
+    
+    .empty-day {
+      background-color: transparent;
+      border: 1px dashed #ccc;
+    }
+    
+    /* Event Modal */
+    .event-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .event-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background-color: var(--light-color);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      transform: translateY(-50px);
+      transition: transform 0.3s ease;
+    }
+    
+    .event-modal.show .modal-content {
+      transform: translateY(0);
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+    
+    .modal-title {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+    
+    .modal-date {
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    /* Academic Year Calendar */
+    .year-calendar {
+      margin-top: 60px;
+    }
+    
+    .year-calendar h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      animation: fadeIn 1s ease 0.4s forwards;
+      opacity: 0;
+    }
+    
+    .academic-months {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      animation: fadeIn 1s ease 0.6s forwards;
+      opacity: 0;
+    }
+    
+    .academic-month {
+      background-color: var(--light-color);
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .academic-month:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .month-header {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    .month-events {
+      list-style: none;
+    }
+    
+    .month-event {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .month-event:last-child {
+      border-bottom: none;
+    }
+    
+    .event-date {
+      font-weight: 600;
+      color: var(--primary-color);
+      min-width: 60px;
+    }
+    
+    .event-title {
+      flex-grow: 1;
+      padding-left: 15px;
+    }
+    
+    /* Footer - Same as main page */
+    footer {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      padding: 60px 0 30px;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent-color);
+    }
+    
+    .footer-col p {
+      margin-bottom: 15px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light-color);
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: var(--light-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent-color);
+    }
+    
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    
+    .quick-contact i {
+      margin-right: 10px;
+      color: var(--accent-color);
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInLeft {
+      from { 
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeInRight {
+      from { 
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light-color);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 40px;
+        transition: left 0.3s ease;
+      }
+      
+      .nav-links.show {
+        left: 0;
+      }
+      
+      .nav-links li {
+        margin: 0 0 30px 0;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+      }
+      
+      .calendar-day {
+        min-height: 80px;
+        padding: 5px;
+      }
+      
+      .event {
+        font-size: 0.7rem;
+        padding: 2px 4px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+      
+      .calendar-nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <img src="ttps://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/academics">Academics</a></li>
+        <li><a href="/admissions">Admissions</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/calendar" class="active">Calendar</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>School Calendar</h1>
+      <p>Stay updated with all the important dates and events at St. Mary's High School</p>
+    </div>
+  </section>
+
+  <!-- Calendar Section -->
+  <section class="calendar-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Monthly Calendar</h2>
+      </div>
+      
+      <!-- Calendar Navigation -->
+      <div class="calendar-nav">
+        <h3 id="current-month">September 2025</h3>
+        <div class="calendar-nav-buttons">
+          <button class="calendar-nav-btn" id="prev-month"><i class="fas fa-chevron-left"></i> Previous</button>
+          <button class="calendar-nav-btn" id="next-month">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+      
+      <!-- Calendar Grid -->
+      <div class="calendar-grid" id="calendar">
+        <!-- Calendar days will be generated by JavaScript -->
+      </div>
+      
+      <!-- Academic Year Calendar -->
+      <div class="year-calendar">
+        <h3>2025-2026 Academic Year at a Glance</h3>
+        <div class="academic-months">
+          <div class="academic-month">
+            <div class="month-header">September 2025</div>
+            <ul class="month-events">
+              <li class="month-event">
+                <span class="event-date">5</span>
+                <span class="event-title">First Day of School</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">15</span>
+                <span class="event-title">Back to School Night</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">25-29</span>
+                <span class="event-title">Spirit Week</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="academic-month">
+            <div class="month-header">October 2025</div>
+            <ul class="month-events">
+              <li class="month-event">
+                <span class="event-date">9</span>
+                <span class="event-title">Columbus Day - No School</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">20</span>
+                <span class="event-title">Parent-Teacher Conferences</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">31</span>
+                <span class="event-title">Halloween Celebration</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="academic-month">
+            <div class="month-header">November 2025</div>
+            <ul class="month-events">
+              <li class="month-event">
+                <span class="event-date">10</span>
+                <span class="event-title">Veterans Day Assembly</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">22-24</span>
+                <span class="event-title">Thanksgiving Break</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">30</span>
+                <span class="event-title">End of First Trimester</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="academic-month">
+            <div class="month-header">December 2025</div>
+            <ul class="month-events">
+              <li class="month-event">
+                <span class="event-date">15</span>
+                <span class="event-title">Winter Concert</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">22</span>
+                <span class="event-title">Last Day Before Break</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">25 - Jan 1</span>
+                <span class="event-title">Winter Break</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="academic-month">
+            <div class="month-header">January 2026</div>
+            <ul class="month-events">
+              <li class="month-event">
+                <span class="event-date">2</span>
+                <span class="event-title">School Resumes</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">15</span>
+                <span class="event-title">MLK Day - No School</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">26</span>
+                <span class="event-title">Science Fair</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="academic-month">
+            <div class="month-header">February 2026</div>
+            <ul class="month-events">
+              <li class="month-event">
+                <span class="event-date">12</span>
+                <span class="event-title">Easter Friday - No School</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">19</span>
+                <span class="event-title">Robert G day- No School</span>
+              </li>
+              <li class="month-event">
+                <span class="event-date">23</span>
+                <span class="event-title">Music Competition</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Modal -->
+  <div class="event-modal" id="event-modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <h3 class="modal-title" id="modal-title">Event Title</h3>
+      <div class="modal-date" id="modal-date">September 5, 2025</div>
+      <p id="modal-description">Event description goes here with all the details about what's happening during this event.</p>
+      <p><strong>Time:</strong> <span id="modal-time">8:00 AM - 3:00 PM</span></p>
+      <p><strong>Location:</strong> <span id="modal-location">School Auditorium</span></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/academics">Academics</a></li>
+            <li><a href="/admissions">Admissions</a></li>           
+            <li><a href="/calendar">School Calendar</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Education Way, Academic City, AC 12345</p>
+            <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    // Calendar functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sample events data
+      const events = [
+        { date: '2025-10-01', title: 'First Day of School', description: 'Welcome back students! First day of the 2023-2024 academic year.', time: '8:00 AM - 3:00 PM', location: 'All classrooms' },
+        { date: '2025-09-15', title: 'Back to School Night', description: 'Parents are invited to meet the teachers and learn about the curriculum.', time: '6:00 PM - 8:00 PM', location: 'School Auditorium' },
+        { date: '2025-09-25', title: 'Easter', description: 'A week of fun activities and dress-up days to show school spirit!', time: 'All day', location: 'School-wide' },
+        { date: '2025-09-29', title: 'Africa Dy', description: 'Annual homecoming football game against rival school.', time: '7:00 PM', location: 'School Stadium' },
+        { date: '2025-10-09', title: 'Workers DayDay - No School', description: 'School closed for Columbus Day holiday.', time: 'All day', location: '' },
+        { date: '2023-10-20', title: 'Parent-Teacher Consultation', description: 'Opportunity for parents to discuss student progress with teachers.', time: '4:00 PM - 7:00 PM', location: 'Classrooms' }
+      ];
+
+      // Get current date
+      let currentDate = new Date();
+      let currentMonth = currentDate.getMonth();
+      let currentYear = currentDate.getFullYear();
+
+      // DOM elements
+      const calendarGrid = document.getElementById('calendar');
+      const currentMonthElement = document.getElementById('current-month');
+      const prevMonthBtn = document.getElementById('prev-month');
+      const nextMonthBtn = document.getElementById('next-month');
+      const eventModal = document.getElementById('event-modal');
+      const closeModalBtn = document.getElementById('close-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDate = document.getElementById('modal-date');
+      const modalDescription = document.getElementById('modal-description');
+      const modalTime = document.getElementById('modal-time');
+      const modalLocation = document.getElementById('modal-location');
+
+      // Month names
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      // Generate calendar
+      function generateCalendar(month, year) {
+        // Clear previous calendar
+        calendarGrid.innerHTML = '';
+        
+        // Add day headers
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        dayNames.forEach(day => {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'calendar-day-header';
+          dayElement.textContent = day;
+          calendarGrid.appendChild(dayElement);
+        });
+        
+        // Get first day of month and total days
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Add empty cells for days before first day of month
+        for (let i = 0; i < firstDay; i++) {
+          const emptyDay = document.createElement('div');
+          emptyDay.className = 'calendar-day empty-day';
+          calendarGrid.appendChild(emptyDay);
+        }
+        
+        // Add days of month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'calendar-day';
+          
+          const dayNumber = document.createElement('div');
+          dayNumber.className = 'day-number';
+          dayNumber.textContent = day;
+          dayElement.appendChild(dayNumber);
+          
+          // Add events for this day
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          const dayEvents = events.filter(event => event.date === dateStr);
+          
+          dayEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event';
+            eventElement.textContent = event.title;
+            eventElement.addEventListener('click', () => openEventModal(event));
+            dayElement.appendChild(eventElement);
+          });
+          
+          calendarGrid.appendChild(dayElement);
+        }
+        
+        // Update month/year display
+        currentMonthElement.textContent = `${monthNames[month]} ${year}`;
+      }
+      
+      // Open event modal
+      function openEventModal(event) {
+        modalTitle.textContent = event.title;
+        modalDate.textContent = formatDate(event.date);
+        modalDescription.textContent = event.description;
+        modalTime.textContent = event.time;
+        modalLocation.textContent = event.location || 'N/A';
+        eventModal.classList.add('show');
+      }
+      
+      // Close event modal
+      function closeEventModal() {
+        eventModal.classList.remove('show');
+      }
+      
+      // Format date for display
+      function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+      }
+      
+      // Event listeners
+      prevMonthBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        generateCalendar(currentMonth, currentYear);
+      });
+      
+      nextMonthBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        generateCalendar(currentMonth, currentYear);
+      });
+      
+      closeModalBtn.addEventListener('click', closeEventModal);
+      eventModal.addEventListener('click', (e) => {
+        if (e.target === eventModal) {
+          closeEventModal();
+        }
+      });
+      
+      // Initialize calendar
+      generateCalendar(currentMonth, currentYear);
+      
+      // Animate elements on scroll
+      const animateOnScroll = () => {
+        const elements = document.querySelectorAll('.academic-month, .calendar-grid, .year-calendar h3');
+        elements.forEach(element => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight / 1.3;
+          
+          if (elementPosition < screenPosition) {
+            element.style.opacity = '1';
+          }
+        });
+      };
+      
+      window.addEventListener('scroll', animateOnScroll);
+      window.addEventListener('load', animateOnScroll);
+    });
+  </script>
+</body>
+</html>

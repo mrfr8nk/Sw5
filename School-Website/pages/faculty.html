@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty - St. Mary's High School</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/6cDkTqRh/mrfrankofc.jpg">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary: #003366;
+            --secondary: #FFD700;
+            --text-color: #333;
+            --bg-light: #f9f9f9;
+            --bg-dark: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background 0.6s ease, color 0.6s ease;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+        }
+
+        section {
+            padding: 4rem 5%;
+            background: var(--bg-light);
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        /* Faculty Cards */
+        .faculty-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .faculty-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .faculty-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Scroll Animations */
+        .slide-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .slide-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animation Toggle */
+        .toggle-animation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 2rem 5%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">St. Mary's High</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/faculty">Faculty</a>
+            <a href="/gallery">Gallery</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="slide-in">
+            <h2>Science Subjects</h2>
+            <div class="faculty-cards">
+                <div class="faculty-card"><i class="fas fa-flask"></i><h3>Chemistry</h3></div>
+                <div class="faculty-card"><i class="fas fa-atom"></i><h3>Physics</h3></div>
+                <div class="faculty-card"><i class="fas fa-dna"></i><h3>Biology</h3></div>
+            </div>
+        </section>
+
+        <section class="slide-in">
+            <h2>Commercial Subjects</h2>
+            <div class="faculty-cards">
+                <div class="faculty-card"><i class="fas fa-chart-line"></i><h3>Business Studies</h3></div>
+                <div class="faculty-card"><i class="fas fa-coins"></i><h3>Accounting</h3></div>
+                <div class="faculty-card"><i class="fas fa-money-bill-wave"></i><h3>Economics</h3></div>
+            </div>
+        </section>
+
+        <section class="slide-in">
+            <h2>Arts Subjects</h2>
+            <div class="faculty-cards">
+                <div class="faculty-card"><i class="fas fa-book"></i><h3>Literature</h3></div>
+                <div class="faculty-card"><i class="fas fa-landmark"></i><h3>History</h3></div>
+                <div class="faculty-card"><i class="fas fa-paint-brush"></i><h3>Fine Arts</h3></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>&copy; 2025 St. Mary's High School. All rights reserved.</footer>
+
+    <!-- Animation Toggle -->
+    <button class="toggle-animation" onclick="toggleAnimations()">Toggle Animations</button>
+
+    <!-- JavaScript -->
+    <script>
+        // Scroll Animations
+        const slideElements = document.querySelectorAll('.slide-in');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        });
+
+        slideElements.forEach(el => observer.observe(el));
+
+        // Toggle Animations
+        function toggleAnimations() {
+            document.body.classList.toggle('no-animations');
+            document.querySelectorAll('.faculty-card').forEach(card => {
+                card.style.transition = document.body.classList.contains('no-animations') ? 'none' : '';
+            });
+        }
+    </script>
+</body>
+</html>

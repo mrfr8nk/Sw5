@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News & Events | St. Mary's High School</title>
+  
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f393.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#003366">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Color System */
+      --primary: #003366;
+      --primary-light: #3d5d8a;
+      --primary-dark: #001a33;
+      --secondary: #FFD700;
+      --secondary-light: #ffeb99;
+      --accent: #87CEEB;
+      --accent-dark: #5aa5d1;
+      --text: #333333;
+      --text-light: #6c757d;
+      --light: #ffffff;
+      --light-gray: #f8f9fa;
+      --dark: #212529;
+      --success: #28a745;
+      --info: #17a2b8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-xxl: 3rem;
+      
+      /* Typography */
+      --font-primary: 'Poppins', sans-serif;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      --text-5xl: 3rem;
+      --text-6xl: 3.75rem;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+      
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+      --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      
+      /* Border Radius */
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --primary: #4d94ff;
+      --primary-light: #7ab3ff;
+      --primary-dark: #0052cc;
+      --text: #f8f9fa;
+      --text-light: #adb5bd;
+      --light: #212529;
+      --light-gray: #343a40;
+      --dark: #f8f9fa;
+    }
+
+    /* Base Styles */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text);
+      background-color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color var(--transition-slow), color var(--transition-slow);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+
+    p {
+      margin-bottom: var(--space-md);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition-normal);
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    ul, ol {
+      padding-left: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Utility Classes */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    .section {
+      padding: var(--space-xxl) 0;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-title h2 {
+      font-size: var(--text-4xl);
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      transform: translateX(-50%);
+      border-radius: var(--radius-full);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 { margin-top: var(--space-xs); }
+    .mt-2 { margin-top: var(--space-sm); }
+    .mt-3 { margin-top: var(--space-md); }
+    .mt-4 { margin-top: var(--space-lg); }
+    .mt-5 { margin-top: var(--space-xl); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      font-weight: 500;
+      line-height: 1.5;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid transparent;
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      color: var(--light);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-light);
+      color: var(--dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--light);
+    }
+
+    .btn-lg {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-lg);
+    }
+
+    .btn-icon {
+      margin-right: var(--space-sm);
+    }
+
+    /* Header & Navigation */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--light);
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .header.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dark-mode .header.scrolled {
+      background-color: rgba(33, 37, 41, 0.95);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      margin-right: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+
+    .logo-text span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links > li:not(:last-child) {
+      margin-right: var(--space-md);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 500;
+      color: var(--text);
+      transition: color var(--transition-normal);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: var(--space-md);
+      bottom: 0;
+      width: calc(100% - 2 * var(--space-md));
+      height: 2px;
+      background-color: var(--primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-normal);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-links .dropdown {
+      position: relative;
+    }
+
+    .nav-links .dropdown-content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+      background-color: var(--light);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all var(--transition-normal);
+      z-index: 100;
+    }
+
+    .nav-links .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-links .dropdown-content a {
+      padding: var(--space-sm) var(--space-md);
+      color: var(--text);
+    }
+
+    .nav-links .dropdown-content a:hover {
+      background-color: var(--light-gray);
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: var(--text-2xl);
+      cursor: pointer;
+      color: var(--primary);
+      z-index: 1001;
+    }
+
+    /* News Hero */
+    .news-hero {
+      height: 400px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                  url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      color: var(--light);
+      position: relative;
+      margin-top: 80px;
+    }
+
+    .news-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .news-hero h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-lg);
+    }
+
+    .news-hero p {
+      font-size: var(--text-xl);
+    }
+
+    /* News Categories */
+    .news-categories {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .news-category-btn {
+      padding: var(--space-sm) var(--space-lg);
+      background-color: var(--light-gray);
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: var(--font-primary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .news-category-btn.active,
+    .news-category-btn:hover {
+      background-color: var(--primary);
+      color: var(--light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* News Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: var(--space-xl);
+    }
+
+    .news-article {
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .news-article:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .news-article-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .news-article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .news-article:hover .news-article-image img {
+      transform: scale(1.1);
+    }
+
+    .news-article-content {
+      padding: var(--space-lg);
+    }
+
+    .news-meta {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-md);
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .news-date {
+      margin-right: var(--space-md);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .news-category {
+      background-color: var(--light-gray);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+    }
+
+    .news-article-content h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-md);
+      color: var(--primary);
+    }
+
+    .news-excerpt {
+      margin-bottom: var(--space-lg);
+      color: var(--text);
+    }
+
+    .read-more {
+      color: var(--accent);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .read-more i {
+      margin-left: var(--space-xs);
+      transition: transform var(--transition-normal);
+    }
+
+    .read-more:hover i {
+      transform: translateX(5px);
+    }
+
+    /* Featured News */
+    .featured-news {
+      margin-bottom: var(--space-xxl);
+    }
+
+    .featured-article {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      background-color: var(--light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .featured-image {
+      height: 400px;
+    }
+
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-content {
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-md);
+      color: var(--text-light);
+    }
+
+    .featured-date {
+      margin-right: var(--space-md);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .featured-category {
+      background-color: var(--light-gray);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+    }
+
+    .featured-content h2 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-md);
+      color: var(--primary);
+    }
+
+    .featured-excerpt {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-xxl);
+    }
+
+    .page-numbers {
+      display: flex;
+      list-style: none;
+      gap: var(--space-sm);
+    }
+
+    .page-number {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      background-color: var(--light-gray);
+      transition: all var(--transition-normal);
+    }
+
+    .page-number a {
+      color: var(--text);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-number:hover,
+    .page-number.active {
+      background-color: var(--primary);
+    }
+
+    .page-number:hover a,
+    .page-number.active a {
+      color: var(--light);
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background-color: var(--primary);
+      color: var(--light);
+      padding: var(--space-xl) 0;
+      margin: var(--space-xxl) 0;
+      border-radius: var(--radius-lg);
+    }
+
+    .newsletter-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter h3 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-md);
+    }
+
+    .newsletter p {
+      margin-bottom: var(--space-lg);
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: var(--space-md);
+      border: none;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      font-family: var(--font-primary);
+    }
+
+    .newsletter-btn {
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--secondary);
+      color: var(--dark);
+      border: none;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-family: var(--font-primary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+    }
+
+    .newsletter-btn:hover {
+      background-color: var(--secondary-light);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark);
+      color: var(--light);
+      padding: var(--space-xxl) 0 var(--space-lg);
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .footer-col h3 {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 40px;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    .footer-col p {
+      margin-bottom: var(--space-md);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--light);
+      transition: all var(--transition-normal);
+    }
+
+    .social-links a:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-sm);
+    }
+
+    .footer-links a {
+      color: var(--light);
+      transition: color var(--transition-normal);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .quick-contact p {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .quick-contact i {
+      margin-right: var(--space-sm);
+      color: var(--accent);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: var(--space-xxl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .featured-article {
+        grid-template-columns: 1fr;
+      }
+      
+      .featured-image {
+        height: 300px;
+      }
+      
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+        transition: left var(--transition-normal);
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .nav-links .dropdown-content {
+        position: static;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+      }
+
+      .nav-links .dropdown:hover .dropdown-content,
+      .nav-links .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+      }
+      
+      .newsletter-input {
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+      }
+      
+      .newsletter-btn {
+        border-radius: 0 0 var(--radius-md) var(--radius-md);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .news-hero h1 {
+        font-size: var(--text-3xl);
+      }
+
+      .news-hero p {
+        font-size: var(--text-base);
+      }
+
+      .section {
+        padding: var(--space-xl) 0;
+      }
+
+      .section-title h2 {
+        font-size: var(--text-3xl);
+      }
+      
+      .featured-content h2 {
+        font-size: var(--text-2xl);
+      }
+      
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="/" class="logo">
+        <img src="https://i.postimg.cc/mZ81jqGW/In-Shot-20250227-051117557.jpg" alt="St. Mary's Logo" class="logo-img">
+        <span class="logo-text">St. Mary's <span>High School</span></span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li class="dropdown">
+          <a href="/academics">Academics <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-content">
+            <a href="/sciences">Sciences</a>
+            <a href="/arts">Arts</a>
+            <a href="/commercials">Commercials</a>
+            <a href="/calendar">School Calendar</a>
+          </div>
+        </li>
+        <li><a href="/admissions">Admissions</a></li>
+        <li><a href="/news" class="active">News & Events</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/dashboard" class="btn btn-outline">Student Portal</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- News Hero -->
+  <section class="news-hero">
+    <div class="container news-hero-content">
+      <h1>School News & Events</h1>
+      <p>Stay updated with the latest happenings at St. Mary's High School</p>
+    </div>
+  </section>
+
+  <!-- Featured News -->
+  <section class="section featured-news">
+    <div class="container">
+      <div class="featured-article">
+        <div class="featured-image">
+          <img src="https://files.catbox.moe/41cewv.jpg" alt="Quiz Team Wins Championship">
+        </div>
+        <div class="featured-content">
+          <div class="featured-meta">
+            <span class="featured-date">June 15, 2024</span>
+            <span class="featured-category">Achievements</span>
+          </div>
+          <h2>Quiz Team Wins Provincial Championship</h2>
+          <p class="featured-excerpt">Our Quiz Team took first place at the Old Mutual School Quiz competition with their outstanding performance, beating 15 other schools from across the province.</p>
+          <a href="/news/quiz-team-wins" class="btn btn-primary">Read Full Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News Categories -->
+  <section class="section news-section">
+    <div class="container">
+      <div class="news-categories">
+        <button class="news-category-btn active" data-category="all">All News</button>
+        <button class="news-category-btn" data-category="events">Events</button>
+        <button class="news-category-btn" data-category="achievements">Achievements</button>
+        <button class="news-category-btn" data-category="announcements">Announcements</button>
+        <button class="news-category-btn" data-category="sports">Sports</button>
+      </div>
+
+      <!-- News Grid -->
+      <div class="news-grid">
+        <!-- News Article 1 -->
+        <div class="news-article" data-category="achievements">
+          <div class="news-article-image">
+            <img src="https://files.catbox.moe/bryizn.jpg" alt="New School Bus">
+          </div>
+          <div class="news-article-content">
+            <div class="news-meta">
+              <span class="news-date">March 10, 2025</span>
+              <span class="news-category">Achievements</span>
+            </div>
+            <h3>Our New School Bus Arrives</h3>
+            <p class="news-excerpt">Thanks to fundraising efforts and a generous donation from alumni, we've added a new 65-seater bus to our fleet.</p>
+            <a href="/news/new-bus" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- News Article 2 -->
+        <div class="news-article" data-category="events">
+          <div class="news-article-image">
+            <img src="https://files.catbox.moe/9hsuch.jpg" alt="Speech & Prize Ceremony">
+          </div>
+          <div class="news-article-content">
+            <div class="news-meta">
+              <span class="news-date">September 10, 2024</span>
+              <span class="news-category">Events</span>
+            </div>
+            <h3>Annual Speech & Prize Ceremony</h3>
+            <p class="news-excerpt">We celebrated our students' academic and extracurricular achievements at our annual ceremony attended by parents and special guests.</p>
+            <a href="/news/prize-ceremony" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- News Article 3 -->
+        <div class="news-article" data-category="sports">
+          <div class="news-article-image">
+            <img src="https://files.catbox.moe/dqzy2j.jpg" alt="Basketball Champions">
+          </div>
+          <div class="news-article-content">
+            <div class="news-meta">
+              <span class="news-date">November 5, 2024</span>
+              <span class="news-category">Sports</span>
+            </div>
+            <h3>Basketball Team Wins Regional Finals</h3>
+            <p class="news-excerpt">Our boys' basketball team brought home the regional championship trophy after an intense final match against rivals.</p>
+            <a href="/news/basketball-champions" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- News Article 4 -->
+        <div class="news-article" data-category="announcements">
+          <div class="news-article-image">
+            <img src="https://files.catbox.moe/mdw7tj.jpg" alt="School Play">
+          </div>
+          <div class="news-article-content">
+            <div class="news-meta">
+              <span class="news-date">February 15, 2025</span>
+              <span class="news-category">Announcements</span>
+            </div>
+            <h3>Annual School Play: "The Lion King"</h3>
+            <p class="news-excerpt">Our drama club will present their adaptation of the classic musical. Tickets now available for three performances.</p>
+            <a href="/news/school-play" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- News Article 5 -->
+        <div class="news-article" data-category="achievements">
+          <div class="news-article-image">
+            <img src="https://files.catbox.moe/yndyr1.jpg" alt="Science Fair">
+          </div>
+          <div class="news-article-content">
+            <div class="news-meta">
+              <span class="news-date">April 22, 2025</span>
+              <span class="news-category">Achievements</span>
+            </div>
+            <h3>Students Win Science Fair Awards</h3>
+            <p class="news-excerpt">Three of our students received top honors at the National Youth Science Fair for their innovative projects.</p>
+            <a href="/news/science-fair" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- News Article 6 -->
+        <div class="news-article" data-category="events">
+          <div class="news-article-image">
+            <img src="https://files.catbox.moe/x2yw1m.jpg" alt="Career Day">
+          </div>
+          <div class="news-article-content">
+            <div class="news-meta">
+              <span class="news-date">May 8, 2025</span>
+              <span class="news-category">Events</span>
+            </div>
+            <h3>Annual Career Day Success</h3>
+            <p class="news-excerpt">Professionals from various fields visited to share career insights with our students during this popular annual event.</p>
+            <a href="/news/career-day" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <ul class="page-numbers">
+          <li class="page-number active"><a href="#">1</a></li>
+          <li class="page-number"><a href="#">2</a></li>
+          <li class="page-number"><a href="#">3</a></li>
+          <li class="page-number"><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container newsletter-container">
+      <h3>Stay Updated</h3>
+      <p>Subscribe to our newsletter to receive the latest news and updates directly to your inbox</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email address" class="newsletter-input" required>
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3>St. Mary's High School</h3>
+          <p>Providing excellence in education since 1952. Our mission is to develop the whole person - mind, body, and spirit.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/academics">Academics</a></li>
+                        <li><a href="/admissions">Admissions</a></li>
+            <li><a href="/news">News & Events</a></li>
+            <li><a href="/calendar">School Calendar</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="quick-contact">
+            <p><i class="fas fa-map-marker-alt"></i> Harare, Chitungwiza Zengeza 1</p>
+            <p><i class="fas fa-phone"></i> +263 719 647 303</p>
+            <p><i class="fas fa-envelope"></i> info@stmaryshs.edu</p>
+            <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 4:30 PM</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 St. Mary's High School. All rights reserved.</p>
+        <p class="mt-2">Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> by <a href="https://wa.me/263719647303" target="_blank" style="color: var(--accent);">Darrell Mucheri</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Preloader
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      preloader.style.transition = 'opacity 0.5s ease';
+      preloader.style.opacity = '0';
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 500);
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('show');
+      mobileMenuBtn.innerHTML = navLinks.classList.contains('show') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Dropdown Menus
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('a');
+      link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          dropdown.classList.toggle('active');
+        }
+      });
+    });
+
+    // Sticky Header
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // News Category Filtering
+    const newsCategoryBtns = document.querySelectorAll('.news-category-btn');
+    const newsArticles = document.querySelectorAll('.news-article');
+    
+    newsCategoryBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        newsCategoryBtns.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        const category = this.dataset.category;
+        
+        // Filter news articles
+        newsArticles.forEach(article => {
+          if (category === 'all' || article.dataset.category === category) {
+            article.style.display = 'block';
+          } else {
+            article.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Smooth Scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (navLinks.classList.contains('show')) {
+            navLinks.classList.remove('show');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        }
+      });
+    });
+
+    // Newsletter Form Submission
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+        // Here you would typically send the email to your server
+        alert(`Thank you for subscribing with ${emailInput.value}! You'll receive our newsletter soon.`);
+        emailInput.value = '';
+      });
+    }
+
+    // Scroll Animations
+    const fadeElements = document.querySelectorAll('.news-article');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      fadeObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
